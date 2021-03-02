@@ -19,6 +19,7 @@ import ClientOnly from "../../components/clientOnly/ClientOnly";
 import { Layout } from "../../components";
 import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
+import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
 
 const Container = styled.div`
   display: flex;
@@ -136,6 +137,7 @@ function Race({
   const [analytics, setAnalytics] = useState();
   const [projectedLocation, setProjectedLocation] = useState();
   const [projectedLocationIndex, setProjectedLocationIndex] = useState();
+  const [progression, setProgression] = useState();
 
   useEffect(() => {
     console.log("effect sections");
@@ -168,6 +170,31 @@ function Race({
     // compute error
     const delta = calculateDistance(closestLocation, position);
     setDelta(delta);
+
+    // compute progression
+    const distanceCompleted = ((analytics[0] * 100) / distance).toFixed(2);
+    const positiveElevationCompleted = (
+      (analytics[1] * 100) /
+      elevation.positive
+    ).toFixed(2);
+    const negativeElevationCompleted = (
+      (analytics[2] * 100) /
+      elevation.negative
+    ).toFixed(2);
+
+    setProgression([
+      { label: "distance", percent: distanceCompleted, color: "red" },
+      {
+        label: "elevation gain",
+        percent: positiveElevationCompleted,
+        color: "red",
+      },
+      {
+        label: "elevation loss",
+        percent: negativeElevationCompleted,
+        color: "red",
+      },
+    ]);
   }, [position, coordinates]);
 
   useEffect(() => {

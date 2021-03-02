@@ -77,7 +77,7 @@ const RadialProgressBar = ({ className, width = 250, height = 250, data }) => {
                 href={`#${index}-progress`}
                 startOffset={`${item.percent * 0.75 + 1}%`}
               >
-                {`${item.percent.toFixed(0)}%`}
+                {`${item.percent}%`}
               </textPath>
             </text>
           </Fragment>
