@@ -8,8 +8,28 @@
     "start": "next start"
   },
   "dependencies": {
+    "@mapbox/togeojson": "^0.16.0",
+    "@styled-icons/feather": "^10.18.0",
+    "@styled-icons/octicons": "^10.28.0",
+    "@vx/gradient": "^0.0.199",
+    "d3-array": "^2.11.0",
+    "d3-dsv": "2.0.0",
+    "d3-ease": "^2.0.0",
+    "d3-scale": "^3.2.3",
+    "d3-shape": "^2.0.0",
+    "date-fns": "^2.17.0",
+    "deck.gl": "^8.4.5",
     "next": "10.0.5",
+    "positic": "1.0.10",
+    "process": "^0.11.10",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "react-map-gl": "^6.1.7",
+    "react-spring": "^8.0.27",
+    "styled-components": "latest",
+    "xmldom": "^0.4.0"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "latest"
   }
 }
