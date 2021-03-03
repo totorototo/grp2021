@@ -7,6 +7,7 @@ const style = (Component) => styled(Component)`
   flex-direction: column;
   height: 100%;
   position: relative;
+  justify-content: center;
 
   //background: -webkit-linear-gradient(
   //  0deg,
