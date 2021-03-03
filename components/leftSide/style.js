@@ -10,6 +10,7 @@ const style = (Component) => styled(Component)`
   background-color: var(--color-background);
   transition: background-color 0.5s ease, color 0.5s ease;
   color: var(--color-text);
+  width: 2em;
 `;
 
 export default style;
