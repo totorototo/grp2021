@@ -19,7 +19,6 @@ import ClientOnly from "../../components/clientOnly/ClientOnly";
 import { Layout } from "../../components";
 import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
-import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
 
 const Container = styled.div`
   display: flex;
@@ -138,6 +137,7 @@ function Race({
   const [projectedLocation, setProjectedLocation] = useState();
   const [projectedLocationIndex, setProjectedLocationIndex] = useState();
   const [progression, setProgression] = useState();
+  const [savedPositions, updateSavedPositions] = useState([]);
 
   useEffect(() => {
     console.log("effect sections");
@@ -149,7 +149,7 @@ function Race({
     const helper = createPathHelper(coordinates);
 
     // get current section
-    const closestLocation = helper.findClosestPosition(position);
+    const closestLocation = helper.findClosestPosition(position.coords);
     setProjectedLocation(closestLocation);
 
     const closestLocationIndex = helper.getPositionIndex(closestLocation);
@@ -168,7 +168,7 @@ function Race({
     setAnalytics(analytics);
 
     // compute error
-    const delta = calculateDistance(closestLocation, position);
+    const delta = calculateDistance(closestLocation, position.coords);
     setDelta(delta);
 
     // compute progression
@@ -193,6 +193,15 @@ function Race({
         label: "elevation loss",
         percent: negativeElevationCompleted,
         color: "red",
+      },
+    ]);
+
+    updateSavedPositions([
+      ...savedPositions,
+      {
+        location: closestLocation,
+        timestamp: position.timestamp,
+        distance: helper.getProgressionStatistics(closestLocationIndex)[0] || 0,
       },
     ]);
   }, [position, coordinates]);
@@ -265,8 +274,8 @@ function Race({
             </ProfileContainer>
           </LeftSide>
           <RightSide>
-            <Data>{position && `longitude: ${position[0]} `}</Data>
-            <Data>{position && `latitude: ${position[1]} `}</Data>
+            <Data>{position && `longitude: ${position.coords[0]} `}</Data>
+            <Data>{position && `latitude: ${position.coords[1]} `}</Data>
             <Data>{delta && `delta: ${(delta / 1000).toFixed(4)}`}</Data>
             <Data>{currentSectionIndex && currentSectionIndex}</Data>
             <Data>

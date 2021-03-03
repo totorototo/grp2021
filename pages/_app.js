@@ -46,7 +46,10 @@ export default function MyApp({ Component, pageProps }) {
   const [position, setPosition] = usePersistedState("position", null);
   const spot = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      setPosition([position.coords.longitude, position.coords.latitude]);
+      setPosition({
+        coords: [position.coords.longitude, position.coords.latitude],
+        timestamp: position.timestamp,
+      });
     });
   };
 
