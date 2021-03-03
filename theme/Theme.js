@@ -95,9 +95,9 @@ const THEME = {
   },
   font: {
     family: {
-      "--font-family-serif": "'avenir next', georgia, times, serif",
+      "--font-family-serif": "'Fira Sans', georgia, times, serif",
       "--font-family-sansSerif":
-        '"Open+Sans", -apple-system, BlinkMacSystemFont, "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial, sans-serif',
+        '"Open+Sans", -apple-system, BlinkMacSystemFont, "Montserrat", "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial, sans-serif',
     },
     weights: {
       "--font-weight-bold": "500",
