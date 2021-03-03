@@ -1,10 +1,9 @@
-import { useState } from "react";
 import usePersistedState from "../hooks/usePersistedState";
 import { createGlobalStyle } from "styled-components";
 import THEME from "../theme/Theme";
 import ThemeProvider from "../components/themeProvider/ThemeProvider";
 
-const setDefaultColors = (variant = "light") => {
+const setDefaultColors = (variant = "dark") => {
   return Object.entries(THEME.colors[variant]).reduce((accu, [rule, value]) => {
     return `${rule}:${value}; ${accu}`;
   }, "");

@@ -13,7 +13,7 @@ const Main = styled.div`
 export default function Home() {
   return (
     <Layout>
-      <title>ssr-buddy</title>
+      <title>xxxx-buddy.io</title>
       <Main>GRP 2021</Main>
     </Layout>
   );
