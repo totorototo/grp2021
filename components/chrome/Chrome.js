@@ -15,7 +15,7 @@ const Chrome = ({
       <aside className="left ">{renderLeftSide()}</aside>
       <main>{renderMain()}</main>
       <aside className="right">{renderRightSide()}</aside>
-      {/*<footer>{renderFooter()}</footer>*/}
+      <footer>{renderFooter()}</footer>
     </div>
   );
 };

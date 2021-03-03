@@ -4,7 +4,7 @@ import { ThemeContext } from "../themeProvider/ThemeProvider";
 
 import style from "./style";
 import { Moon, Sun } from "@styled-icons/feather";
-import DropDown from "../dropDown/DropDown";
+import Link from "next/link";
 
 const SideNavigation = ({ className, opened, setState, items }) => {
   const { colorMode, setColorMode } = useContext(ThemeContext);
@@ -14,13 +14,9 @@ const SideNavigation = ({ className, opened, setState, items }) => {
       <div className={"side-menu"}>
         {Object.entries(items).map(([title, value], key) => {
           return (
-            <a
-              className={`${opened ? "opened" : "closed"}`}
-              key={key}
-              href={`#${title}`}
-            >
-              {title}
-            </a>
+            <Link key={key} href={value.href}>
+              <a onClick={() => setState(false)}>{title}</a>
+            </Link>
           );
         })}
       </div>

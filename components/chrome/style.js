@@ -52,7 +52,6 @@ const style = (Component) => styled(Component)`
 
     main {
       grid-column: 2 / 3;
-      background-color: pink;
     }
 
     footer {

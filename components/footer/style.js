@@ -2,16 +2,18 @@ import styled from "styled-components";
 import THEME from "../../theme/Theme";
 
 const style = (Component) => styled(Component)`
+  /*
   background: -webkit-linear-gradient(
     0deg,
     var(--color-homepage-light),
     var(--color-homepage-dark)
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  ); !* Chrome 10-25, Safari 5.1-6 *!
   background: linear-gradient(
     0deg,
     var(--color-homepage-light),
     var(--color-homepage-dark)
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!
+  */
 
   width: 100%;
 
