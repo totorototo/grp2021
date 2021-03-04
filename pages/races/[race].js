@@ -19,6 +19,7 @@ import ClientOnly from "../../components/clientOnly/ClientOnly";
 import { Layout } from "../../components";
 import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
+import Live from "../../components/live/Live";
 
 const Container = styled.div`
   display: flex;
@@ -49,6 +50,14 @@ const ProfileContainer = styled.div`
   border-radius: 10px;
   background-color: #2a2d32;
   margin-top: 1em;
+`;
+
+const LiveContainer = styled.div`
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  background-color: #2a2d32;
+  padding: 1em;
 `;
 
 const TopSection = styled.div`
@@ -99,7 +108,7 @@ const RightSide = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
-  height: 100%;
+  height: 50%;
   align-items: center;
   justify-content: flex-start;
   padding: 20px;
@@ -274,16 +283,36 @@ function Race({
             </ProfileContainer>
           </LeftSide>
           <RightSide>
-            <Data>{position && `longitude: ${position.coords[0]} `}</Data>
-            <Data>{position && `latitude: ${position.coords[1]} `}</Data>
-            <Data>{delta && `delta: ${(delta / 1000).toFixed(4)}`}</Data>
-            <Data>{currentSectionIndex && currentSectionIndex}</Data>
-            <Data>
-              {analytics &&
-                `distance: ${(analytics[0] / 1000).toFixed(2)} - D+: ${
-                  analytics[1]
-                } - D-: ${analytics[2]}`}
-            </Data>
+            <LiveContainer>
+              <ClientOnly>
+                <AutoSizer>
+                  {({ width, height }) =>
+                    savedPositions &&
+                    savedPositions.length > 0 && (
+                      <Live
+                        bgColor="#2a2d32"
+                        color="#F4A301"
+                        width={width}
+                        height={height}
+                        checkpoints={checkpoints}
+                        positions={savedPositions}
+                      />
+                    )
+                  }
+                </AutoSizer>
+              </ClientOnly>
+            </LiveContainer>
+
+            {/*<Data>{position && `longitude: ${position.coords[0]} `}</Data>*/}
+            {/*<Data>{position && `latitude: ${position.coords[1]} `}</Data>*/}
+            {/*<Data>{delta && `delta: ${(delta / 1000).toFixed(4)}`}</Data>*/}
+            {/*<Data>{currentSectionIndex && currentSectionIndex}</Data>*/}
+            {/*<Data>*/}
+            {/*  {analytics &&*/}
+            {/*    `distance: ${(analytics[0] / 1000).toFixed(2)} - D+: ${*/}
+            {/*      analytics[1]*/}
+            {/*    } - D-: ${analytics[2]}`}*/}
+            {/*</Data>*/}
           </RightSide>
         </MainContainer>
       </Container>
