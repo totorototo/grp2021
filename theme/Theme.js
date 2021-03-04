@@ -95,7 +95,7 @@ const THEME = {
   },
   font: {
     family: {
-      "--font-family-serif": "'Fira Sans', georgia, times, serif",
+      "--font-family-serif": "'Helvetica', georgia, times, serif",
       "--font-family-sansSerif":
         '"Open+Sans", -apple-system, BlinkMacSystemFont, "Montserrat", "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial, sans-serif',
     },
