@@ -5,6 +5,7 @@ import DeckGL, { IconLayer } from "deck.gl";
 
 import styled from "./style";
 import mapStyle from "./style.json";
+import { Location } from "@styled-icons/octicons";
 
 const Map = ({
   className,
@@ -12,6 +13,7 @@ const Map = ({
   center,
   checkPointsLocations,
   currentLocation,
+  spot,
 }) => {
   const [viewport, setViewport] = useState({
     latitude: 42.82985,
@@ -34,6 +36,13 @@ const Map = ({
   return (
     <div className={className}>
       <div className="wrapper">
+        <Location
+          onClick={() => {
+            spot();
+          }}
+          className={`fab`}
+          size="16"
+        />
         <MapGL
           {...viewport}
           width="100%"

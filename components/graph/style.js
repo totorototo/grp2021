@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-export default (Component) => styled(Component)`
-  font-family: roboto;
+const style = (Component) => styled(Component)`
   font-size: 10px;
 
   position: relative;
@@ -19,3 +18,5 @@ export default (Component) => styled(Component)`
     border-radius: 10px;
   }
 `;
+
+export default style;

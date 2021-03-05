@@ -14,6 +14,22 @@ const style = (Component) => styled(Component)`
     color: #ffffff94;
     border-radius: 10px;
     position: relative;
+
+    .fab {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      border-radius: 50px;
+      width: 48px;
+      height: 48px;
+      background-color: #e24e1b;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      z-index: 2;
+    }
   }
 
   .mapboxgl-map {

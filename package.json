@@ -10,6 +10,7 @@
   "dependencies": {
     "@mapbox/togeojson": "^0.16.0",
     "@styled-icons/feather": "^10.18.0",
+    "@styled-icons/ionicons-outline": "^10.28.0",
     "@styled-icons/octicons": "^10.28.0",
     "@vx/gradient": "^0.0.199",
     "d3-array": "^2.11.0",
@@ -27,10 +28,12 @@
     "react-dom": "17.0.1",
     "react-map-gl": "^6.1.7",
     "react-spring": "^8.0.27",
+    "react-virtualized": "^9.22.3",
     "styled-components": "latest",
     "xmldom": "^0.4.0"
   },
   "devDependencies": {
+    "@styled-icons/material-outlined": "^10.28.0",
     "babel-plugin-styled-components": "latest"
   }
 }
