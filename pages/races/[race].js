@@ -23,7 +23,7 @@ import { Layout } from "../../components";
 import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
 import Live from "../../components/live/Live";
-import style from "./style";
+import style from "../../styles/[race].style";
 
 function Race({
   position,
