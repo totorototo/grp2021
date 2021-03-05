@@ -243,178 +243,180 @@ const Live = ({
     setLivePath(path);
   }, [positions, scales, checkpoints]);
 
-  return (
-    <svg width={width} height={height} className={className}>
-      <g className="shifts">
-        <g className="group-area">
-          {shifts &&
-            shifts.map((interval, index) => {
-              return (
-                <line
-                  key={index}
-                  x1={scales.x(new Date(interval.start))}
-                  x2={scales.x(new Date(interval.start))}
-                  y1={"0"}
-                  y2={height - OFFSET_Y}
-                  strokeWidth={"1"}
-                  stroke={"white"}
-                  strokeOpacity={0.3}
-                  strokeDasharray="4 4"
-                />
-              );
-            })}
+  return scales ? (
+    <div className={className} style={{ width, height }}>
+      <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+        <g className="shifts">
+          <g className="group-area">
+            {shifts &&
+              shifts.map((interval, index) => {
+                return (
+                  <line
+                    key={index}
+                    x1={scales.x(new Date(interval.start))}
+                    x2={scales.x(new Date(interval.start))}
+                    y1={"0"}
+                    y2={height - OFFSET_Y}
+                    strokeWidth={"1"}
+                    stroke={"white"}
+                    strokeOpacity={0.3}
+                    strokeDasharray="4 4"
+                  />
+                );
+              })}
+          </g>
         </g>
-      </g>
-      <g className="horizontal-ticks">
-        {horizontalTicks.map((tick, index) => (
-          <g key={`${index}-group`}>
-            <text
-              writingMode="tb"
-              key={`${index}-text`}
-              fontSize="12"
-              fill="#ffffff94"
-              x={scales.x(new Date(tick))}
-              y={height - 20}
-            >
-              {differenceInHours(
-                new Date(tick),
-                new Date(checkpoints[0].cutOffTime)
-              )}
-            </text>
-            <line
-              stroke="#ffffff94"
-              key={`${index}-tick`}
-              x1={scales.x(new Date(tick))}
-              x2={scales.x(new Date(tick))}
-              y2={height - OFFSET_Y + 5}
-              y1={height - OFFSET_Y}
-            />
-          </g>
-        ))}
-      </g>
-      <g className={"axis"}>
-        {xAxisLine && yAxisLine}&&(
-        <path
-          d={xAxisLine}
-          fill="none"
-          stroke="white"
-          strokeWidth="1"
-          strokeOpacity="0.4"
-        />
-        <path
-          d={yAxisLine}
-          fill="none"
-          stroke="white"
-          strokeWidth="1"
-          strokeOpacity="0.4"
-        />
-        )
-      </g>
-      <g className="vertical-ticks">
-        {verticalTicks.map((tick, index) => (
-          <g key={`${index}-group`}>
-            <text
-              key={`${index}-text`}
-              fontSize="12"
-              fill="#ffffff94"
-              x={0}
-              y={scales.y(tick) + 5}
-            >
-              {tick}
-            </text>
-            <line
-              stroke="#ffffff94"
-              key={`${index}-tick`}
-              x1={OFFSET_X - 5}
-              x2={OFFSET_X}
-              y2={scales.y(tick)}
-              y1={scales.y(tick)}
-            />
-          </g>
-        ))}
-      </g>
-      {timeSpansArea && (
-        <path
-          fillOpacity="0.1"
-          d={timeSpansArea}
-          strokeWidth="0"
-          fill={color}
-        />
-      )}
-      <g className={"lines"}>
-        {slowLine && fastLine && (
-          <g>
-            <path
-              d={slowLine}
-              fill="none"
-              stroke={color}
-              strokeWidth="1"
-              strokeOpacity="1"
-            />
-            <path
-              d={fastLine}
-              fill="none"
-              stroke={color}
-              strokeWidth="1"
-              strokeOpacity="1"
-            />
-          </g>
-        )}
-      </g>
-      <g className={"checkpoints-markers"}>
-        {enhancedCheckpoints &&
-          enhancedCheckpoints.map((enhancedCheckpoints, index) => (
-            <g>
-              <g>
-                <circle
-                  cx={scales.x(enhancedCheckpoints.slow)}
-                  cy={scales.y(enhancedCheckpoints.distance)}
-                  r="4"
-                  fill={color}
-                />
-                <circle
-                  cx={scales.x(enhancedCheckpoints.slow)}
-                  cy={scales.y(enhancedCheckpoints.distance)}
-                  r="3"
-                  fill={bgColor}
-                >
-                  <title>
-                    {`${enhancedCheckpoints.name} - ${format(
-                      new Date(enhancedCheckpoints.slow),
-                      "dd-MM HH:mm"
-                    )}`}
-                  </title>
-                </circle>
-              </g>
-              <g>
-                <circle
-                  cx={scales.x(enhancedCheckpoints.fast)}
-                  cy={scales.y(enhancedCheckpoints.distance)}
-                  r="4"
-                  fill={color}
-                />
-                <circle
-                  cx={scales.x(enhancedCheckpoints.fast)}
-                  cy={scales.y(enhancedCheckpoints.distance)}
-                  r="3"
-                  fill={bgColor}
-                />
-              </g>
+        <g className="horizontal-ticks">
+          {horizontalTicks.map((tick, index) => (
+            <g key={`${index}-group`}>
+              <text
+                writingMode="tb"
+                key={`${index}-text`}
+                fontSize="12"
+                fill="#ffffff94"
+                x={scales.x(new Date(tick))}
+                y={height - 20}
+              >
+                {differenceInHours(
+                  new Date(tick),
+                  new Date(checkpoints[0].cutOffTime)
+                )}
+              </text>
+              <line
+                stroke="#ffffff94"
+                key={`${index}-tick`}
+                x1={scales.x(new Date(tick))}
+                x2={scales.x(new Date(tick))}
+                y2={height - OFFSET_Y + 5}
+                y1={height - OFFSET_Y}
+              />
             </g>
           ))}
-      </g>
-      {livePath && (
-        <path
-          d={livePath}
-          fill="none"
-          stroke="#357597"
-          strokeWidth="2"
-          strokeDasharray="4 4"
-          strokeOpacity="0.9"
-        />
-      )}
-    </svg>
-  );
+        </g>
+        <g className={"axis"}>
+          {xAxisLine && yAxisLine}&&(
+          <path
+            d={xAxisLine}
+            fill="none"
+            stroke="white"
+            strokeWidth="1"
+            strokeOpacity="0.4"
+          />
+          <path
+            d={yAxisLine}
+            fill="none"
+            stroke="white"
+            strokeWidth="1"
+            strokeOpacity="0.4"
+          />
+          )
+        </g>
+        <g className="vertical-ticks">
+          {verticalTicks.map((tick, index) => (
+            <g key={`${index}-group`}>
+              <text
+                key={`${index}-text`}
+                fontSize="12"
+                fill="#ffffff94"
+                x={0}
+                y={scales.y(tick) + 5}
+              >
+                {tick}
+              </text>
+              <line
+                stroke="#ffffff94"
+                key={`${index}-tick`}
+                x1={OFFSET_X - 5}
+                x2={OFFSET_X}
+                y2={scales.y(tick)}
+                y1={scales.y(tick)}
+              />
+            </g>
+          ))}
+        </g>
+        {timeSpansArea && (
+          <path
+            fillOpacity="0.1"
+            d={timeSpansArea}
+            strokeWidth="0"
+            fill={color}
+          />
+        )}
+        <g className={"lines"}>
+          {slowLine && fastLine && (
+            <g>
+              <path
+                d={slowLine}
+                fill="none"
+                stroke={color}
+                strokeWidth="1"
+                strokeOpacity="1"
+              />
+              <path
+                d={fastLine}
+                fill="none"
+                stroke={color}
+                strokeWidth="1"
+                strokeOpacity="1"
+              />
+            </g>
+          )}
+        </g>
+        <g className={"checkpoints-markers"}>
+          {enhancedCheckpoints &&
+            enhancedCheckpoints.map((enhancedCheckpoints, index) => (
+              <g>
+                <g>
+                  <circle
+                    cx={scales.x(enhancedCheckpoints.slow)}
+                    cy={scales.y(enhancedCheckpoints.distance)}
+                    r="4"
+                    fill={color}
+                  />
+                  <circle
+                    cx={scales.x(enhancedCheckpoints.slow)}
+                    cy={scales.y(enhancedCheckpoints.distance)}
+                    r="3"
+                    fill={bgColor}
+                  >
+                    <title>
+                      {`${enhancedCheckpoints.name} - ${format(
+                        new Date(enhancedCheckpoints.slow),
+                        "dd-MM HH:mm"
+                      )}`}
+                    </title>
+                  </circle>
+                </g>
+                <g>
+                  <circle
+                    cx={scales.x(enhancedCheckpoints.fast)}
+                    cy={scales.y(enhancedCheckpoints.distance)}
+                    r="4"
+                    fill={color}
+                  />
+                  <circle
+                    cx={scales.x(enhancedCheckpoints.fast)}
+                    cy={scales.y(enhancedCheckpoints.distance)}
+                    r="3"
+                    fill={bgColor}
+                  />
+                </g>
+              </g>
+            ))}
+        </g>
+        {livePath && (
+          <path
+            d={livePath}
+            fill="none"
+            stroke="#357597"
+            strokeWidth="2"
+            strokeDasharray="4 4"
+            strokeOpacity="0.9"
+          />
+        )}
+      </svg>
+    </div>
+  ) : null;
 };
 
 export default styled(Live);

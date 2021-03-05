@@ -9,117 +9,21 @@ import {
   differenceInMilliseconds,
   formatDistanceToNow,
 } from "date-fns";
-import styled from "styled-components";
 import * as d3Array from "d3-array";
 import { calculateDistance, createPathHelper } from "positic";
+import { AutoSizer } from "react-virtualized";
+import { TrendingUp } from "@styled-icons/feather/TrendingUp";
+import { Watch } from "@styled-icons/feather/Watch";
+import { Timer } from "@styled-icons/ionicons-outline/Timer";
+import { AddRoad } from "@styled-icons/material-outlined/AddRoad";
 
 import Map from "../../components/map/Map";
-import AutoSizer from "../../components/autoSizer/AutoSizer";
 import ClientOnly from "../../components/clientOnly/ClientOnly";
 import { Layout } from "../../components";
 import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
 import Live from "../../components/live/Live";
-
-const Container = styled.div`
-  display: flex;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  color: var(--color-text);
-  align-items: center;
-  justify-content: space-around;
-  position: relative;
-`;
-
-const FAB = styled.div`
-  border-radius: 30%;
-  position: absolute;
-  bottom: 2em;
-  right: 2em;
-  width: 2em;
-  height: 2em;
-  z-index: 22222;
-  background-color: yellow;
-`;
-
-const ProfileContainer = styled.div`
-  width: 100%;
-  height: 150px;
-  border-radius: 10px;
-  background-color: #2a2d32;
-  margin-top: 1em;
-`;
-
-const LiveContainer = styled.div`
-  width: 100%;
-  height: 250px;
-  border-radius: 10px;
-  background-color: #2a2d32;
-  padding: 1em;
-`;
-
-const TopSection = styled.div`
-  width: 100%;
-  padding: 20px;
-  height: 100px;
-  display: flex;
-`;
-
-const Data = styled.div`
-  height: 100%;
-  max-height: 6em;
-  background-color: #2a2d32;
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  border-radius: 8px;
-  width: 100%;
-
-  :not(:last-child) {
-    margin-right: 16px;
-  }
-  padding: 16px;
-`;
-
-const MainContainer = styled.div`
-  display: flex;
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-  color: var(--color-text);
-  align-items: center;
-  justify-content: space-around;
-`;
-
-const LeftSide = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  height: 100%;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-`;
-
-const RightSide = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-  height: 50%;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-`;
-
-const MapContainer = styled.div`
-  display: flex;
-  width: 100%;
-  border-radius: 10px;
-  height: 70%;
-`;
+import style from "./style";
 
 function Race({
   position,
@@ -134,6 +38,7 @@ function Race({
   sections,
   locationsIndices,
   peaks,
+  className,
 }) {
   const [domain, setDomain] = useState({
     x: { min: 0, max: 0 },
@@ -148,9 +53,7 @@ function Race({
   const [progression, setProgression] = useState();
   const [savedPositions, updateSavedPositions] = useState([]);
 
-  useEffect(() => {
-    console.log("effect sections");
-  }, [sections]);
+  useEffect(() => {}, [sections]);
 
   useEffect(() => {
     if (!position || !coordinates) return;
@@ -228,41 +131,71 @@ function Race({
   }, [coordinates]);
 
   return (
-    <Layout>
-      <Container>
-        <FAB
-          onClick={() => {
-            spot();
-          }}
-        />
-        <TopSection>
-          <Data>{`${(distance / 1000).toFixed(0)} km`}</Data>
-          <Data>{`${elevation.positive.toFixed(0)} D+`}</Data>
-          <Data>{`${elevation.negative.toFixed(0)} D-`}</Data>
-          <Data>{`${checkpoints.length} sections`}</Data>
-          <Data>
-            {`${differenceInHours(
-              new Date(checkpoints[checkpoints.length - 1].cutOffTime),
-              new Date(checkpoints[0].cutOffTime)
-            )} hours`}
-          </Data>
-          <Data>
-            {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
-              addSuffix: true,
-            })}
-          </Data>
-        </TopSection>
-        <MainContainer>
-          <LeftSide>
-            <MapContainer>
+    <div className={className}>
+      <Layout>
+        <div className={"main-container"}>
+          <div className={"race"}>
+            <div className={"info"}>
+              <div className={"analytics"}>
+                <div className={"item distance"}>
+                  {`${(distance / 1000).toFixed(0)}`}
+                </div>
+                <div className={"item elevation"}>
+                  <TrendingUp size="40" />
+                  <div className={"values"}>
+                    <div>{`${elevation.positive.toFixed(0)}`}</div>
+                    <span />
+                    <div>{`${elevation.negative.toFixed(0)}`}</div>
+                  </div>
+                </div>
+                <div className={"item sections"}>
+                  <AddRoad size={"30"} />
+                  <div> {`${checkpoints.length} sections`}</div>
+                </div>
+
+                <div className={"item duration"}>
+                  <Watch size="30" />
+                  <div className={"values"}>
+                    {`${differenceInHours(
+                      new Date(checkpoints[checkpoints.length - 1].cutOffTime),
+                      new Date(checkpoints[0].cutOffTime)
+                    )} hours`}
+                  </div>
+                </div>
+                <div className={"item countdown"}>
+                  {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
+                    addSuffix: true,
+                  })}
+                  <Timer size="40" />
+                </div>
+              </div>
+              <div className={"live-tracking"}>
+                <ClientOnly>
+                  <AutoSizer>
+                    {({ width, height }) => (
+                      <Live
+                        bgColor="#2a2d32"
+                        color="#F4A301"
+                        width={width}
+                        height={height}
+                        checkpoints={checkpoints}
+                        positions={savedPositions}
+                      />
+                    )}
+                  </AutoSizer>
+                </ClientOnly>
+              </div>
+            </div>
+            <div className={"map"}>
               <Map
+                spot={spot}
                 currentLocation={projectedLocation}
                 route={route}
                 center={center}
                 checkPointsLocations={checkPointsLocations}
               />
-            </MapContainer>
-            <ProfileContainer>
+            </div>
+            <div className={"profile"}>
               <ClientOnly>
                 <AutoSizer>
                   {({ width, height }) => (
@@ -280,43 +213,12 @@ function Race({
                   )}
                 </AutoSizer>
               </ClientOnly>
-            </ProfileContainer>
-          </LeftSide>
-          <RightSide>
-            <LiveContainer>
-              <ClientOnly>
-                <AutoSizer>
-                  {({ width, height }) =>
-                    savedPositions &&
-                    savedPositions.length > 0 && (
-                      <Live
-                        bgColor="#2a2d32"
-                        color="#F4A301"
-                        width={width}
-                        height={height}
-                        checkpoints={checkpoints}
-                        positions={savedPositions}
-                      />
-                    )
-                  }
-                </AutoSizer>
-              </ClientOnly>
-            </LiveContainer>
-
-            {/*<Data>{position && `longitude: ${position.coords[0]} `}</Data>*/}
-            {/*<Data>{position && `latitude: ${position.coords[1]} `}</Data>*/}
-            {/*<Data>{delta && `delta: ${(delta / 1000).toFixed(4)}`}</Data>*/}
-            {/*<Data>{currentSectionIndex && currentSectionIndex}</Data>*/}
-            {/*<Data>*/}
-            {/*  {analytics &&*/}
-            {/*    `distance: ${(analytics[0] / 1000).toFixed(2)} - D+: ${*/}
-            {/*      analytics[1]*/}
-            {/*    } - D-: ${analytics[2]}`}*/}
-            {/*</Data>*/}
-          </RightSide>
-        </MainContainer>
-      </Container>
-    </Layout>
+            </div>
+          </div>
+          <div className={"runner"} />
+        </div>
+      </Layout>
+    </div>
   );
 }
 
@@ -476,4 +378,4 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-export default Race;
+export default style(Race);

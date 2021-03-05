@@ -23,6 +23,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: var(--font-family-serif);
     margin: 0;
 
+   // * { border: 1px solid red; }
+
     *, *:before, *:after {
       box-sizing: border-box;
     }

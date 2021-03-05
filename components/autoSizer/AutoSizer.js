@@ -15,6 +15,9 @@ const AutoSizer = ({ className, children }) => {
   const width = getContentRect("width") || 200;
   const height = getContentRect("height") || 200;
 
+  console.log("booom");
+  debugger;
+
   return (
     <div ref={ref} className={className}>
       {children({ width, height })}
