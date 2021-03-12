@@ -44,13 +44,15 @@ const style = (Component) => styled(Component)`
     }
     
     .profile-container {
-      grid-area: race-profile;
+      grid-area: race-profile;     
       display: none;
       
     }
     
     .progress-container {
       grid-area: progression;
+      background-color:  ${(props) =>
+        props.rounded && `border-radius: 10px`}; //border-radius: 10px;;
     }
     
     .current-section-container {
@@ -72,79 +74,20 @@ const style = (Component) => styled(Component)`
       grid-gap: 1rem;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
-      .item {
+      .item {    
         background-color: #2a2d32;
-        display: grid;
-        justify-content: center;
-        align-content: center;
         border-radius: 8px;
-        position: relative;
-      }
-
-      .distance {
-        font-size: 4em;
-      }
-
-      .sections {
-        font-size: 1.4em;
-
-        svg {
-          opacity: 0.1;
-          margin-bottom: 0.4em;
-        }
-      }
-
-      .countdown {
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
-        font-size: 1.1em;
-
-        svg {
-          margin-left: 0.4em;
-          color: #f4a301;
-          opacity: 0.6;
-        }
-      }
-
-      .duration {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.1em;
 
         svg {
           margin-right: 0.4em;
+          opacity: 0.6;
         }
-      }
-
-      .elevation {
-        padding: 1em;
-        display: flex;
-        //justify-content: space-around;
-        align-items: center;
-        svg {
-          margin-right: 1em;
-        }
-
-        span {
-          background-color: #ffffffaa;
-          width: 100%;
-          height: 1px;
-        }
-        .values {
-          display: flex;
-
-          height: 100%;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: center;
-          font-size: 1.6em;
-        }
-      }
+      }     
     }
-
-
 
     @media screen and (min-width: ${THEME.breakpoints[0]}) {
       height: 100%;
@@ -155,8 +98,7 @@ const style = (Component) => styled(Component)`
 
       .profile-container {
         grid-area: race-profile;
-       display: flex;
-
+        display: flex;
       }
       
       .current-section-container {

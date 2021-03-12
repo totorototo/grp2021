@@ -26,6 +26,7 @@ import Live from "../../components/live/Live";
 import style from "../../styles/[race].style";
 import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
 import Sections from "../../components/sections/Sections";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
 function Race({
   position,
@@ -138,35 +139,38 @@ function Race({
         <div className={"container"}>
           <div className={"informations-container child"}>
             <div className={"analytics"}>
-              <div className={"item distance"}>
+              <div className={"item"}>
+                <ArrowRight size={"20"} />
                 {`${(distance / 1000).toFixed(0)}`}
               </div>
-              <div className={"item elevation"}>
-                <TrendingUp size="40" />
-                <div className={"values"}>
-                  <div>{`${elevation.positive.toFixed(0)}`}</div>
-                  <span />
-                  <div>{`${elevation.negative.toFixed(0)}`}</div>
+              <div className={"item"}>
+                <TrendingUp size="20" />
+                <div>
+                  {`${elevation.positive.toFixed(
+                    0
+                  )} / ${elevation.negative.toFixed(0)}`}
                 </div>
               </div>
-              <div className={"item sections"}>
-                <AddRoad size={"30"} />
+              <div className={"item"}>
+                <AddRoad size={"20"} />
                 <div> {`${checkpoints.length} sections`}</div>
               </div>
-              <div className={"item duration"}>
-                <Watch size="30" />
-                <div className={"values"}>
+              <div className={"item"}>
+                <Watch size="20" />
+                <div>
                   {`${differenceInHours(
                     new Date(checkpoints[checkpoints.length - 1].cutOffTime),
                     new Date(checkpoints[0].cutOffTime)
                   )} hours`}
                 </div>
               </div>
-              <div className={"item countdown"}>
-                {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
-                  addSuffix: true,
-                })}
-                <Timer size="40" />
+              <div className={"item"}>
+                <Timer size="20" />
+                <div>
+                  {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
+                    addSuffix: true,
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -201,6 +205,7 @@ function Race({
                 {({ width, height }) => (
                   <ClientOnly>
                     <Graph
+                      backgroundColor="#2a2d32"
                       rounded
                       currentIndex={projectedLocationIndex}
                       width={width}
@@ -222,6 +227,8 @@ function Race({
               <AutoSizer>
                 {({ width, height }) => (
                   <RadialProgressBar
+                    rounded
+                    backgroundColor="#2a2d32"
                     data={progression}
                     width={width}
                     height={height}
@@ -236,6 +243,8 @@ function Race({
                 <AutoSizer>
                   {({ width, height }) => (
                     <Sections
+                      rounded
+                      backgroundColor="#2a2d32"
                       sections={sections}
                       locations={coordinates}
                       width={width}

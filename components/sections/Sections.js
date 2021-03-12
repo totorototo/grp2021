@@ -173,7 +173,7 @@ const Sections = ({
               key={index}
               locations={section.coordinates}
               peaks={section.peaks}
-              width={Math.trunc((width * section.distance) / 1000 / 20) || 200}
+              width={Math.trunc((width * section.distance) / 1000 / 40) || 200}
               height={200}
               domain={domain}
             />

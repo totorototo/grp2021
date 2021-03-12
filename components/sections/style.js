@@ -2,10 +2,14 @@ import styled from "styled-components";
 //import Section from "../sections/section/Section";
 
 const style = (Component) => styled(Component)`
+  background-color: ${(props) => props.backgroundColor || "transparent"};
+  ${(props) => props.rounded && `border-radius: 0.5rem`};
   position: absolute; 
   width: ${(props) => `${props.width}px`};
   height: ${(props) => `${props.height}px`};  
   display: flex;
+  padding-top: 1rem;
+  
  
   color: var(--color-text);  
   
