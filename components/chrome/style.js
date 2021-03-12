@@ -18,6 +18,10 @@ const style = (Component) => styled(Component)`
     height: 60px;
   }
 
+  footer {
+    height: 40px;
+  }
+
   footer,
   main,
   aside {
