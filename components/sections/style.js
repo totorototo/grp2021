@@ -2,15 +2,22 @@ import styled from "styled-components";
 //import Section from "../sections/section/Section";
 
 const style = (Component) => styled(Component)`
+  position: absolute; 
+  width: ${(props) => `${props.width}px`};
+  height: ${(props) => `${props.height}px`};  
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 100%;
-  flex: 1 1 auto;
-  width: 100%;
-  position: relative;
-  color: #ffffff94;
+ 
+  color: var(--color-text);  
+  
+  .section-container{
+    display: flex;
+    flex: 1;
+    width: 100%;
+    height: 100%;   
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+  }
 
   .section {
     position: absolute;
@@ -37,7 +44,7 @@ const style = (Component) => styled(Component)`
     width: 100%;
   }
 
-  .analytics {
+  .analytic {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
@@ -45,36 +52,57 @@ const style = (Component) => styled(Component)`
     margin-bottom: auto;
     align-items: center;
     justify-content: center;
+    font-weight: lighter;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 
     .data {
       display: flex;
       width: 100%;
-      align-items: center;
+      height: 100%;
+      align-items: flex-start;    
+      justify-content: flex-start;
+      flex: 1 ;
+      position: relative;
+      
 
-      .index {
-        color: white;
-        font-size: 150px;
-
-        width: 40%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
+      .index {  
+        position: absolute;
+        top:0;
+        bottom: 0;
+        font-size: 14rem;       
+        opacity: 0.1;
+        letter-spacing: -0.142em;
+        right: 0;
+        padding-right: 3rem;
+        line-height: 1;
+        font-weight: 900;
       }
 
       .stats {
-        width: 60%;
+        width: 100%;
+        height: 100%;
         display: flex;
-        flex-direction: column;
-        font-family: roboto;
-        font-size: 14px;
+        flex-direction: column;       
+        font-size: 1rem;        
 
         .title {
-          font-weight: bolder;
+          font-weight: lighter;
         }
         .item {
-          margin-top: 8px;
+          margin-top: 0.5rem;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;         
+          align-items: center;
+
+          svg {
+            margin-right: 0.4em;         
+            opacity: 0.6;
+          }
+          
         }
       }
     }

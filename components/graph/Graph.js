@@ -49,13 +49,16 @@ const Graph = ({
   locations = [],
   currentIndex = -1,
   domain,
-  mainColor,
-  progressionColor,
+  progressionColor = "#000000",
+  lineColor = "#FFFFFF",
+  areaColor = "#FFFFFF",
   setCurrentPosition = () => {},
   offsetMin = 0,
   offsetMax = 0,
   peaks = [],
   delimiterIndices = [],
+  displayLine = false,
+  displayArea = true,
 }) => {
   const [profileArea, setProfileArea] = useState();
   const [profilePath, setProfilePath] = useState();
@@ -122,6 +125,7 @@ const Graph = ({
   }, [scales, locations, domain, offsetMin]);
 
   useEffect(() => {
+    if (!domain) return;
     const x = createXScale(
       {
         min: 0,
@@ -152,28 +156,25 @@ const Graph = ({
           toOffset={"100%"}
           id="gradient"
         />
-        {/*<path*/}
-        {/*  d={profilePath.path}*/}
-        {/*  stroke={mainColor}*/}
-        {/*  strokeWidth="1"*/}
-        {/*  fill={"transparent"}*/}
-        {/*/>*/}
-
-        <path
-          d={profileArea.path}
-          stroke={mainColor}
-          strokeWidth="0"
-          fill={mainColor}
-        />
-
-        {progression && (
+        {displayLine && (
           <path
-            d={progression.path}
-            // // stroke={color ? color : "#ffffff94"}
-            // strokeWidth="1"
-            fill={mainColor ? "url(#gradient)" : "url(#gradient)"}
+            d={profilePath.path}
+            stroke={lineColor}
+            strokeWidth="1"
+            fill={"transparent"}
           />
         )}
+
+        {displayArea && (
+          <path
+            d={profileArea.path}
+            stroke={areaColor}
+            strokeWidth="0"
+            fill={areaColor}
+          />
+        )}
+
+        {progression && <path d={progression.path} fill={progressionColor} />}
         {peaks &&
           scales &&
           peaks.length > 0 &&

@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { formatDistance, format } from "date-fns";
+import { TrendingUp } from "@styled-icons/feather/TrendingUp";
+import { Watch } from "@styled-icons/feather/Watch";
+import { Timer } from "@styled-icons/ionicons-outline/Timer";
+import { MapPin } from "@styled-icons/feather/MapPin";
+import { ArrowRight } from "@styled-icons/feather/ArrowRight";
 
 import styled from "./style";
 import useIntersect from "../../hooks/useIntersect";
 import Graph from "../graph/Graph";
-
 import customStyled from "styled-components";
 
 const Container = customStyled.div`  
@@ -67,7 +71,10 @@ const IntersectSection = ({
         displayPeaks
         peaks={peaks}
         markers={markers}
-        color={selectedSectionIndex === id ? "#EBEBEB" : "#EBEBEB"}
+        displayLine
+        displayArea
+        lineColor="#F4A301"
+        areaColor={selectedSectionIndex === id ? "#F4A30140" : "#F4A30110"}
         {...rest}
         offsetMax={500}
       />
@@ -92,83 +99,86 @@ const Sections = ({
 
   return (
     <div className={className}>
-      {/*<div className="analytics">*/}
-      {/*  <div className="data">*/}
-      {/*    <div className="index">{selectedSectionIndex + 1}</div>*/}
-      {/*    <div className="stats">*/}
-      {/*      <div className="title">*/}
-      {/*        {`${sections[selectedSectionIndex].departureLocation} - ${sections[selectedSectionIndex].arrivalLocation}`}*/}
-      {/*      </div>*/}
-      {/*      <div className="item">*/}
-      {/*        <div>{`${(sections[selectedSectionIndex].distance / 1000).toFixed(*/}
-      {/*          2*/}
-      {/*        )} km - ${(sections[selectedSectionIndex].fromKm / 1000).toFixed(*/}
-      {/*          2*/}
-      {/*        )} km - ${(sections[selectedSectionIndex].toKm / 1000).toFixed(*/}
-      {/*          2*/}
-      {/*        )} km`}</div>*/}
-      {/*        <div>distance - from - to</div>*/}
-      {/*      </div>*/}
-      {/*      <div className="item">*/}
-      {/*        <div>*/}
-      {/*          {`${sections[selectedSectionIndex].elevation.positive.toFixed(*/}
-      {/*            0*/}
-      {/*          )} m - ${sections[*/}
-      {/*            selectedSectionIndex*/}
-      {/*          ].elevation.negative.toFixed(0)} m`}*/}
-      {/*        </div>*/}
-      {/*        <div>elevation D+/D-</div>*/}
-      {/*      </div>*/}
-      {/*      <div className="item">*/}
-      {/*        <div>*/}
-      {/*          {formatDistance(0, sections[selectedSectionIndex].duration, {*/}
-      {/*            includeSeconds: true,*/}
-      {/*          })}*/}
-      {/*        </div>*/}
-      {/*        <div>duration</div>*/}
-      {/*      </div>*/}
-      {/*      <div className="item">*/}
-      {/*        <div>*/}
-      {/*          {format(*/}
-      {/*            new Date(sections[selectedSectionIndex].cutOffTime),*/}
-      {/*            "dd-MM HH:mm"*/}
-      {/*          )}*/}
-      {/*        </div>*/}
-      {/*        <div>time barrier</div>*/}
-      {/*      </div>*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
-      <div className="profile">
-        <Graph
-          setCurrentLocation={setCurrentLocation}
-          width={width}
-          height={300}
-          locations={locations}
-          color="#FF39A8"
-          currentLocationIndex={currentLocationIndex}
-          domain={domain}
-          offsetMin={5000}
-        />
-      </div>
-      <div ref={root} className="section">
-        {sections.map((section, index) => (
-          <IntersectSection
-            section={section}
+      <div className={"section-container"}>
+        <div className="analytic">
+          <div className="data">
+            <div className="index">{selectedSectionIndex + 1}</div>
+            <div className="stats">
+              <div className="title">
+                {`${sections[selectedSectionIndex].departureLocation} - ${sections[selectedSectionIndex].arrivalLocation}`}
+              </div>
+              <div className="item">
+                <ArrowRight size={"20"} />
+                <div>{`${(
+                  sections[selectedSectionIndex].distance / 1000
+                ).toFixed(2)}`}</div>
+              </div>
+              <div className={"item"}>
+                <MapPin size={"20"} />
+                <div>
+                  {`${(sections[selectedSectionIndex].toKm / 1000).toFixed(2)}`}
+                </div>
+              </div>
+              <div className="item">
+                <TrendingUp size={"20"} />
+                <div>
+                  {`${sections[selectedSectionIndex].elevation.positive.toFixed(
+                    0
+                  )} / ${sections[
+                    selectedSectionIndex
+                  ].elevation.negative.toFixed(0)}`}
+                </div>
+              </div>
+              <div className="item">
+                <Watch size={"20"} />
+                <div>
+                  {formatDistance(0, sections[selectedSectionIndex].duration, {
+                    includeSeconds: true,
+                  })}
+                </div>
+              </div>
+              <div className="item">
+                <Timer size={"20"} />
+                <div>
+                  {format(
+                    new Date(sections[selectedSectionIndex].cutOffTime),
+                    "dd-MM HH:mm"
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="profile">
+          <Graph
+            width={width}
+            height={300}
+            locations={locations}
+            areaColor="#007da3"
             currentLocationIndex={currentLocationIndex}
-            current={currentSectionIndex === index}
-            setSelectedSectionIndex={setSelectedSectionIndex}
-            selectedSectionIndex={selectedSectionIndex}
-            id={index}
-            root={root}
-            key={index}
-            locations={section.coordinates}
-            peaks={section.peaks}
-            width={Math.trunc((width * section.distance) / 1000 / 40) || 200}
-            height={200}
             domain={domain}
+            offsetMin={3000}
           />
-        ))}
+        </div>*/}
+        <div ref={root} className="section">
+          {sections.map((section, index) => (
+            <IntersectSection
+              section={section}
+              currentLocationIndex={currentLocationIndex}
+              current={currentSectionIndex === index}
+              setSelectedSectionIndex={setSelectedSectionIndex}
+              selectedSectionIndex={selectedSectionIndex}
+              id={index}
+              root={root}
+              key={index}
+              locations={section.coordinates}
+              peaks={section.peaks}
+              width={Math.trunc((width * section.distance) / 1000 / 20) || 200}
+              height={200}
+              domain={domain}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

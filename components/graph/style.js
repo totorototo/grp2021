@@ -13,9 +13,9 @@ const style = (Component) => styled(Component)`
       dominant-baseline: middle; /* vertical alignment fix */
     }
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
-    border-radius: 10px;
+    ${(props) => props.rounded && `border-radius: 10px`}; //border-radius: 10px;
   }
 `;
 

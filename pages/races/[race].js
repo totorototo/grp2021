@@ -24,6 +24,8 @@ import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
 import Live from "../../components/live/Live";
 import style from "../../styles/[race].style";
+import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
+import Sections from "../../components/sections/Sections";
 
 function Race({
   position,
@@ -95,16 +97,16 @@ function Race({
     ).toFixed(2);
 
     setProgression([
-      { label: "distance", percent: distanceCompleted, color: "red" },
+      { label: "distance", percent: distanceCompleted, color: "#007da3" },
       {
         label: "elevation gain",
         percent: positiveElevationCompleted,
-        color: "red",
+        color: "#007da3",
       },
       {
         label: "elevation loss",
         percent: negativeElevationCompleted,
-        color: "red",
+        color: "#007da3",
       },
     ]);
 
@@ -133,89 +135,140 @@ function Race({
   return (
     <div className={className}>
       <Layout>
-        <div className={"main-container"}>
-          <div className={"race"}>
-            <div className={"info"}>
-              <div className={"analytics"}>
-                <div className={"item distance"}>
-                  {`${(distance / 1000).toFixed(0)}`}
-                </div>
-                <div className={"item elevation"}>
-                  <TrendingUp size="40" />
-                  <div className={"values"}>
-                    <div>{`${elevation.positive.toFixed(0)}`}</div>
-                    <span />
-                    <div>{`${elevation.negative.toFixed(0)}`}</div>
-                  </div>
-                </div>
-                <div className={"item sections"}>
-                  <AddRoad size={"30"} />
-                  <div> {`${checkpoints.length} sections`}</div>
-                </div>
-
-                <div className={"item duration"}>
-                  <Watch size="30" />
-                  <div className={"values"}>
-                    {`${differenceInHours(
-                      new Date(checkpoints[checkpoints.length - 1].cutOffTime),
-                      new Date(checkpoints[0].cutOffTime)
-                    )} hours`}
-                  </div>
-                </div>
-                <div className={"item countdown"}>
-                  {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
-                    addSuffix: true,
-                  })}
-                  <Timer size="40" />
+        <div className={"container"}>
+          <div className={"informations-container child"}>
+            <div className={"analytics"}>
+              <div className={"item distance"}>
+                {`${(distance / 1000).toFixed(0)}`}
+              </div>
+              <div className={"item elevation"}>
+                <TrendingUp size="40" />
+                <div className={"values"}>
+                  <div>{`${elevation.positive.toFixed(0)}`}</div>
+                  <span />
+                  <div>{`${elevation.negative.toFixed(0)}`}</div>
                 </div>
               </div>
-              <div className={"live-tracking"}>
-                <ClientOnly>
-                  <AutoSizer>
-                    {({ width, height }) => (
-                      <Live
-                        bgColor="#2a2d32"
-                        color="#F4A301"
-                        width={width}
-                        height={height}
-                        checkpoints={checkpoints}
-                        positions={savedPositions}
-                      />
-                    )}
-                  </AutoSizer>
-                </ClientOnly>
+              <div className={"item sections"}>
+                <AddRoad size={"30"} />
+                <div> {`${checkpoints.length} sections`}</div>
+              </div>
+              <div className={"item duration"}>
+                <Watch size="30" />
+                <div className={"values"}>
+                  {`${differenceInHours(
+                    new Date(checkpoints[checkpoints.length - 1].cutOffTime),
+                    new Date(checkpoints[0].cutOffTime)
+                  )} hours`}
+                </div>
+              </div>
+              <div className={"item countdown"}>
+                {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
+                  addSuffix: true,
+                })}
+                <Timer size="40" />
               </div>
             </div>
-            <div className={"map"}>
-              <Map
-                spot={spot}
-                currentLocation={projectedLocation}
-                route={route}
-                center={center}
-                checkPointsLocations={checkPointsLocations}
-              />
-            </div>
-            <div className={"profile"}>
-              <ClientOnly>
-                <AutoSizer>
-                  {({ width, height }) => (
+          </div>
+          <div className={"map-container child"}>
+            <Map
+              spot={spot}
+              currentLocation={projectedLocation}
+              route={route}
+              center={center}
+              checkPointsLocations={checkPointsLocations}
+            />
+          </div>
+          <div className={"time-table-container child"}>
+            <ClientOnly>
+              <AutoSizer>
+                {({ width, height }) => (
+                  <Live
+                    bgColor="#2a2d32"
+                    color="#F4A301"
+                    width={width}
+                    height={height}
+                    checkpoints={checkpoints}
+                    positions={savedPositions}
+                  />
+                )}
+              </AutoSizer>
+            </ClientOnly>
+          </div>
+          <div className={"profile-container child"}>
+            <ClientOnly>
+              <AutoSizer>
+                {({ width, height }) => (
+                  <ClientOnly>
                     <Graph
+                      rounded
                       currentIndex={projectedLocationIndex}
                       width={width}
                       height={height}
                       locations={coordinates}
-                      mainColor="#F4A301"
+                      areaColor="#F4A301"
                       progressionColor="#007DA3"
                       domain={domain}
                       delimiterIndices={locationsIndices}
                       peaks={peaks}
                     />
+                  </ClientOnly>
+                )}
+              </AutoSizer>
+            </ClientOnly>
+          </div>
+          <div className={"progress-container child"}>
+            {progression && (
+              <AutoSizer>
+                {({ width, height }) => (
+                  <RadialProgressBar
+                    data={progression}
+                    width={width}
+                    height={height}
+                  />
+                )}
+              </AutoSizer>
+            )}
+          </div>
+          <div className={"current-section-container child"}>
+            {currentSectionIndex && (
+              <ClientOnly>
+                <AutoSizer>
+                  {({ width, height }) => (
+                    <Sections
+                      sections={sections}
+                      locations={coordinates}
+                      width={width}
+                      height={height}
+                      domain={domain}
+                      currentLocationIndex={currentSectionIndex}
+                    />
                   )}
                 </AutoSizer>
               </ClientOnly>
-            </div>
+              /*  <>
+                <div className={"a"}>a</div>
+                <div className={"b"}>b</div>
+              </>*/
+
+              /*              <ClientOnly>
+                <AutoSizer>
+                  {({ width, height }) => (
+                    <Graph
+                      width={width}
+                      height={height}
+                      domain={domain}
+                      displayLine
+                      displayArea
+                      lineColor="#F4A301"
+                      areaColor="#F4A30140"
+                      locations={sections[currentSectionIndex].coordinates}
+                    />
+                  )}
+                </AutoSizer>
+              </ClientOnly>*/
+            )}
           </div>
-          <div className={"runner"} />
         </div>
       </Layout>
     </div>
