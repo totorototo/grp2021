@@ -6,6 +6,7 @@ const style = (Component) => styled(Component)`
   .container {
     // max-height: 100vh;
     width: 100%;
+    height: calc(100vh - 100px);
    
     overflow-y: scroll;    
 
@@ -13,7 +14,7 @@ const style = (Component) => styled(Component)`
     scroll-snap-type: y mandatory;
     grid-gap: 2px;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, minmax(50px, auto));
+    grid-template-rows: repeat(6, auto);
     grid-template-areas:
     "informations"
     "map"   
@@ -22,7 +23,8 @@ const style = (Component) => styled(Component)`
     "progression";
 
     .child {
-      height: 100vh;
+      //height: 100vh;
+      height: calc(100vh - 100px);
       scroll-snap-align: center;
       padding: 10px;
      // border: 1px solid white;     
