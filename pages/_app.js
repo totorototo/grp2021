@@ -27,7 +27,10 @@ const GlobalStyle = createGlobalStyle`
 
     *, *:before, *:after {
       box-sizing: border-box;
+      padding: 0;
+      margin: 0;
     }
+ 
 
     > div:first-child,
     div#__next,

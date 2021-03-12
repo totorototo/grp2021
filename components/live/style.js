@@ -6,7 +6,6 @@ const style = (Component) => styled(Component)`
   border-radius: 8px;
 
   title {
-    background-color: red;
   }
 
   > svg {

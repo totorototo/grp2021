@@ -47,7 +47,7 @@ const THEME = {
       "--syntax-fn": "#3D5AFE",
     },
     dark: {
-      "--color-text": "hsl(0deg, 0%, 100%)",
+      "--color-text": "hsl(0deg, 0%, 80%)",
       "--color-background": "#212429",
       "--color-blurred-background": " hsla(210deg, 30%, 8%, 0.85)",
       "--color-primary": " hsl(333deg, 100%, 52%)",

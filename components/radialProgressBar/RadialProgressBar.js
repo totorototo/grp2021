@@ -34,10 +34,10 @@ const RadialProgressBar = ({ className, width = 250, height = 250, data }) => {
               x={500 + 50}
               y={100 * index + 50}
               style={{
-                fontSize: 60,
+                fontSize: "4rem",
                 letterSpacing: 1,
-                // fontWeight: "lighter",
-                fill: "white",
+                fontWeight: "lighter",
+                fill: "#ebebeb",
               }}
             >
               {item.label}
@@ -49,7 +49,7 @@ const RadialProgressBar = ({ className, width = 250, height = 250, data }) => {
               cy={500}
               r={item.radius}
               strokeWidth="1"
-              stroke="#ffffff"
+              stroke="#ebebeb"
               fill="none"
               strokeDasharray={item.strokeDasharray}
               strokeLinecap="round"
@@ -60,19 +60,21 @@ const RadialProgressBar = ({ className, width = 250, height = 250, data }) => {
               cx={500}
               cy={500}
               r={item.radius}
-              strokeWidth={1000 / 15}
+              strokeWidth={1000 / 20}
               stroke={item.color}
               fill="none"
               strokeDasharray={item.strokeDasharray}
               strokeDashoffset={item.strokeDashoffset}
+              strokeLinecap="round"
             />
             <text key={`${index}-text-circle`}>
               <textPath
                 style={{
-                  fontSize: 60,
+                  fontSize: "4rem",
                   letterSpacing: 1,
-                  // fontWeight: "lighter",
-                  fill: "white",
+                  fontWeight: "lighter",
+                  fill: "#ebebeb",
+                  marginLeft: "1rem",
                 }}
                 href={`#${index}-progress`}
                 startOffset={`${item.percent * 0.75 + 1}%`}
