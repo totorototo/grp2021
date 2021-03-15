@@ -8,6 +8,7 @@ const Main = styled.div`
   letter-spacing: 0.036em;
   font-weight: 500;
   font-style: normal;
+  color: var(--color-text);
 `;
 
 export default function Home() {

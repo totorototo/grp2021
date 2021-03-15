@@ -42,7 +42,7 @@ const Live = ({
   width,
   height,
   color,
-  bgColor,
+  bgColor = "var(--color-background)",
 }) => {
   const [scales, setScales] = useState();
   const [shifts, setShifts] = useState();
@@ -258,7 +258,7 @@ const Live = ({
                     y1={"0"}
                     y2={height - OFFSET_Y}
                     strokeWidth={"1"}
-                    stroke={"white"}
+                    stroke={"var(--color-text)"}
                     strokeOpacity={0.3}
                     strokeDasharray="4 4"
                   />
@@ -273,7 +273,7 @@ const Live = ({
                 writingMode="tb"
                 key={`${index}-text`}
                 fontSize="12"
-                fill="#ffffff94"
+                fill="var(--color-text)"
                 x={scales.x(new Date(tick))}
                 y={height - 20}
               >
@@ -283,7 +283,7 @@ const Live = ({
                 )}
               </text>
               <line
-                stroke="#ffffff94"
+                stroke="var(--color-text)"
                 key={`${index}-tick`}
                 x1={scales.x(new Date(tick))}
                 x2={scales.x(new Date(tick))}
@@ -298,14 +298,14 @@ const Live = ({
           <path
             d={xAxisLine}
             fill="none"
-            stroke="white"
+            stroke="var(--color-text)"
             strokeWidth="1"
             strokeOpacity="0.4"
           />
           <path
             d={yAxisLine}
             fill="none"
-            stroke="white"
+            stroke="var(--color-text)"
             strokeWidth="1"
             strokeOpacity="0.4"
           />
@@ -317,14 +317,14 @@ const Live = ({
               <text
                 key={`${index}-text`}
                 fontSize="12"
-                fill="#ffffff94"
+                fill="var(--color-text)"
                 x={0}
                 y={scales.y(tick) + 5}
               >
                 {tick}
               </text>
               <line
-                stroke="#ffffff94"
+                stroke="var(color-text)"
                 key={`${index}-tick`}
                 x1={OFFSET_X - 5}
                 x2={OFFSET_X}

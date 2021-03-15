@@ -69,7 +69,7 @@ const style = (Component) => styled(Component)`
     }
 
     .analytics {
-      color: #aaabad;
+      color: var(--color-text);
       width: 100%;
       height: 100%;     
       display: grid;
@@ -77,7 +77,7 @@ const style = (Component) => styled(Component)`
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 
       .item {    
-        background-color: #2a2d32;
+        background-color: var(--color-background);
         border-radius: 8px;
         display: flex;
         flex-direction: row;

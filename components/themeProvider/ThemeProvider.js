@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 export const ThemeContext = createContext(null);
 
 const ThemeProvider = ({ children, theme }) => {
-  const [colorMode, rawSetColorMode] = useState("dark");
+  const [colorMode, rawSetColorMode] = useState("light");
 
   const setColorMode = () => {
     rawSetColorMode(colorMode === "light" ? "dark" : "light");

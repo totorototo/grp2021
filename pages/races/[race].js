@@ -188,7 +188,7 @@ function Race({
               <AutoSizer>
                 {({ width, height }) => (
                   <Live
-                    bgColor="#2a2d32"
+                    //bgColor="#2a2d32"
                     color="#F4A301"
                     width={width}
                     height={height}
@@ -205,17 +205,18 @@ function Race({
                 {({ width, height }) => (
                   <ClientOnly>
                     <Graph
-                      backgroundColor="#2a2d32"
+                      backgroundColor="var(--color-background)"
                       rounded
                       currentIndex={projectedLocationIndex}
                       width={width}
                       height={height}
                       locations={coordinates}
-                      areaColor="#F4A301"
-                      progressionColor="#007DA3"
+                      progressionColor="#121212"
                       domain={domain}
                       delimiterIndices={locationsIndices}
                       peaks={peaks}
+                      displayLine
+                      lineColor={"#121212"}
                     />
                   </ClientOnly>
                 )}
@@ -227,8 +228,7 @@ function Race({
               <AutoSizer>
                 {({ width, height }) => (
                   <RadialProgressBar
-                    rounded
-                    backgroundColor="#2a2d32"
+                    backgroundColor="var(--color-background)"
                     data={progression}
                     width={width}
                     height={height}
@@ -244,7 +244,7 @@ function Race({
                   {({ width, height }) => (
                     <Sections
                       rounded
-                      backgroundColor="#2a2d32"
+                      backgroundColor="var(--color-background)"
                       sections={sections}
                       locations={coordinates}
                       width={width}
