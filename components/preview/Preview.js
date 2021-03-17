@@ -12,23 +12,23 @@ const Preview = ({ className, distance, elevation, checkpoints }) => {
   return (
     <div className={className}>
       <div className={"item"}>
-        <ArrowRight size={"20"} />
-        {`${(distance / 1000).toFixed(0)}`}
+        {/* <ArrowRight size={"20"} />*/}
+        {`${(distance / 1000).toFixed(0)} km`}
       </div>
       <div className={"item"}>
-        <TrendingUp size="20" />
+        {/* <TrendingUp size="20" />*/}
         <div>
-          {`${elevation.positive.toFixed(0)} / ${elevation.negative.toFixed(
+          {`${elevation.positive.toFixed(0)} D+  ${elevation.negative.toFixed(
             0
-          )}`}
+          )} D-`}
         </div>
       </div>
       <div className={"item"}>
-        <AddRoad size={"20"} />
+        {/* <AddRoad size={"20"} />*/}
         <div> {`${checkpoints.length} sections`}</div>
       </div>
       <div className={"item"}>
-        <Watch size="20" />
+        {/* <Watch size="20" />*/}
         <div>
           {`${differenceInHours(
             new Date(checkpoints[checkpoints.length - 1].cutOffTime),
@@ -37,7 +37,7 @@ const Preview = ({ className, distance, elevation, checkpoints }) => {
         </div>
       </div>
       <div className={"item"}>
-        <Timer size="20" />
+        {/*<Timer size="20" />*/}
         <div>
           {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
             addSuffix: true,

@@ -14,7 +14,7 @@ const style = (Component) => styled(Component)`
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, auto);
     grid-template-areas:
-    "informations"
+    "preview"
     "map"   
     "time"
     "section"
@@ -32,7 +32,7 @@ const style = (Component) => styled(Component)`
     }
     
     .preview-container {
-      grid-area: informations;
+      grid-area: preview;
     }
     
     .time-table-container {
@@ -88,7 +88,7 @@ const style = (Component) => styled(Component)`
       grid-template-columns: repeat(8, 1fr);
       grid-template-rows: repeat(6, minmax(100px, auto));
       grid-template-areas:
-       "informations informations informations informations . .time time"
+       "preview preview preview preview . .time time"
        "map map map map map map time time"
        "map map map map map map section section"
        "map map map map map map section section"
