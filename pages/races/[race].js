@@ -4,18 +4,10 @@ import path from "path";
 import xmldom from "xmldom";
 import { gpx } from "@mapbox/togeojson";
 import { csvParse } from "d3-dsv";
-import {
-  differenceInHours,
-  differenceInMilliseconds,
-  formatDistanceToNow,
-} from "date-fns";
+import { differenceInMilliseconds } from "date-fns";
 import * as d3Array from "d3-array";
 import { calculateDistance, createPathHelper } from "positic";
 import { AutoSizer } from "react-virtualized";
-import { TrendingUp } from "@styled-icons/feather/TrendingUp";
-import { Watch } from "@styled-icons/feather/Watch";
-import { Timer } from "@styled-icons/ionicons-outline/Timer";
-import { AddRoad } from "@styled-icons/material-outlined/AddRoad";
 
 import Map from "../../components/map/Map";
 import ClientOnly from "../../components/clientOnly/ClientOnly";
@@ -26,7 +18,7 @@ import Live from "../../components/live/Live";
 import style from "../../styles/[race].style";
 import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
 import Sections from "../../components/sections/Sections";
-import { ArrowRight } from "@styled-icons/feather/ArrowRight";
+import Preview from "../../components/preview/Preview";
 
 function Race({
   position,
@@ -137,42 +129,12 @@ function Race({
     <div className={className}>
       <Layout>
         <div className={"container"}>
-          <div className={"informations-container child"}>
-            <div className={"analytics"}>
-              <div className={"item"}>
-                <ArrowRight size={"20"} />
-                {`${(distance / 1000).toFixed(0)}`}
-              </div>
-              <div className={"item"}>
-                <TrendingUp size="20" />
-                <div>
-                  {`${elevation.positive.toFixed(
-                    0
-                  )} / ${elevation.negative.toFixed(0)}`}
-                </div>
-              </div>
-              <div className={"item"}>
-                <AddRoad size={"20"} />
-                <div> {`${checkpoints.length} sections`}</div>
-              </div>
-              <div className={"item"}>
-                <Watch size="20" />
-                <div>
-                  {`${differenceInHours(
-                    new Date(checkpoints[checkpoints.length - 1].cutOffTime),
-                    new Date(checkpoints[0].cutOffTime)
-                  )} hours`}
-                </div>
-              </div>
-              <div className={"item"}>
-                <Timer size="20" />
-                <div>
-                  {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
-                    addSuffix: true,
-                  })}
-                </div>
-              </div>
-            </div>
+          <div className={"preview-container child"}>
+            <Preview
+              distance={distance}
+              elevation={elevation}
+              checkpoints={checkpoints}
+            />
           </div>
           <div className={"map-container child"}>
             <Map
@@ -188,7 +150,7 @@ function Race({
               <AutoSizer>
                 {({ width, height }) => (
                   <Live
-                    bgColor="#2a2d32"
+                    //bgColor="#2a2d32"
                     color="#F4A301"
                     width={width}
                     height={height}
@@ -205,17 +167,18 @@ function Race({
                 {({ width, height }) => (
                   <ClientOnly>
                     <Graph
-                      backgroundColor="#2a2d32"
+                      backgroundColor="var(--color-background)"
                       rounded
                       currentIndex={projectedLocationIndex}
                       width={width}
                       height={height}
                       locations={coordinates}
-                      areaColor="#F4A301"
-                      progressionColor="#007DA3"
+                      progressionColor="var(--color-background)"
                       domain={domain}
                       delimiterIndices={locationsIndices}
                       peaks={peaks}
+                      displayLine
+                      lineColor={"var(--color-text)"}
                     />
                   </ClientOnly>
                 )}
@@ -227,8 +190,7 @@ function Race({
               <AutoSizer>
                 {({ width, height }) => (
                   <RadialProgressBar
-                    rounded
-                    backgroundColor="#2a2d32"
+                    backgroundColor="var(--color-background)"
                     data={progression}
                     width={width}
                     height={height}
@@ -243,14 +205,22 @@ function Race({
                 <AutoSizer>
                   {({ width, height }) => (
                     <Sections
-                      rounded
-                      backgroundColor="#2a2d32"
+                      currentIndex={projectedLocationIndex}
+                      backgroundColor="transparent"
+                      lineColor={"var(--color-text)"}
+                      areaColor={"var(--color-text)"}
+                      profileColor={"#e0e0e0"}
+                      sectionsColor={"#737373"}
                       sections={sections}
                       locations={coordinates}
                       width={width}
                       height={height}
                       domain={domain}
-                      currentLocationIndex={currentSectionIndex}
+                      currentLocationIndex={projectedLocationIndex}
+                      currentSectionIndex={currentSectionIndex}
+                      setCurrentSectionIndex={setCurrentSectionIndex}
+                      progressionColor={"var(--color-background)"}
+                      currentSectionColor={"#e24e1b"}
                     />
                   )}
                 </AutoSizer>

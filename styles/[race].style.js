@@ -4,41 +4,35 @@ import THEME from "../theme/Theme";
 const style = (Component) => styled(Component)`
   
   .container {
-    // max-height: 100vh;
-    width: 100%;
-    height: calc(100vh - 100px);
    
+    width: 100%;
+    height: calc(100vh - 100px);   
     overflow-y: scroll;    
-
     display: grid;
     scroll-snap-type: y mandatory;
     grid-gap: 2px;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(6, auto);
     grid-template-areas:
-    "informations"
+    "preview"
     "map"   
     "time"
     "section"
     "progression";
 
-    .child {
-      //height: 100vh;
+    .child {      
       height: calc(100vh - 100px);
-      scroll-snap-align: center;
-      padding: 10px;
-     // border: 1px solid white;     
+      scroll-snap-align: center;         
       width: 100%;    
-      position: relative;      
+      position: relative; 
     }
     
     .map-container {
-      grid-area: map;
-     
+      grid-area: map;     
     }
     
-    .informations-container {
-      grid-area: informations;
+    .preview-container {
+      grid-area: preview;
     }
     
     .time-table-container {
@@ -53,8 +47,9 @@ const style = (Component) => styled(Component)`
     
     .progress-container {
       grid-area: progression;
-      background-color:  ${(props) =>
-        props.rounded && `border-radius: 10px`}; //border-radius: 10px;;
+    /*  background-color:  ${(props) =>
+      props.rounded && `border-radius: 10px`}; */
+      //border-radius: 10px;;
     }
     
     .current-section-container {
@@ -66,29 +61,6 @@ const style = (Component) => styled(Component)`
     }
     .a {
       display: flex;
-    }
-
-    .analytics {
-      color: #aaabad;
-      width: 100%;
-      height: 100%;     
-      display: grid;
-      grid-gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-
-      .item {    
-        background-color: #2a2d32;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-
-        svg {
-          margin-right: 0.4em;
-          opacity: 0.6;
-        }
-      }     
     }
 
     @media screen and (min-width: ${THEME.breakpoints[0]}) {
@@ -116,7 +88,7 @@ const style = (Component) => styled(Component)`
       grid-template-columns: repeat(8, 1fr);
       grid-template-rows: repeat(6, minmax(100px, auto));
       grid-template-areas:
-       "informations informations informations informations . .time time"
+       "preview preview preview preview . .time time"
        "map map map map map map time time"
        "map map map map map map section section"
        "map map map map map map section section"

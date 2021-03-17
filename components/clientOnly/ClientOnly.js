@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import style from "./style";
+
 const ClientOnly = ({ children }) => {
   const [showChild, setShowChild] = useState(false);
 
@@ -11,4 +13,4 @@ const ClientOnly = ({ children }) => {
   return showChild && children;
 };
 
-export default ClientOnly;
+export default style(ClientOnly);

@@ -4,20 +4,19 @@ import styled from "styled-components";
 const style = (Component) => styled(Component)`
   background-color: ${(props) => props.backgroundColor || "transparent"};
   ${(props) => props.rounded && `border-radius: 0.5rem`};
-  position: absolute; 
+  position: absolute;
   width: ${(props) => `${props.width}px`};
-  height: ${(props) => `${props.height}px`};  
+  height: ${(props) => `${props.height}px`};
   display: flex;
   padding-top: 1rem;
-  
- 
-  color: var(--color-text);  
-  
-  .section-container{
+
+  color: var(--color-text);
+
+  .section-container {
     display: flex;
     flex: 1;
     width: 100%;
-    height: 100%;   
+    height: 100%;
     justify-content: center;
     align-items: flex-end;
     position: relative;
@@ -35,11 +34,6 @@ const style = (Component) => styled(Component)`
     flex: none;
     flex-flow: row nowrap;
     scroll-snap-type: x mandatory;
-
-    // ${Section} {
-    //   scroll-snap-align: center;
-    //   width: 100%;
-    // }
   }
 
   .profile {
@@ -67,17 +61,16 @@ const style = (Component) => styled(Component)`
       display: flex;
       width: 100%;
       height: 100%;
-      align-items: flex-start;    
+      align-items: flex-start;
       justify-content: flex-start;
-      flex: 1 ;
+      flex: 1;
       position: relative;
-      
 
-      .index {  
+      .index {
         position: absolute;
-        top:0;
+        top: 0;
         bottom: 0;
-        font-size: 14rem;       
+        font-size: 14rem;
         opacity: 0.1;
         letter-spacing: -0.142em;
         right: 0;
@@ -90,8 +83,8 @@ const style = (Component) => styled(Component)`
         width: 100%;
         height: 100%;
         display: flex;
-        flex-direction: column;       
-        font-size: 1rem;        
+        flex-direction: column;
+        font-size: 1rem;
 
         .title {
           font-weight: lighter;
@@ -99,14 +92,13 @@ const style = (Component) => styled(Component)`
         .item {
           margin-top: 0.5rem;
           display: flex;
-          flex-direction: row;         
+          flex-direction: row;
           align-items: center;
 
           svg {
-            margin-right: 0.4em;         
+            margin-right: 0.4em;
             opacity: 0.6;
           }
-          
         }
       }
     }

@@ -1,11 +1,13 @@
 import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MapGL, { Source, Layer } from "react-map-gl";
 import DeckGL, { IconLayer } from "deck.gl";
 
 import styled from "./style";
-import mapStyle from "./style.json";
+import lightStyle from "./light-style.json";
+import darkStyle from "./dark-style.json";
 import { Location } from "@styled-icons/octicons";
+import { ThemeContext } from "../themeProvider/ThemeProvider";
 
 const Map = ({
   className,
@@ -15,6 +17,7 @@ const Map = ({
   currentLocation,
   spot,
 }) => {
+  const { colorMode } = useContext(ThemeContext);
   const [viewport, setViewport] = useState({
     latitude: 42.82985,
     longitude: 0.32715,
@@ -43,11 +46,17 @@ const Map = ({
           className={`fab`}
           size="16"
         />
+        {currentLocation && (
+          <div
+            className={"position"}
+          >{`${currentLocation[1]} ${currentLocation[0]}`}</div>
+        )}
+
         <MapGL
           {...viewport}
           width="100%"
           height="100%"
-          mapStyle={mapStyle}
+          mapStyle={colorMode === "light" ? lightStyle : darkStyle}
           onViewportChange={setViewport}
           mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
         >

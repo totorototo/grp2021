@@ -2,9 +2,8 @@ import styled from "styled-components";
 
 const style = (Component) => styled(Component)`
   height: 100%;
-  //width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 5;
   top: 0;
   left: 0;
   background-color: var(--color-blurred-background);

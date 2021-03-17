@@ -34,7 +34,7 @@ const Marker = ({ width, height, x, y }) => (
 const Gradient = ({
   from = "#F4A301",
   to = "#F4A301",
-  toOffset = "100%",
+  toOffset = "10%",
   ...restProps
 }) => {
   return (
@@ -151,8 +151,8 @@ const Graph = ({
         viewBox={`0 0 ${width} ${height}`}
       >
         <Gradient
-          from={progressionColor}
-          to={progressionColor}
+          from={"#ebebeb80"}
+          to={"#ebebeb40"}
           toOffset={"100%"}
           id="gradient"
         />
@@ -174,7 +174,7 @@ const Graph = ({
           />
         )}
 
-        {progression && <path d={progression.path} fill={progressionColor} />}
+        {progression && <path d={progression.path} fill={"url(#gradient)"} />}
         {peaks &&
           scales &&
           peaks.length > 0 &&
@@ -205,10 +205,10 @@ const Graph = ({
             <path
               key={index}
               d={line.path}
-              stroke="white"
+              stroke="var(--color-text)"
               strokeWidth="1"
               strokeDasharray="2 2"
-              strokeOpacity="0.4"
+              //strokeOpacity="0.4"
             />
           ))}
       </svg>
