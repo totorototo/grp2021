@@ -19,7 +19,7 @@ const style = (Component) => styled(Component)`
     overflow-y: scroll;
 
     .shadow {
-      filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+      //filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
     }
 
     g:nth-child(even) {
@@ -36,7 +36,7 @@ const style = (Component) => styled(Component)`
 
     .cp {
       .km {
-        transform: translate(-0.5rem, 0);
+        transform: translate(-0.4rem, -0.6rem);
         font-size: 0.6rem;
       }
 

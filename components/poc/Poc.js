@@ -31,7 +31,7 @@ const Poc = ({
     if (sections.length === 0 || !scales.x || !scales.y) return;
 
     const points = sections.map((section) => [
-      { x: section.indices[1], y: 200 },
+      { x: section.indices[1], y: 300 },
       {
         x: section.indices[1],
         y: coordinates[section.indices[1]][2],
@@ -91,7 +91,7 @@ const Poc = ({
           {profilePath && (
             <path
               d={profilePath.path}
-              stroke={"black"}
+              stroke={"#F4A301"}
               strokeWidth="1"
               fill={"transparent"}
             />
@@ -101,7 +101,8 @@ const Poc = ({
               d={profileArea.path}
               stroke={"transparent"}
               strokeWidth="0"
-              fill={"url(#gradient)"}
+              fill={"#F4A301"}
+              opacity={0.1}
             />
           )}
           {lines &&
@@ -109,10 +110,10 @@ const Poc = ({
               <path
                 key={index}
                 d={line.path}
-                stroke="var(--color-text)"
-                strokeWidth="1"
-                strokeDasharray="2 2"
-                //strokeOpacity="0.4"
+                strokeWidth={"1"}
+                stroke={"var(--color-text)"}
+                strokeOpacity={0.3}
+                strokeDasharray="4 4"
               />
             ))}
           {/*  {peaks &&
@@ -151,26 +152,27 @@ const Poc = ({
                   >
                     {(section.toKm / 1000).toFixed(0)}
                   </text>
-                  <text
+                  {/* <text
                     className={"location"}
                     x={scales.x(section.indices[1])}
                     y={scales.y(coordinates[section.indices[1]][2])}
                     key={index}
-                    /*  transform={`rotate(-90, ${scales.x(
+                    transform={`rotate(-90, ${scales.x(
                       section.indices[1]
-                    )},${scales.y(coordinates[section.indices[1]][2])})`}*/
+                    )},${scales.y(coordinates[section.indices[1]][2])})`}
                   >
                     {section.arrivalLocation}
-                  </text>
+                  </text>*/}
                   <g>
                     <circle
                       className={"shadow"}
                       cx={scales.x(section.indices[1])}
                       cy={scales.y(coordinates[section.indices[1]][2])}
                       r="4"
-                      fill={"black"}
+                      fill={"#F4A301"}
                     />
                     <circle
+                      onClick={() => console.log("bim")}
                       cx={scales.x(section.indices[1])}
                       cy={scales.y(coordinates[section.indices[1]][2])}
                       r="3"
