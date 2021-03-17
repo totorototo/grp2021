@@ -12,8 +12,18 @@ const style = (Component) => styled(Component)`
     flex: 1 1 auto;
     height: 100%;
     color: #ffffff94;
-    border-radius: 10px;
+    //border-radius: 10px;
     position: relative;
+
+    .position {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 3;
+      background-color: #e24e1b;
+      color: white;
+      padding: 0.4rem;
+    }
 
     .fab {
       position: absolute;
@@ -33,7 +43,7 @@ const style = (Component) => styled(Component)`
   }
 
   .mapboxgl-map {
-    border-radius: 10px;
+    //border-radius: 10px;
   }
 
   .mapboxgl-ctrl-bottom-right {

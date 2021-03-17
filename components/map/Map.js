@@ -46,6 +46,12 @@ const Map = ({
           className={`fab`}
           size="16"
         />
+        {currentLocation && (
+          <div
+            className={"position"}
+          >{`${currentLocation[1]} ${currentLocation[0]}`}</div>
+        )}
+
         <MapGL
           {...viewport}
           width="100%"

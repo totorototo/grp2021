@@ -4,12 +4,10 @@ import THEME from "../theme/Theme";
 const style = (Component) => styled(Component)`
   
   .container {
-    // max-height: 100vh;
-    width: 100%;
-    height: calc(100vh - 100px);
    
+    width: 100%;
+    height: calc(100vh - 100px);   
     overflow-y: scroll;    
-
     display: grid;
     scroll-snap-type: y mandatory;
     grid-gap: 2px;
@@ -22,19 +20,15 @@ const style = (Component) => styled(Component)`
     "section"
     "progression";
 
-    .child {
-      //height: 100vh;
+    .child {      
       height: calc(100vh - 100px);
-      scroll-snap-align: center;
-      padding: 10px;
-     // border: 1px solid white;     
+      scroll-snap-align: center;         
       width: 100%;    
-      position: relative;      
+      position: relative; 
     }
     
     .map-container {
-      grid-area: map;
-     
+      grid-area: map;     
     }
     
     .informations-container {
@@ -53,8 +47,9 @@ const style = (Component) => styled(Component)`
     
     .progress-container {
       grid-area: progression;
-      background-color:  ${(props) =>
-        props.rounded && `border-radius: 10px`}; //border-radius: 10px;;
+    /*  background-color:  ${(props) =>
+      props.rounded && `border-radius: 10px`}; */
+      //border-radius: 10px;;
     }
     
     .current-section-container {

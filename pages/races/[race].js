@@ -211,12 +211,12 @@ function Race({
                       width={width}
                       height={height}
                       locations={coordinates}
-                      progressionColor="#121212"
+                      progressionColor="var(--color-background)"
                       domain={domain}
                       delimiterIndices={locationsIndices}
                       peaks={peaks}
                       displayLine
-                      lineColor={"#121212"}
+                      lineColor={"var(--color-text)"}
                     />
                   </ClientOnly>
                 )}
@@ -243,14 +243,22 @@ function Race({
                 <AutoSizer>
                   {({ width, height }) => (
                     <Sections
-                      rounded
-                      backgroundColor="var(--color-background)"
+                      currentIndex={projectedLocationIndex}
+                      backgroundColor="transparent"
+                      lineColor={"var(--color-text)"}
+                      areaColor={"var(--color-text)"}
+                      profileColor={"#737373"}
+                      sectionsColor={"#e0e0e0"}
                       sections={sections}
                       locations={coordinates}
                       width={width}
                       height={height}
                       domain={domain}
-                      currentLocationIndex={currentSectionIndex}
+                      currentLocationIndex={projectedLocationIndex}
+                      currentSectionIndex={currentSectionIndex}
+                      setCurrentSectionIndex={setCurrentSectionIndex}
+                      progressionColor={"var(--color-background)"}
+                      currentSectionColor={"#cccccc"}
                     />
                   )}
                 </AutoSizer>

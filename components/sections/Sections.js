@@ -26,6 +26,11 @@ const IntersectSection = ({
   peaks,
   section,
   currentLocationIndex,
+  lineColor,
+  backgroundColor,
+  areaColor,
+  sectionsColor,
+  currentSectionColor,
   ...rest
 }) => {
   const [ref, entry] = useIntersect({
@@ -73,8 +78,11 @@ const IntersectSection = ({
         markers={markers}
         displayLine
         displayArea
-        lineColor="#F4A301"
-        areaColor={selectedSectionIndex === id ? "#F4A30140" : "#F4A30110"}
+        lineColor={sectionsColor}
+        areaColor={
+          selectedSectionIndex === id ? currentSectionColor : sectionsColor
+        }
+        backgroundColor={backgroundColor}
         {...rest}
         offsetMax={500}
       />
@@ -85,54 +93,65 @@ const IntersectSection = ({
 const Sections = ({
   className,
   sections,
-  currentSectionIndex,
+  currentSectionIndex = 0,
+  setCurrentSectionIndex,
   currentLocationIndex,
   setCurrentLocation,
   locations,
   domain,
   width,
   height,
+  lineColor = "var(--color-text)",
+  areaColor = "var(--color-background)",
+  backgroundColor = "var(--color-background)",
+  currentSectionColor,
+  profileColor,
+  sectionsColor,
+  currentIndex,
+  progressionColor,
 }) => {
   const root = useRef(null);
 
-  const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
+  /*  const [selectedSectionIndex, setSelectedSectionIndex] = useState(
+    currentSectionIndex
+  );*/
 
   return (
     <div className={className}>
       <div className={"section-container"}>
         <div className="analytic">
           <div className="data">
-            <div className="index">{selectedSectionIndex + 1}</div>
+            <div className="index">{currentSectionIndex + 1}</div>
             <div className="stats">
               <div className="title">
-                {`${sections[selectedSectionIndex].departureLocation} - ${sections[selectedSectionIndex].arrivalLocation}`}
+                {`${sections[currentSectionIndex].departureLocation} - ${sections[currentSectionIndex].arrivalLocation}`}
               </div>
               <div className="item">
                 <ArrowRight size={"20"} />
                 <div>{`${(
-                  sections[selectedSectionIndex].distance / 1000
+                  sections[currentSectionIndex].distance / 1000
                 ).toFixed(2)}`}</div>
               </div>
               <div className={"item"}>
                 <MapPin size={"20"} />
                 <div>
-                  {`${(sections[selectedSectionIndex].toKm / 1000).toFixed(2)}`}
+                  {`${(sections[currentSectionIndex].toKm / 1000).toFixed(2)}`}
                 </div>
               </div>
               <div className="item">
                 <TrendingUp size={"20"} />
                 <div>
-                  {`${sections[selectedSectionIndex].elevation.positive.toFixed(
+                  {`${sections[currentSectionIndex].elevation.positive.toFixed(
                     0
                   )} / ${sections[
-                    selectedSectionIndex
+                    currentSectionIndex
                   ].elevation.negative.toFixed(0)}`}
                 </div>
               </div>
               <div className="item">
                 <Watch size={"20"} />
                 <div>
-                  {formatDistance(0, sections[selectedSectionIndex].duration, {
+                  {formatDistance(0, sections[currentSectionIndex].duration, {
                     includeSeconds: true,
                   })}
                 </div>
@@ -141,7 +160,7 @@ const Sections = ({
                 <Timer size={"20"} />
                 <div>
                   {format(
-                    new Date(sections[selectedSectionIndex].cutOffTime),
+                    new Date(sections[currentSectionIndex].cutOffTime),
                     "dd-MM HH:mm"
                   )}
                 </div>
@@ -149,25 +168,27 @@ const Sections = ({
             </div>
           </div>
         </div>
-        {/* <div className="profile">
+        <div className="profile">
           <Graph
+            currentIndex={currentIndex}
             width={width}
             height={300}
             locations={locations}
-            areaColor="#007da3"
+            areaColor={profileColor}
             currentLocationIndex={currentLocationIndex}
             domain={domain}
             offsetMin={3000}
+            progressionColor={progressionColor}
           />
-        </div>*/}
+        </div>
         <div ref={root} className="section">
           {sections.map((section, index) => (
             <IntersectSection
               section={section}
               currentLocationIndex={currentLocationIndex}
               current={currentSectionIndex === index}
-              setSelectedSectionIndex={setSelectedSectionIndex}
-              selectedSectionIndex={selectedSectionIndex}
+              setSelectedSectionIndex={setCurrentSectionIndex}
+              selectedSectionIndex={currentSectionIndex}
               id={index}
               root={root}
               key={index}
@@ -176,6 +197,11 @@ const Sections = ({
               width={Math.trunc((width * section.distance) / 1000 / 40) || 200}
               height={200}
               domain={domain}
+              displayLine={false}
+              areaColor={areaColor}
+              backgroundColor={"transparent"}
+              sectionsColor={sectionsColor}
+              currentSectionColor={currentSectionColor}
             />
           ))}
         </div>

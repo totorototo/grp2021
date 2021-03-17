@@ -205,10 +205,10 @@ const Graph = ({
             <path
               key={index}
               d={line.path}
-              stroke="#121212"
+              stroke="var(--color-text)"
               strokeWidth="1"
               strokeDasharray="2 2"
-              strokeOpacity="0.4"
+              //strokeOpacity="0.4"
             />
           ))}
       </svg>
