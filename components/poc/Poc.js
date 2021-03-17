@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { LinearGradient } from "@vx/gradient";
+import styled from "styled-components";
 
 import style from "./style";
 import {
@@ -10,6 +11,73 @@ import {
   getLines,
 } from "../../helpers/d3";
 import Gradient from "../gradient/Gradient";
+import useIntersect from "../../hooks/useIntersect";
+
+const Container = styled.div`
+  height: 100%;
+  position: relative;
+  scroll-snap-align: center;
+
+  .detail {
+    min-width: 100vw;
+    width: 100vw;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    font-weight: bolder;
+    font-size: 10rem;
+    opacity: 0.4;
+  }
+`;
+
+const Section = ({
+  root,
+  setSelectedSectionIndex,
+  id,
+  section,
+  highlightedSectionIndex,
+  setHighlightedSectionIndex,
+}) => {
+  const [ref, entry] = useIntersect({
+    threshold: 0.8,
+    root: root.current,
+    rootMargin: "0px 50px 0px 50px",
+  });
+
+  /*  useEffect(() => {
+    if (currentLocationIndex === -1) return;
+
+    if (
+      currentLocationIndex >= section.indices[0] &&
+      currentLocationIndex < section.indices[1]
+    ) {
+      const index = currentLocationIndex - section.indices[0];
+      const currentLocation = section.coordinates[index];
+      const marker = { x: index, y: currentLocation[2] };
+
+      setSelectedSectionIndex(id);
+
+      setMarkers([marker]);
+    } else {
+      setMarkers([]);
+    }
+  }, [currentLocationIndex, section, setSelectedSectionIndex, id]);*/
+
+  useEffect(() => {
+    if (entry.intersectionRatio > 0.8) setHighlightedSectionIndex(id);
+  }, [entry.intersectionRatio, setHighlightedSectionIndex, id]);
+
+  return (
+    <Container
+      onClick={() => {
+        setSelectedSectionIndex(id);
+      }}
+      ref={ref}
+    >
+      <div className={"detail"}>{id}</div>
+    </Container>
+  );
+};
 
 const Poc = ({
   className,
@@ -26,6 +94,9 @@ const Poc = ({
   const [scales, setScales] = useState({});
   const [profilePath, setProfilePath] = useState();
   const [lines, setLines] = useState();
+  const [highlightedSectionIndex, setHighlightedSectionIndex] = useState();
+
+  const root = useRef(null);
 
   useEffect(() => {
     if (sections.length === 0 || !scales.x || !scales.y) return;
@@ -76,6 +147,19 @@ const Poc = ({
   }, [width, height, coordinates, domain]);
   return (
     <div className={className} style={{ width, height }}>
+      <div className={"sections-container"} ref={root}>
+        {sections.map((section, index) => (
+          <Section
+            section={section}
+            id={index}
+            root={root}
+            key={index}
+            height={200}
+            setHighlightedSectionIndex={setHighlightedSectionIndex}
+            highlightedSectionIndex={highlightedSectionIndex}
+          />
+        ))}
+      </div>
       <div className={"svg-container"} style={{ width, height: height / 2 }}>
         <svg
           height={height / 2}

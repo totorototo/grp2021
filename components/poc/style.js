@@ -4,12 +4,44 @@ const style = (Component) => styled(Component)`
   top: 0;
   left: 0;
   // background-color: aqua;
-
+  display: flex;
+  flex: 1;
+  // background-color: rebeccapurple;
   svg {
     // background-color: blue;
     position: absolute;
     bottom: 0;
     left: 0;
+  }
+
+  .sections-container {
+    position: absolute;
+    height: 50%;
+    bottom: 0;
+    top: 0;
+    width: 100vw;
+
+    //  background-color: chartreuse;
+    scroll-snap-type: x mandatory;
+    display: flex;
+    overflow: auto;
+    flex: none;
+    flex-flow: row nowrap;
+  }
+
+  .section-detail {
+    display: flex;
+    flex: 1 1 auto;
+    height: 100%;
+    width: 100vw;
+    //  background-color: chocolate;
+    scroll-snap-align: center;
+    min-width: 100vw;
+    align-items: center;
+    justify-content: center;
+    font-size: 10rem;
+    font-weight: bolder;
+    opacity: 0.3;
   }
 
   .svg-container {
