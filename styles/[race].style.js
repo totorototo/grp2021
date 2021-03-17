@@ -15,9 +15,9 @@ const style = (Component) => styled(Component)`
     grid-template-rows: repeat(6, auto);
     grid-template-areas:
     "preview"
-    "map"   
-    "time"
+    "map" 
     "section"
+    "time"   
     "progression";
 
     .child {      

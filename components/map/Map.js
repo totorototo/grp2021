@@ -16,6 +16,7 @@ const Map = ({
   checkPointsLocations,
   currentLocation,
   spot,
+  analytics,
 }) => {
   const { colorMode } = useContext(ThemeContext);
   const [viewport, setViewport] = useState({
@@ -50,6 +51,11 @@ const Map = ({
           <div
             className={"position"}
           >{`${currentLocation[1]} ${currentLocation[0]}`}</div>
+        )}
+        {analytics && (
+          <div className={"runner-analytics"}>{`${(analytics[0] / 1000).toFixed(
+            0
+          )}km ${analytics[1]}D+ ${analytics[2]}D-`}</div>
         )}
 
         <MapGL
