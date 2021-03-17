@@ -138,6 +138,7 @@ function Race({
           </div>
           <div className={"map-container child"}>
             <Map
+              analytics={analytics}
               spot={spot}
               currentLocation={projectedLocation}
               route={route}

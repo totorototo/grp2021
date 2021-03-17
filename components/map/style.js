@@ -25,6 +25,16 @@ const style = (Component) => styled(Component)`
       padding: 0.4rem;
     }
 
+    .runner-analytics {
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      z-index: 3;
+      background-color: #e24e1b;
+      color: white;
+      padding: 0.4rem;
+    }
+
     .fab {
       position: absolute;
       bottom: 20px;
