@@ -365,8 +365,8 @@ const Live = ({
         <g className={"checkpoints-markers"}>
           {enhancedCheckpoints &&
             enhancedCheckpoints.map((enhancedCheckpoints, index) => (
-              <g>
-                <g>
+              <g key={`${index}-main-circle`}>
+                <g  key={`${index}-outer-circle`}>
                   <circle
                     cx={scales.x(enhancedCheckpoints.slow)}
                     cy={scales.y(enhancedCheckpoints.distance)}
@@ -387,7 +387,7 @@ const Live = ({
                     </title>
                   </circle>
                 </g>
-                <g>
+                <g  key={`${index}-inner-circle`}>
                   <circle
                     cx={scales.x(enhancedCheckpoints.fast)}
                     cy={scales.y(enhancedCheckpoints.distance)}
