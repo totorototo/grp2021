@@ -19,6 +19,7 @@ import style from "../../styles/[race].style";
 import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
 import Sections from "../../components/sections/Sections";
 import Preview from "../../components/preview/Preview";
+import Poc from "../../components/poc/Poc";
 
 function Race({
   position,
@@ -117,11 +118,11 @@ function Race({
     if (!coordinates) return;
     const altitudes = coordinates.map((location) => location[2]);
     const extentY = d3Array.extent(altitudes);
-    const lowerFullHundred = Math.floor(extentY[0] / 100) * 100;
+    //const lowerFullHundred = Math.floor(extentY[0] / 100) * 100;
     setDomain((domain) => ({
       ...domain,
       x: { min: 0, max: coordinates.length },
-      y: { min: lowerFullHundred, max: extentY[1] * 1.2 },
+      y: { min: 0, max: extentY[1] * 1.2 },
     }));
   }, [coordinates]);
 
@@ -166,22 +167,20 @@ function Race({
             <ClientOnly>
               <AutoSizer>
                 {({ width, height }) => (
-                  <ClientOnly>
-                    <Graph
-                      backgroundColor="var(--color-background)"
-                      rounded
-                      currentIndex={projectedLocationIndex}
-                      width={width}
-                      height={height}
-                      locations={coordinates}
-                      progressionColor="var(--color-background)"
-                      domain={domain}
-                      delimiterIndices={locationsIndices}
-                      peaks={peaks}
-                      displayLine
-                      lineColor={"var(--color-text)"}
-                    />
-                  </ClientOnly>
+                  <Graph
+                    backgroundColor="var(--color-background)"
+                    rounded
+                    currentIndex={projectedLocationIndex}
+                    width={width}
+                    height={height}
+                    locations={coordinates}
+                    progressionColor="var(--color-background)"
+                    domain={domain}
+                    delimiterIndices={locationsIndices}
+                    peaks={peaks}
+                    displayLine
+                    lineColor={"var(--color-text)"}
+                  />
                 )}
               </AutoSizer>
             </ClientOnly>
@@ -205,7 +204,7 @@ function Race({
               <ClientOnly>
                 <AutoSizer>
                   {({ width, height }) => (
-                    <Sections
+                    /*  <Sections
                       currentIndex={projectedLocationIndex}
                       backgroundColor="transparent"
                       lineColor={"var(--color-text)"}
@@ -222,6 +221,15 @@ function Race({
                       setCurrentSectionIndex={setCurrentSectionIndex}
                       progressionColor={"var(--color-background)"}
                       currentSectionColor={"#e24e1b"}
+                    />*/
+                    <Poc
+                      width={width}
+                      height={height}
+                      coordinates={coordinates}
+                      domain={domain}
+                      delimiterIndices={locationsIndices}
+                      peaks={peaks}
+                      sections={sections}
                     />
                   )}
                 </AutoSizer>
