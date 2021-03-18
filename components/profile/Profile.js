@@ -1,6 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
-import { LinearGradient } from "@vx/gradient";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
 
 import style from "./style";
 import {
@@ -11,9 +9,7 @@ import {
   getLines,
 } from "../../helpers/d3";
 import Gradient from "../gradient/Gradient";
-import useIntersect from "../../hooks/useIntersect";
 import Marker from "../marker/Marker";
-import Container from "./Container";
 import Section from "./Section";
 
 const MARKER_WIDTH = 30;
@@ -79,6 +75,7 @@ const Profile = ({
     sections,
   ]);
 
+  // compute current runner position
   useEffect(() => {
     if (currentIndex === -1 || !scales.x || !scales.y) return;
     const locationsVisited = coordinates.slice(0, currentIndex);
@@ -100,6 +97,7 @@ const Profile = ({
     setMarkers([marker]);
   }, [currentIndex, domain, coordinates, scales, offsetMin]);
 
+  // compute cp lines
   useEffect(() => {
     if (sections.length === 0 || !scales.x || !scales.y) return;
 
@@ -115,6 +113,7 @@ const Profile = ({
     setLines(delimiterLines);
   }, [domain, coordinates, scales, offsetMin, sections]);
 
+  // compute profile path and area
   useEffect(() => {
     if (!scales.x || !scales.y) return;
     const area = getArea(
@@ -130,6 +129,7 @@ const Profile = ({
     setProfilePath(line);
   }, [scales, coordinates, domain, offsetMin]);
 
+  // compute scales
   useEffect(() => {
     if (!domain) return;
     const x = createXScale(
@@ -166,7 +166,7 @@ const Profile = ({
       <div className={"svg-container"} style={{ width, height: height / 2 }}>
         <svg
           height={height / 2}
-          width={width * 2}
+          width={width * 2.5}
           viewBox={`0 0 ${width * 2.5} ${height / 2}`}
         >
           <Gradient
