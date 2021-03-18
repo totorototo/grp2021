@@ -17,9 +17,8 @@ import detectPeaks from "../../helpers/peak";
 import Live from "../../components/live/Live";
 import style from "../../styles/[race].style";
 import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
-import Sections from "../../components/sections/Sections";
 import Preview from "../../components/preview/Preview";
-import Poc from "../../components/poc/Poc";
+import Profile from "../../components/profile/Profile";
 
 function Race({
   position,
@@ -222,7 +221,7 @@ function Race({
                       progressionColor={"var(--color-background)"}
                       currentSectionColor={"#e24e1b"}
                     />*/
-                    <Poc
+                    <Profile
                       currentSectionIndex={currentSectionIndex}
                       currentIndex={projectedLocationIndex}
                       width={width}
