@@ -223,6 +223,8 @@ function Race({
                       currentSectionColor={"#e24e1b"}
                     />*/
                     <Poc
+                      currentSectionIndex={currentSectionIndex}
+                      currentIndex={projectedLocationIndex}
                       width={width}
                       height={height}
                       coordinates={coordinates}

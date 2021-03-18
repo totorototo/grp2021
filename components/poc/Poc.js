@@ -27,6 +27,10 @@ const Container = styled.div`
     font-weight: bolder;
     font-size: 10rem;
     opacity: 0.4;
+
+    &.current {
+      opacity: 1;
+    }
   }
 `;
 
@@ -37,6 +41,7 @@ const Section = ({
   section,
   highlightedSectionIndex,
   setHighlightedSectionIndex,
+  currentSectionIndex,
 }) => {
   const [ref, entry] = useIntersect({
     threshold: 0.8,
@@ -74,10 +79,33 @@ const Section = ({
       }}
       ref={ref}
     >
-      <div className={"detail"}>{id}</div>
+      <div className={`detail ${currentSectionIndex === id ? "current" : ""}`}>
+        {id}
+      </div>
     </Container>
   );
 };
+
+const MARKER_WIDTH = 30;
+
+const Marker = ({ width, height, x, y }) => (
+  <svg height={height} viewBox="0 0 512 512" width={width} x={x} y={y - height}>
+    <g>
+      <path
+        fill="#E24E1B"
+        d="M256,0C156.698,0,76,80.7,76,180c0,33.6,9.302,66.301,27.001,94.501l140.797,230.414
+	c2.402,3.9,6.002,6.301,10.203,6.901c5.698,0.899,12.001-1.5,15.3-7.2l141.2-232.516C427.299,244.501,436,212.401,436,180
+	C436,80.7,355.302,0,256,0z M256,270c-50.398,0-90-40.8-90-90c0-49.501,40.499-90,90-90s90,40.499,90,90
+	C346,228.9,306.999,270,256,270z"
+      />
+      <path
+        fill="#E24E1B"
+        d="M256,0v90c49.501,0,90,40.499,90,90c0,48.9-39.001,90-90,90v241.991
+	c5.119,0.119,10.383-2.335,13.3-7.375L410.5,272.1c16.799-27.599,25.5-59.699,25.5-92.1C436,80.7,355.302,0,256,0z"
+      />
+    </g>
+  </svg>
+);
 
 const Poc = ({
   className,
@@ -89,14 +117,77 @@ const Poc = ({
   offsetMax = 0,
   peaks = [],
   sections,
+  currentIndex,
+  currentSectionIndex,
 }) => {
   const [profileArea, setProfileArea] = useState();
   const [scales, setScales] = useState({});
   const [profilePath, setProfilePath] = useState();
   const [lines, setLines] = useState();
   const [highlightedSectionIndex, setHighlightedSectionIndex] = useState();
+  const [progression, setProgression] = useState();
+  const [markers, setMarkers] = useState();
+  const [highlightedArea, setHighlightedArea] = useState();
 
   const root = useRef(null);
+
+  useEffect(() => {
+    if (
+      !highlightedSectionIndex ||
+      !scales.x ||
+      !scales.y ||
+      !sections ||
+      sections.length === 0
+    )
+      return;
+
+    const highlightedCoordinates = [
+      ...new Array(coordinates.length),
+    ].map(() => [0, 0, 0]);
+
+    highlightedCoordinates.splice(
+      sections[highlightedSectionIndex].indices[0],
+      sections[highlightedSectionIndex].coordinates.length,
+      ...sections[highlightedSectionIndex].coordinates
+    );
+
+    const area = getArea(
+      highlightedCoordinates,
+      scales.x,
+      scales.y,
+      domain.y.min - offsetMin
+    );
+    //console.log(area);
+    setHighlightedArea(area);
+  }, [
+    highlightedSectionIndex,
+    domain,
+    coordinates,
+    scales,
+    offsetMin,
+    sections,
+  ]);
+
+  useEffect(() => {
+    if (currentIndex === -1 || !scales.x || !scales.y) return;
+    const locationsVisited = coordinates.slice(0, currentIndex);
+    const progress = getArea(
+      locationsVisited,
+      scales.x,
+      scales.y,
+      domain.y.min - offsetMin
+    );
+    setProgression(progress);
+
+    const marker = {
+      x: currentIndex,
+      y:
+        coordinates[currentIndex] && coordinates[currentIndex][2]
+          ? coordinates[currentIndex][2]
+          : 0,
+    };
+    setMarkers([marker]);
+  }, [currentIndex, domain, coordinates, scales, offsetMin]);
 
   useEffect(() => {
     if (sections.length === 0 || !scales.x || !scales.y) return;
@@ -157,6 +248,7 @@ const Poc = ({
             height={200}
             setHighlightedSectionIndex={setHighlightedSectionIndex}
             highlightedSectionIndex={highlightedSectionIndex}
+            currentSectionIndex={currentSectionIndex}
           />
         ))}
       </div>
@@ -189,6 +281,28 @@ const Poc = ({
               opacity={0.1}
             />
           )}
+          {highlightedArea && (
+            <path
+              d={highlightedArea.path}
+              stroke={"transparent"}
+              strokeWidth="0"
+              fill={"#F4A301"}
+              opacity={0.4}
+            />
+          )}
+          {progression && <path d={progression.path} fill={"url(#gradient)"} />}
+          {markers &&
+            scales &&
+            markers.length > 0 &&
+            markers.map((marker, index) => (
+              <Marker
+                key={index}
+                x={scales.x(marker.x) - MARKER_WIDTH / 2}
+                y={scales.y(marker.y)}
+                width={MARKER_WIDTH}
+                height={MARKER_WIDTH}
+              />
+            ))}
           {lines &&
             lines.map((line, index) => (
               <path
