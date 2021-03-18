@@ -17,8 +17,8 @@ import detectPeaks from "../../helpers/peak";
 import Live from "../../components/live/Live";
 import style from "../../styles/[race].style";
 import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
-import Sections from "../../components/sections/Sections";
 import Preview from "../../components/preview/Preview";
+import Profile from "../../components/profile/Profile";
 
 function Race({
   position,
@@ -117,11 +117,11 @@ function Race({
     if (!coordinates) return;
     const altitudes = coordinates.map((location) => location[2]);
     const extentY = d3Array.extent(altitudes);
-    const lowerFullHundred = Math.floor(extentY[0] / 100) * 100;
+    //const lowerFullHundred = Math.floor(extentY[0] / 100) * 100;
     setDomain((domain) => ({
       ...domain,
       x: { min: 0, max: coordinates.length },
-      y: { min: lowerFullHundred, max: extentY[1] * 1.2 },
+      y: { min: 0, max: extentY[1] * 1.2 },
     }));
   }, [coordinates]);
 
@@ -166,22 +166,20 @@ function Race({
             <ClientOnly>
               <AutoSizer>
                 {({ width, height }) => (
-                  <ClientOnly>
-                    <Graph
-                      backgroundColor="var(--color-background)"
-                      rounded
-                      currentIndex={projectedLocationIndex}
-                      width={width}
-                      height={height}
-                      locations={coordinates}
-                      progressionColor="var(--color-background)"
-                      domain={domain}
-                      delimiterIndices={locationsIndices}
-                      peaks={peaks}
-                      displayLine
-                      lineColor={"var(--color-text)"}
-                    />
-                  </ClientOnly>
+                  <Graph
+                    backgroundColor="var(--color-background)"
+                    rounded
+                    currentIndex={projectedLocationIndex}
+                    width={width}
+                    height={height}
+                    locations={coordinates}
+                    progressionColor="var(--color-background)"
+                    domain={domain}
+                    delimiterIndices={locationsIndices}
+                    peaks={peaks}
+                    displayLine
+                    lineColor={"var(--color-text)"}
+                  />
                 )}
               </AutoSizer>
             </ClientOnly>
@@ -205,23 +203,16 @@ function Race({
               <ClientOnly>
                 <AutoSizer>
                   {({ width, height }) => (
-                    <Sections
+                    <Profile
+                      currentSectionIndex={currentSectionIndex}
                       currentIndex={projectedLocationIndex}
-                      backgroundColor="transparent"
-                      lineColor={"var(--color-text)"}
-                      areaColor={"var(--color-text)"}
-                      profileColor={"#e0e0e0"}
-                      sectionsColor={"#737373"}
-                      sections={sections}
-                      locations={coordinates}
                       width={width}
                       height={height}
+                      coordinates={coordinates}
                       domain={domain}
-                      currentLocationIndex={projectedLocationIndex}
-                      currentSectionIndex={currentSectionIndex}
-                      setCurrentSectionIndex={setCurrentSectionIndex}
-                      progressionColor={"var(--color-background)"}
-                      currentSectionColor={"#e24e1b"}
+                      delimiterIndices={locationsIndices}
+                      peaks={peaks}
+                      sections={sections}
                     />
                   )}
                 </AutoSizer>
@@ -230,23 +221,6 @@ function Race({
                 <div className={"a"}>a</div>
                 <div className={"b"}>b</div>
               </>*/
-
-              /*              <ClientOnly>
-                <AutoSizer>
-                  {({ width, height }) => (
-                    <Graph
-                      width={width}
-                      height={height}
-                      domain={domain}
-                      displayLine
-                      displayArea
-                      lineColor="#F4A301"
-                      areaColor="#F4A30140"
-                      locations={sections[currentSectionIndex].coordinates}
-                    />
-                  )}
-                </AutoSizer>
-              </ClientOnly>*/
             )}
           </div>
         </div>
