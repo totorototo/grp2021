@@ -58,7 +58,14 @@ const Live = ({
 
   // horizontal ticks
   useEffect(() => {
-    const tickPeriod = 4;
+    const duration = differenceInHours(
+      new Date(checkpoints[checkpoints.length - 1].cutOffTime),
+      new Date(checkpoints[0].cutOffTime)
+    );
+
+    const tickPeriod = (duration / (duration * 2)).toFixed();
+
+    //const tickPeriod = 2;
     let date = new Date(checkpoints[0].cutOffTime);
 
     const markers = [];
@@ -78,8 +85,8 @@ const Live = ({
 
   // vertical ticks
   useEffect(() => {
-    const tickPeriod = 20;
     const distance = checkpoints[checkpoints.length - 1].km;
+    const tickPeriod = (distance / 40).toFixed();
     const times = (distance - (distance % tickPeriod)) / tickPeriod;
 
     const markers = [];
@@ -270,12 +277,12 @@ const Live = ({
           {horizontalTicks.map((tick, index) => (
             <g key={`${index}-group`}>
               <text
-                writingMode="tb"
+                // writingMode="tb"
                 key={`${index}-text`}
                 fontSize="12"
                 fill="var(--color-text)"
-                x={scales.x(new Date(tick))}
-                y={height - 20}
+                x={scales.x(new Date(tick)) - 5}
+                y={height - 10}
               >
                 {differenceInHours(
                   new Date(tick),
@@ -293,7 +300,7 @@ const Live = ({
             </g>
           ))}
         </g>
-        <g className={"axis"}>
+        {/*  <g className={"axis"}>
           {xAxisLine && yAxisLine}&&(
           <path
             d={xAxisLine}
@@ -310,7 +317,7 @@ const Live = ({
             strokeOpacity="0.4"
           />
           )
-        </g>
+        </g>*/}
         <g className="vertical-ticks">
           {verticalTicks.map((tick, index) => (
             <g key={`${index}-group`}>
@@ -318,13 +325,13 @@ const Live = ({
                 key={`${index}-text`}
                 fontSize="12"
                 fill="var(--color-text)"
-                x={0}
+                x={OFFSET_X - 25}
                 y={scales.y(tick) + 5}
               >
                 {tick}
               </text>
               <line
-                stroke="var(color-text)"
+                stroke="var(--color-text)"
                 key={`${index}-tick`}
                 x1={OFFSET_X - 5}
                 x2={OFFSET_X}
@@ -366,7 +373,7 @@ const Live = ({
           {enhancedCheckpoints &&
             enhancedCheckpoints.map((enhancedCheckpoints, index) => (
               <g key={`${index}-main-circle`}>
-                <g  key={`${index}-outer-circle`}>
+                <g key={`${index}-outer-circle`}>
                   <circle
                     cx={scales.x(enhancedCheckpoints.slow)}
                     cy={scales.y(enhancedCheckpoints.distance)}
@@ -387,7 +394,7 @@ const Live = ({
                     </title>
                   </circle>
                 </g>
-                <g  key={`${index}-inner-circle`}>
+                <g key={`${index}-inner-circle`}>
                   <circle
                     cx={scales.x(enhancedCheckpoints.fast)}
                     cy={scales.y(enhancedCheckpoints.distance)}
