@@ -14,19 +14,21 @@ const Container = styled.div`
     align-items: center;
     justify-content: space-around;
     opacity: 0.4;
+    padding: 1rem;
 
     .section-index {
       display: grid;
       place-items: center;
       font-weight: bolder;
-      font-size: 10rem;
+      font-size: 6rem;
+      letter-spacing: -0.05em;
       min-width: 10rem;
       //flex: 1 1 auto;
     }
 
     .section-data {
       display: flex;
-      //flex: 1 1 auto;
+      flex: 1 1 auto;
       height: 100%;
 
       flex-direction: column;
