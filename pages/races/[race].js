@@ -326,11 +326,17 @@ export async function getStaticProps({ params }) {
   const sections = checkpoints.reduce((accu, checkpoint, index, array) => {
     if (index > 0) {
       const endingDate = new Date(checkpoint.cutOffTime);
+      const raceStartDate = new Date(array[0].cutOffTime);
+      const elapsedHoursFromStart = differenceInMilliseconds(
+        endingDate,
+        raceStartDate
+      );
       const startingDate = new Date(array[index - 1].cutOffTime);
       const duration = differenceInMilliseconds(endingDate, startingDate);
       return [
         ...accu,
         {
+          elapsedHoursFromStart,
           startingDate: array[index - 1].cutOffTime,
           endingDate: checkpoint.cutOffTime,
           departureLocation: array[index - 1][columns[0]],
