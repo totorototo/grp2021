@@ -4,6 +4,16 @@ import { formatDistance, format } from "date-fns";
 import useIntersect from "../../hooks/useIntersect";
 import Container from "./Container";
 
+const msToTime = (milliseconds) => {
+  let day, hour, minute, seconds;
+  seconds = Math.floor(milliseconds / 1000);
+  minute = Math.floor(seconds / 60);
+  hour = Math.floor(minute / 60);
+  minute = minute % 60;
+
+  return minute !== 0 ? `${hour} hours ${minute} minutes` : `${hour} hours`;
+};
+
 const Section = ({
   root,
   setSelectedSectionIndex,
@@ -69,6 +79,8 @@ const Section = ({
           <span className={"type"}>duration</span>
           <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
           <span className={"type"}>time barrier</span>
+          <span>{msToTime(section.elapsedHoursFromStart)}</span>
+          <span className={"type"}>from start</span>
         </p>
       </div>
     </Container>
