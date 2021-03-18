@@ -14,6 +14,44 @@ const style = (Component) => styled(Component)`
     left: 0;
   }
 
+  .horizontal-ticks {
+    g {
+      text {
+        opacity: 0;
+      }
+      line {
+        opacity: 0.1;
+      }
+    }
+    g:nth-child(4n + 0) {
+      text {
+        opacity: 1;
+      }
+      line {
+        opacity: 1;
+      }
+    }
+  }
+
+  .vertical-ticks {
+    g {
+      text {
+        opacity: 0;
+      }
+      line {
+        opacity: 0.1;
+      }
+    }
+    g:nth-child(4n + 0) {
+      text {
+        opacity: 1;
+      }
+      line {
+        opacity: 1;
+      }
+    }
+  }
+
   .shifts {
     .group-area {
       line:first-child {
