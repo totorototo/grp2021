@@ -225,7 +225,7 @@ const Profile = ({
                 strokeDasharray="4 4"
               />
             ))}
-          {/*  {peaks &&
+          {peaks &&
             scales.x &&
             scales.y &&
             peaks.length > 0 &&
@@ -234,10 +234,11 @@ const Profile = ({
                 x={scales.x(peak)}
                 y={scales.y(coordinates[peak][2]) - 10}
                 key={index}
+                fill={"var(--color-text)"}
               >
                 {coordinates[peak][2].toFixed(0)}
               </text>
-            ))}*/}
+            ))}
 
           {sections &&
             sections.length > 0 &&
@@ -245,12 +246,12 @@ const Profile = ({
             scales.y &&
             sections
               // .filter((_, index) => index < sections.length - 1)
-              .reduce((accu, section, index, array) => {
+              /*.reduce((accu, section, index, array) => {
                 if (!array[index + 1]) return accu;
                 if (array[index + 1].toKm !== section.toKm) {
                   return [...accu, section];
                 } else return accu;
-              }, [])
+              }, [])*/
               .map((section, index) => (
                 <g className={"cp"} key={index}>
                   <text
@@ -258,6 +259,7 @@ const Profile = ({
                     x={scales.x(section.indices[1])}
                     y={scales.y(0)}
                     key={index}
+                    fill={"var(--color-text)"}
                   >
                     {(section.toKm / 1000).toFixed(0)}
                   </text>
@@ -285,7 +287,7 @@ const Profile = ({
                       cx={scales.x(section.indices[1])}
                       cy={scales.y(coordinates[section.indices[1]][2])}
                       r="3"
-                      fill={"white"}
+                      fill={"var(--color-background)"}
                     >
                       <title>{section.arrivalLocation}</title>
                     </circle>

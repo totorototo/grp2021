@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { formatDistance, format } from "date-fns";
 
 import useIntersect from "../../hooks/useIntersect";
 import Container from "./Container";
@@ -49,7 +50,26 @@ const Section = ({
       ref={ref}
     >
       <div className={`detail ${currentSectionIndex === id ? "current" : ""}`}>
-        {id}
+        <div className={"section-index"}>{id + 1}</div>
+        <p className={"section-data"}>
+          <span>{`${section.departureLocation} - ${section.arrivalLocation}`}</span>
+          <span>{`${(section.distance / 1000).toFixed(1)}km `}</span>
+          <span className={"type"}>distance</span>
+          <span>
+            {`${section.elevation.positive.toFixed(
+              0
+            )}D+ ${section.elevation.negative.toFixed(0)}D-`}
+          </span>
+          <span className={"type"}>elevation</span>
+          <span>
+            {formatDistance(0, section.duration, {
+              includeSeconds: true,
+            })}
+          </span>
+          <span className={"type"}>duration</span>
+          <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
+          <span className={"type"}>time barrier</span>
+        </p>
       </div>
     </Container>
   );

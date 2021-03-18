@@ -70,6 +70,7 @@ const style = (Component) => styled(Component)`
       .km {
         transform: translate(-0.4rem, -0.6rem);
         font-size: 0.6rem;
+        color: var(--color-text);
       }
 
       /*  .location {
