@@ -203,24 +203,6 @@ function Race({
               <ClientOnly>
                 <AutoSizer>
                   {({ width, height }) => (
-                    /*  <Sections
-                      currentIndex={projectedLocationIndex}
-                      backgroundColor="transparent"
-                      lineColor={"var(--color-text)"}
-                      areaColor={"var(--color-text)"}
-                      profileColor={"#e0e0e0"}
-                      sectionsColor={"#737373"}
-                      sections={sections}
-                      locations={coordinates}
-                      width={width}
-                      height={height}
-                      domain={domain}
-                      currentLocationIndex={projectedLocationIndex}
-                      currentSectionIndex={currentSectionIndex}
-                      setCurrentSectionIndex={setCurrentSectionIndex}
-                      progressionColor={"var(--color-background)"}
-                      currentSectionColor={"#e24e1b"}
-                    />*/
                     <Profile
                       currentSectionIndex={currentSectionIndex}
                       currentIndex={projectedLocationIndex}
@@ -239,23 +221,6 @@ function Race({
                 <div className={"a"}>a</div>
                 <div className={"b"}>b</div>
               </>*/
-
-              /*              <ClientOnly>
-                <AutoSizer>
-                  {({ width, height }) => (
-                    <Graph
-                      width={width}
-                      height={height}
-                      domain={domain}
-                      displayLine
-                      displayArea
-                      lineColor="#F4A301"
-                      areaColor="#F4A30140"
-                      locations={sections[currentSectionIndex].coordinates}
-                    />
-                  )}
-                </AutoSizer>
-              </ClientOnly>*/
             )}
           </div>
         </div>
