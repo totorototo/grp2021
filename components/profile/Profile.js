@@ -24,8 +24,8 @@ const Profile = ({
   offsetMax = 0,
   peaks = [],
   sections,
-  currentIndex,
-  currentSectionIndex,
+  currentIndex = -1,
+  currentSectionIndex = 0,
 }) => {
   const [profileArea, setProfileArea] = useState();
   const [scales, setScales] = useState({});
@@ -280,7 +280,7 @@ const Profile = ({
                       cx={scales.x(section.indices[1])}
                       cy={scales.y(coordinates[section.indices[1]][2])}
                       r="4"
-                      fill={"#F4A301"}
+                      fill={"#007DA3"}
                     />
                     <circle
                       onClick={() => console.log("bim")}
