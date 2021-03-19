@@ -378,7 +378,7 @@ const Live = ({
                     cx={scales.x(enhancedCheckpoints.slow)}
                     cy={scales.y(enhancedCheckpoints.distance)}
                     r="4"
-                    fill={color}
+                    fill={"#007DA3"}
                   />
                   <circle
                     cx={scales.x(enhancedCheckpoints.slow)}
@@ -399,7 +399,7 @@ const Live = ({
                     cx={scales.x(enhancedCheckpoints.fast)}
                     cy={scales.y(enhancedCheckpoints.distance)}
                     r="4"
-                    fill={color}
+                    fill={"#007DA3"}
                   />
                   <circle
                     cx={scales.x(enhancedCheckpoints.fast)}

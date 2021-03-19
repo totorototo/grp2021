@@ -80,7 +80,7 @@ const Section = ({
           <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
           <span className={"type"}>time barrier</span>
           <span>{msToTime(section.elapsedHoursFromStart)}</span>
-          <span className={"type"}>from start</span>
+          <span className={"type"}>since start</span>
         </p>
       </div>
     </Container>

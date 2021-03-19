@@ -18,7 +18,7 @@ const style = (Component) => styled(Component)`
     "map" 
     "section"
     "time"   
-    "progression";
+    "debug";
 
     .child {      
       height: calc(100vh - 100px);
@@ -45,11 +45,8 @@ const style = (Component) => styled(Component)`
       
     }
     
-    .progress-container {
-      grid-area: progression;
-    /*  background-color:  ${(props) =>
-      props.rounded && `border-radius: 10px`}; */
-      //border-radius: 10px;;
+    .debug-container {
+      grid-area: debug;    
     }
     
     .current-section-container {
@@ -92,8 +89,8 @@ const style = (Component) => styled(Component)`
        "map map map map map map time time"
        "map map map map map map section section"
        "map map map map map map section section"
-       "map map map map map map progression progression"
-       "race-profile race-profile race-profile race-profile race-profile race-profile progression progression"
+       "map map map map map map debug debug"
+       "race-profile race-profile race-profile race-profile race-profile race-profile debug debug"
 
     }
     }
