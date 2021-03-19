@@ -16,9 +16,9 @@ import Graph from "../../components/graph/Graph";
 import detectPeaks from "../../helpers/peak";
 import Live from "../../components/live/Live";
 import style from "../../styles/[race].style";
-import RadialProgressBar from "../../components/radialProgressBar/RadialProgressBar";
 import Preview from "../../components/preview/Preview";
 import Profile from "../../components/profile/Profile";
+import Debug from "../../components/debug/Debug";
 
 function Race({
   position,
@@ -47,8 +47,6 @@ function Race({
   const [projectedLocationIndex, setProjectedLocationIndex] = useState();
   const [progression, setProgression] = useState();
   const [savedPositions, updateSavedPositions] = useState([]);
-
-  useEffect(() => {}, [sections]);
 
   useEffect(() => {
     if (!position || !coordinates) return;
@@ -90,16 +88,14 @@ function Race({
     ).toFixed(2);
 
     setProgression([
-      { label: "distance", percent: distanceCompleted, color: "#007da3" },
+      { label: "distance", percent: distanceCompleted },
       {
         label: "elevation gain",
         percent: positiveElevationCompleted,
-        color: "#007da3",
       },
       {
         label: "elevation loss",
         percent: negativeElevationCompleted,
-        color: "#007da3",
       },
     ]);
 
@@ -184,44 +180,34 @@ function Race({
               </AutoSizer>
             </ClientOnly>
           </div>
-          <div className={"progress-container child"}>
-            {progression && (
+          <div className={"debug-container child"}>
+            <Debug
+              position={position}
+              projectedLocation={projectedLocation}
+              delta={delta}
+              savedPositions={savedPositions}
+              analytics={analytics}
+              progression={progression}
+            />
+          </div>
+          <div className={"current-section-container child"}>
+            <ClientOnly>
               <AutoSizer>
                 {({ width, height }) => (
-                  <RadialProgressBar
-                    backgroundColor="var(--color-background)"
-                    data={progression}
+                  <Profile
+                    currentSectionIndex={currentSectionIndex}
+                    currentIndex={projectedLocationIndex}
                     width={width}
                     height={height}
+                    coordinates={coordinates}
+                    domain={domain}
+                    delimiterIndices={locationsIndices}
+                    peaks={peaks}
+                    sections={sections}
                   />
                 )}
               </AutoSizer>
-            )}
-          </div>
-          <div className={"current-section-container child"}>
-            {currentSectionIndex && (
-              <ClientOnly>
-                <AutoSizer>
-                  {({ width, height }) => (
-                    <Profile
-                      currentSectionIndex={currentSectionIndex}
-                      currentIndex={projectedLocationIndex}
-                      width={width}
-                      height={height}
-                      coordinates={coordinates}
-                      domain={domain}
-                      delimiterIndices={locationsIndices}
-                      peaks={peaks}
-                      sections={sections}
-                    />
-                  )}
-                </AutoSizer>
-              </ClientOnly>
-              /*  <>
-                <div className={"a"}>a</div>
-                <div className={"b"}>b</div>
-              </>*/
-            )}
+            </ClientOnly>
           </div>
         </div>
       </Layout>
