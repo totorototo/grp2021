@@ -32,7 +32,6 @@ const Container = styled.div`
       height: 100%;
 
       flex-direction: column;
-      // background-color: chocolate;
       align-items: flex-start;
       justify-content: center;
 

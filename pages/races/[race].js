@@ -188,6 +188,7 @@ function Race({
               savedPositions={savedPositions}
               analytics={analytics}
               progression={progression}
+              sections={sections}
             />
           </div>
           <div className={"current-section-container child"}>
