@@ -21,7 +21,7 @@ import Profile from "../../components/profile/Profile";
 import Debug from "../../components/debug/Debug";
 
 function Race({
-  position,
+  positions,
   spot,
   distance,
   elevation,
@@ -46,15 +46,16 @@ function Race({
   const [projectedLocation, setProjectedLocation] = useState();
   const [projectedLocationIndex, setProjectedLocationIndex] = useState();
   const [progression, setProgression] = useState();
-  const [savedPositions, updateSavedPositions] = useState([]);
 
   useEffect(() => {
-    if (!position || !coordinates) return;
+    if (!positions || positions.length === 0 || !coordinates) return;
 
     const helper = createPathHelper(coordinates);
+    const sortedPositions = positions.sort((a, b) => a.timestamp - b.timestamp);
+    const lastPosition = sortedPositions[sortedPositions.length - 1];
 
     // get current section
-    const closestLocation = helper.findClosestPosition(position.coords);
+    const closestLocation = helper.findClosestPosition(lastPosition.coords);
     setProjectedLocation(closestLocation);
 
     const closestLocationIndex = helper.getPositionIndex(closestLocation);
@@ -73,7 +74,7 @@ function Race({
     setAnalytics(analytics);
 
     // compute error
-    const delta = calculateDistance(closestLocation, position.coords);
+    const delta = calculateDistance(closestLocation, lastPosition.coords);
     setDelta(delta);
 
     // compute progression
@@ -98,16 +99,7 @@ function Race({
         percent: negativeElevationCompleted,
       },
     ]);
-
-    updateSavedPositions([
-      ...savedPositions,
-      {
-        location: closestLocation,
-        timestamp: position.timestamp,
-        distance: helper.getProgressionStatistics(closestLocationIndex)[0] || 0,
-      },
-    ]);
-  }, [position, coordinates]);
+  }, [positions, coordinates]);
 
   useEffect(() => {
     if (!coordinates) return;
@@ -152,7 +144,7 @@ function Race({
                     width={width}
                     height={height}
                     checkpoints={checkpoints}
-                    positions={savedPositions}
+                    positions={positions}
                   />
                 )}
               </AutoSizer>
@@ -182,10 +174,10 @@ function Race({
           </div>
           <div className={"debug-container child"}>
             <Debug
-              position={position}
+              positions={positions}
               projectedLocation={projectedLocation}
               delta={delta}
-              savedPositions={savedPositions}
+              //savedPositions={savedPositions}
               analytics={analytics}
               progression={progression}
               sections={sections}

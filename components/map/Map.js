@@ -48,9 +48,9 @@ const Map = ({
           size="16"
         />
         {currentLocation && (
-          <div
-            className={"position"}
-          >{`${currentLocation[1]} ${currentLocation[0]}`}</div>
+          <div className={"position"}>{`${currentLocation[1].toFixed(
+            5
+          )} ${currentLocation[0].toFixed(5)}`}</div>
         )}
         {analytics && (
           <div className={"runner-analytics"}>{`${(analytics[0] / 1000).toFixed(
