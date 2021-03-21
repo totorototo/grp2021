@@ -5,7 +5,7 @@ import style from "./style";
 
 const Debug = ({
   className,
-  position,
+  positions,
   delta,
   projectedLocation,
   savedPositions,
@@ -14,6 +14,13 @@ const Debug = ({
   sections,
 }) => {
   const [interval, setInterval] = useState();
+  const [sortedPositions, setSortedPositions] = useState();
+
+  useEffect(() => {
+    if (!positions) return;
+    const sorted = positions.sort((a, b) => a.timestamp - b.timestamp);
+    setSortedPositions(sorted);
+  }, [positions]);
 
   useEffect(() => {
     if (!sections || sections.length === 0) return;
@@ -21,17 +28,20 @@ const Debug = ({
     const end = new Date(sections[sections.length - 1].cutOffTime);
     setInterval({ start, end });
   }, [sections]);
+
   return (
     <div className={className}>
       <p>
         <span className={"category"}>runner position</span>
-        {position && (
+        {sortedPositions && sortedPositions.length > 0 && (
           <span className={"position"}>
             <span>last tracked position:</span>
-            <span>{`latitude: ${position.coords[1].toFixed(
-              5
-            )} - longitude: ${position.coords[0].toFixed(5)} -  ${format(
-              new Date(position.timestamp),
+            <span>{`latitude: ${sortedPositions[
+              sortedPositions.length - 1
+            ].coords[1].toFixed(5)} - longitude: ${sortedPositions[
+              sortedPositions.length - 1
+            ].coords[0].toFixed(5)} -  ${format(
+              new Date(sortedPositions[sortedPositions.length - 1].timestamp),
               "dd-MM-yy HH:mm"
             )}`}</span>
           </span>
@@ -71,9 +81,9 @@ const Debug = ({
       </p>
       <p>
         <span className={"category"}>saved positions</span>
-        {sections && interval && savedPositions && savedPositions.length > 0 && (
+        {sections && interval && sortedPositions && sortedPositions.length > 0 && (
           <span className={"positions"}>
-            {savedPositions.map((position, index) => {
+            {sortedPositions.map((position, index) => {
               const withinInterval = isWithinInterval(
                 new Date(position.timestamp),
                 interval
@@ -84,9 +94,9 @@ const Debug = ({
                   className={`${index} ${withinInterval ? "" : "warning"}`}
                   key={index}
                 >
-                  {`latitude: ${position.location[1]} - longitude: ${
-                    position.location[0]
-                  } - ${format(
+                  {`latitude: ${position.coords[1].toFixed(
+                    5
+                  )} - longitude: ${position.coords[0].toFixed(5)} - ${format(
                     new Date(position.timestamp),
                     "dd-MM-yy HH:mm"
                   )}`}

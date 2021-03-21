@@ -2,6 +2,8 @@ import usePersistedState from "../hooks/usePersistedState";
 import { createGlobalStyle } from "styled-components";
 import THEME from "../theme/Theme";
 import ThemeProvider from "../components/themeProvider/ThemeProvider";
+import createRingBuffer from "../helpers/buffer";
+import { useEffect, useState } from "react";
 
 const setDefaultColors = (variant = "light") => {
   return Object.entries(THEME.colors[variant]).reduce((accu, [rule, value]) => {
@@ -47,21 +49,39 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
+//const buffer = createRingBuffer(10);
+
 export default function MyApp({ Component, pageProps }) {
-  const [position, setPosition] = usePersistedState("position", null);
+  const [positions, setPositions] = usePersistedState("positions", []);
+  const [buffer, setBuffer] = useState();
+
+  useEffect(() => {
+    if (!positions) return;
+
+    if (!buffer) {
+      const ringBuffer = createRingBuffer(10, positions);
+      setBuffer(ringBuffer);
+    }
+  }, [positions]);
+
   const spot = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setPosition({
-        coords: [position.coords.longitude, position.coords.latitude],
-        timestamp: position.timestamp,
-      });
+    navigator.geolocation.getCurrentPosition((pos) => {
+      const item = {
+        coords: [pos.coords.longitude, pos.coords.latitude],
+        timestamp: pos.timestamp,
+      };
+      if (buffer) {
+        buffer.push(item);
+        const dump = buffer.dump();
+        setPositions(() => [...dump]);
+      }
     });
   };
 
   return (
     <ThemeProvider theme={THEME}>
       <GlobalStyle />
-      <Component {...pageProps} position={position} spot={spot} />
+      <Component {...pageProps} positions={positions} spot={spot} />
     </ThemeProvider>
   );
 }
