@@ -1,7 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Maximize } from "@styled-icons/feather/Maximize";
+import { Minimize } from "@styled-icons/feather/Minimize";
+
 import {
   eachDayOfInterval,
   differenceInMilliseconds,
+  differenceInSeconds,
   addMilliseconds,
   addHours,
   differenceInHours,
@@ -55,6 +59,8 @@ const Live = ({
   const [yAxisLine, setYAxisLine] = useState();
   const [slowLine, setSlowLine] = useState();
   const [fastLine, setFastLine] = useState();
+  const [runnerPositions, setRunnerPositions] = useState();
+  const [toggle, setToggle] = useState(false);
 
   // horizontal ticks
   useEffect(() => {
@@ -223,32 +229,97 @@ const Live = ({
 
   // runner positions and path line
   useEffect(() => {
-    if (!scales || !positions || positions.length <= 0 || !checkpoints) return;
+    if (!positions || positions.length === 0 || !scales || !checkpoints) return;
 
     const start = new Date(checkpoints[0].cutOffTime);
     const end = new Date(checkpoints[checkpoints.length - 1].cutOffTime);
     const raceDistance = checkpoints[checkpoints.length - 1].km;
 
-    const positions = positions
-      .filter((location) => {
-        const current = new Date(location.timestamp);
-        return (
-          isAfter(current, start) &&
-          isBefore(current, end) &&
-          location.distance <= raceDistance
-        );
-      })
-      .map((location) => [location.km / 1000, new Date(location.timestamp)]);
+    //TODO: debug purpose
+    const fakePositions = [{}];
 
+    // positions within race time range and within distance
+    const filteredPositions = positions.filter((pair) => {
+      const current = new Date(pair.position.timestamp);
+      return (
+        isAfter(current, start) &&
+        isBefore(current, end) &&
+        pair.analytics[0] <= raceDistance
+      );
+    });
+
+    /*    if (filteredPositions.length === 0) return;
+
+    const positionsData = filteredPositions.map((position) => [
+      position.analytics[0],
+      position.projectPosition.timestamp,
+    ]);
+
+    const lastItem = positionsData[positionsData.length - 1];*/
+
+    //TODO: debug purpose
+    const slow = new Date(checkpoints[1].cutOffTime);
+    const duration = differenceInMilliseconds(slow, start);
+    const fast = addMilliseconds(start, duration / 2);
+    const lastItem = { distance: 10, eta: fast };
+
+    const items = [lastItem];
+
+    // 1- compute runner average speed
+    const duration1 = differenceInSeconds(
+      new Date(lastItem.eta),
+      new Date(checkpoints[0].cutOffTime)
+    );
+
+    //km.h
+    const averageRunnerSpeed = (lastItem.distance.toFixed() / duration1) * 3.6;
+
+    // 2- compute remaining cp
+    const remainingCheckpoints = checkpoints.filter(
+      (checkpoints) => checkpoints.km > lastItem.distance.toFixed()
+    );
+
+    // 3- compute eta(s) for remaining checkpoints
+    const etas = remainingCheckpoints.reduce(
+      (etas, checkpoint, index, array) => {
+        // ideal duration
+        const time = checkpoint.km / averageRunnerSpeed;
+        // add fatigue coefficient
+        const timeInMs = time * 3600 * (1.07 + (0.5 * index) / array.length);
+
+        const totalDuration = differenceInSeconds(
+          new Date(addMilliseconds(start, timeInMs)),
+          start
+        );
+
+        const averageSpeed = (checkpoint.km / totalDuration) * 3600;
+
+        return [
+          ...etas,
+          {
+            distance: checkpoint.km,
+            eta: new Date(addMilliseconds(start, timeInMs)),
+            averageSpeed,
+            site: checkpoint["\ufeffsite"],
+          },
+        ];
+      },
+      []
+    );
+
+    const mergedData = [{ distance: 0, eta: start }, ...items, ...etas];
+    setRunnerPositions(mergedData);
+
+    // 4- compute markers and lines
     const getLine = d3.shape
       .line()
-      .x((d) => scales.x(new Date(d[1])))
-      .y((d) => scales.y(d[0]))
+      .x((d) => scales.x(new Date(d.eta)))
+      .y((d) => scales.y(d.distance))
       .defined((d) => !d.fake);
 
-    const path = getLine(positions);
+    const path = getLine(mergedData);
     setLivePath(path);
-  }, [positions, scales, checkpoints]);
+  }, [positions, checkpoints, scales]);
 
   return scales ? (
     <div className={className} style={{ width, height }}>
@@ -415,13 +486,58 @@ const Live = ({
           <path
             d={livePath}
             fill="none"
-            stroke="#357597"
+            stroke="#e24e1b"
             strokeWidth="2"
             strokeDasharray="4 4"
             strokeOpacity="0.9"
           />
         )}
+        <g className={"runner-positions-markers"}>
+          {runnerPositions &&
+            runnerPositions.map((position, index) => (
+              <g key={`${index}-main-circle`}>
+                <g key={`${index}-outer-circle`}>
+                  <circle
+                    cx={scales.x(position.eta)}
+                    cy={scales.y(position.distance)}
+                    r="4"
+                    fill={"#e24e1b"}
+                  />
+                  <circle
+                    cx={scales.x(position.eta)}
+                    cy={scales.y(position.distance)}
+                    r="3"
+                    fill={bgColor}
+                  >
+                    <title>
+                      {`${position.site ? position.site : "gps"} - ${format(
+                        new Date(position.eta),
+                        "dd-MM HH:mm"
+                      )}`}
+                    </title>
+                  </circle>
+                </g>
+              </g>
+            ))}
+        </g>
       </svg>
+      <div className={`report ${toggle ? "open" : "close"}`}>
+        {!toggle ? (
+          <Maximize size={16} onClick={() => setToggle(!toggle)} />
+        ) : (
+          <>
+            <Minimize size={20} onClick={() => setToggle(!toggle)} />
+            {runnerPositions &&
+              runnerPositions.map((position, index) => (
+                <div key={index}>
+                  {`${position.site ? position.site : "gps"} - ${
+                    position.distance
+                  } km - ${format(new Date(position.eta), "dd-MM HH:mm")}`}
+                </div>
+              ))}
+          </>
+        )}
+      </div>
     </div>
   ) : null;
 };

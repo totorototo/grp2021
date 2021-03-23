@@ -34,6 +34,7 @@ function Race({
   locationsIndices,
   peaks,
   className,
+  flushPositions,
 }) {
   const [domain, setDomain] = useState({
     x: { min: 0, max: 0 },
@@ -46,13 +47,45 @@ function Race({
   const [projectedLocation, setProjectedLocation] = useState();
   const [projectedLocationIndex, setProjectedLocationIndex] = useState();
   const [progression, setProgression] = useState();
+  const [mappedPositions, setMappedPositions] = useState();
 
   useEffect(() => {
-    if (!positions || positions.length === 0 || !coordinates) return;
+    if (!positions /*|| positions.length === 0*/ || !coordinates) return;
+
+    if (positions.length === 0) {
+      setDelta(undefined);
+      setCurrentSectionIndex(undefined);
+      setAnalytics(undefined);
+      setProjectedLocation(undefined);
+      setProjectedLocationIndex(undefined);
+      setMappedPositions(undefined);
+      setProgression(undefined);
+      return;
+    }
 
     const helper = createPathHelper(coordinates);
     const sortedPositions = positions.sort((a, b) => a.timestamp - b.timestamp);
     const lastPosition = sortedPositions[sortedPositions.length - 1];
+
+    // temp
+    const pairs = sortedPositions.map((position) => {
+      const closestPosition = helper.findClosestPosition(position.coords);
+      const closestPositionIndex = helper.getPositionIndex(closestPosition);
+      const analytics = helper.getProgressionStatistics(closestPositionIndex);
+      const delta = calculateDistance(position.coords, closestPosition);
+
+      return {
+        position,
+        projectPosition: {
+          coords: closestPosition,
+          timestamp: position.timestamp,
+        },
+        analytics,
+        delta,
+      };
+    });
+
+    setMappedPositions(pairs);
 
     // get current section
     const closestLocation = helper.findClosestPosition(lastPosition.coords);
@@ -140,11 +173,11 @@ function Race({
                 {({ width, height }) => (
                   <Live
                     //bgColor="#2a2d32"
+                    positions={mappedPositions}
                     color="#F4A301"
                     width={width}
                     height={height}
                     checkpoints={checkpoints}
-                    positions={positions}
                   />
                 )}
               </AutoSizer>
@@ -181,6 +214,7 @@ function Race({
               analytics={analytics}
               progression={progression}
               sections={sections}
+              flushPositions={flushPositions}
             />
           </div>
           <div className={"current-section-container child"}>

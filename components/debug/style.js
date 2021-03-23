@@ -10,6 +10,7 @@ const style = (Component) => styled(Component)`
   align-items: flex-start;
   justify-content: flex-start;
   color: var(--color-text);
+  position: relative;
 
   p {
     display: flex;
@@ -20,6 +21,17 @@ const style = (Component) => styled(Component)`
         font-weight: bolder;
         font-size: 1.2rem;
         margin-bottom: 0.2rem;
+        svg {
+          margin-left: 0.3rem;
+          background-color: var(--color-alert);
+          border-radius: 0.1rem;
+          stroke: var(--color-background);
+          padding: 0.1rem;
+
+          &.disable {
+            opacity: 0.1;
+          }
+        }
       }
       &.title {
       }

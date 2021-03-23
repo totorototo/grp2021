@@ -59,6 +59,41 @@ const style = (Component) => styled(Component)`
       }
     }
   }
+  .report {
+    position: absolute;
+    bottom: 3rem;
+    right: 2rem;
+    background-color: #e24e1b;
+    padding: 0.5rem;
+    border-radius: 2rem;
+
+    svg {
+      stroke: var(--color-background);
+      stroke-width: 2;
+    }
+
+    &.open {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      top: 0;
+      left: 0;
+      bottom: 3rem;
+      right: 2rem;
+
+      border-radius: 0;
+      background-color: var(--color-background);
+      opacity: 0.8;
+      svg {
+        stroke: #e24e1b;
+        align-self: flex-end;
+      }
+    }
+  }
 `;
 
 export default style;
