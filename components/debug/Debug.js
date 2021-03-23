@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { format, isWithinInterval } from "date-fns";
+import { Trash } from "@styled-icons/feather/Trash";
 
 import style from "./style";
 
@@ -12,6 +13,7 @@ const Debug = ({
   analytics,
   progression,
   sections,
+  flushPositions,
 }) => {
   const [interval, setInterval] = useState();
   const [sortedPositions, setSortedPositions] = useState();
@@ -80,7 +82,20 @@ const Debug = ({
         )}
       </p>
       <p>
-        <span className={"category"}>saved positions</span>
+        <span className={"category"}>
+          <span>saved positions</span>
+          <Trash
+            className={`${
+              sortedPositions && sortedPositions.length > 0
+                ? "enable"
+                : "disable"
+            }`}
+            size={20}
+            onClick={() => flushPositions()}
+          >
+            flush
+          </Trash>
+        </span>
         {sections && interval && sortedPositions && sortedPositions.length > 0 && (
           <span className={"positions"}>
             {sortedPositions.map((position, index) => {
