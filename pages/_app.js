@@ -49,8 +49,6 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-//const buffer = createRingBuffer(10);
-
 export default function MyApp({ Component, pageProps }) {
   const [positions, setPositions] = usePersistedState("positions", []);
   const [buffer, setBuffer] = useState();
@@ -78,10 +76,22 @@ export default function MyApp({ Component, pageProps }) {
     });
   };
 
+  const flushPositions = () => {
+    if (buffer) {
+      buffer.flush();
+      setPositions(() => []);
+    }
+  };
+
   return (
     <ThemeProvider theme={THEME}>
       <GlobalStyle />
-      <Component {...pageProps} positions={positions} spot={spot} />
+      <Component
+        {...pageProps}
+        positions={positions}
+        spot={spot}
+        flushPositions={flushPositions}
+      />
     </ThemeProvider>
   );
 }
