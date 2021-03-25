@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { formatDistance, format } from "date-fns";
 
-import useIntersect from "../../hooks/useIntersect";
-import Container from "./Container";
+import useIntersect from "../../../hooks/useIntersect";
+import Container from "../Container";
+import style from "./style";
 
 const msToTime = (milliseconds) => {
   let day, hour, minute, seconds;
@@ -15,8 +16,9 @@ const msToTime = (milliseconds) => {
 };
 
 const Section = ({
+  className,
   root,
-  setSelectedSectionIndex,
+  setSelectedSectionIndex = () => {},
   id,
   section,
   highlightedSectionIndex,
@@ -53,7 +55,8 @@ const Section = ({
   }, [entry.intersectionRatio, setHighlightedSectionIndex, id]);
 
   return (
-    <Container
+    <div
+      className={className}
       onClick={() => {
         setSelectedSectionIndex(id);
       }}
@@ -61,7 +64,30 @@ const Section = ({
     >
       <div className={`detail ${currentSectionIndex === id ? "current" : ""}`}>
         <div className={"section-index"}>{id + 1}</div>
-        <p className={"section-data"}>
+        <div className={"section-data"}>
+          <div className={"item"}>{`${section.departureLocation}`}</div>
+          <div className={"item"}>{`${section.arrivalLocation}`}</div>
+          <div className={"item"}>{`${(section.distance / 1000).toFixed(
+            1
+          )}km`}</div>
+          <div className={"item"}>
+            {`${section.elevation.positive.toFixed(
+              0
+            )}D+ ${section.elevation.negative.toFixed(0)}D-`}
+          </div>
+          <div className={"item"}>
+            {formatDistance(0, section.duration, {
+              includeSeconds: true,
+            })}
+          </div>
+          <div className={"item"}>
+            {format(new Date(section.cutOffTime), "dd-MM HH:mm")}
+          </div>
+          <div className={"item"}>
+            {msToTime(section.elapsedHoursFromStart)}
+          </div>
+        </div>
+        {/*   <p className={"section-data"}>
           <span>{`${section.departureLocation} - ${section.arrivalLocation}`}</span>
           <span>{`${(section.distance / 1000).toFixed(1)}km `}</span>
           <span className={"type"}>distance</span>
@@ -81,10 +107,10 @@ const Section = ({
           <span className={"type"}>time barrier</span>
           <span>{msToTime(section.elapsedHoursFromStart)}</span>
           <span className={"type"}>since start</span>
-        </p>
+        </p>*/}
       </div>
-    </Container>
+    </div>
   );
 };
 
-export default Section;
+export default style(Section);

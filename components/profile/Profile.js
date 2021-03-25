@@ -10,7 +10,7 @@ import {
 } from "../../helpers/d3";
 import Gradient from "../gradient/Gradient";
 import Marker from "../marker/Marker";
-import Section from "./Section";
+import Section from "./sections/Section";
 
 const MARKER_WIDTH = 30;
 
