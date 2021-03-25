@@ -32,6 +32,17 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       margin: 0;
     }
+
+    *:focus {
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+    }
+    
+    ::selection{
+      background-color: transparent;
+    }
  
 
     > div:first-child,
