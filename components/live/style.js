@@ -62,13 +62,13 @@ const style = (Component) => styled(Component)`
   .report {
     position: absolute;
     bottom: 3rem;
-    right: 2rem;
-    background-color: #e24e1b;
+    right: 1rem;
+    background-color: var(--color-gray-300);
     padding: 0.5rem;
     border-radius: 2rem;
 
     svg {
-      stroke: var(--color-background);
+      stroke: var(--color-text);
       stroke-width: 2;
     }
 
@@ -78,7 +78,7 @@ const style = (Component) => styled(Component)`
       height: 100%;
       flex-direction: column;
       align-items: flex-start;
-      justify-content: center;
+      justify-content: flex-start;
 
       top: 0;
       left: 0;
@@ -91,6 +91,22 @@ const style = (Component) => styled(Component)`
       svg {
         stroke: #e24e1b;
         align-self: flex-end;
+      }
+
+      p {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+
+        .category {
+          font-weight: bolder;
+          font-size: 1.2rem;
+          margin-bottom: 0.2rem;
+        }
+
+        .step {
+          //color: pink;
+        }
       }
     }
   }
