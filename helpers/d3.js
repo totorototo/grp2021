@@ -49,7 +49,8 @@ export const getLine = (points, scaleX, scaleY) => {
     .line()
     .x((d) => scaleX(points.indexOf(d)))
     .y((d) => scaleY(d[2]))
-    .defined((d) => !d.fake);
+    .defined((d) => !d.fake)
+    .curve(d3.shape.curveCatmullRom.alpha(0.5));
   return {
     path: lineShape(points),
   };

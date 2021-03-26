@@ -64,7 +64,7 @@ const Section = ({
     >
       <div className={`detail ${currentSectionIndex === id ? "current" : ""}`}>
         <div className={"section-index"}>{id + 1}</div>
-        <div className={"section-data"}>
+        {/* <div className={"section-data"}>
           <div className={"item"}>{`${section.departureLocation}`}</div>
           <div className={"item"}>{`${section.arrivalLocation}`}</div>
           <div className={"item"}>{`${(section.distance / 1000).toFixed(
@@ -86,8 +86,8 @@ const Section = ({
           <div className={"item"}>
             {msToTime(section.elapsedHoursFromStart)}
           </div>
-        </div>
-        {/*   <p className={"section-data"}>
+        </div>*/}
+        <p className={"section-data"}>
           <span>{`${section.departureLocation} - ${section.arrivalLocation}`}</span>
           <span>{`${(section.distance / 1000).toFixed(1)}km `}</span>
           <span className={"type"}>distance</span>
@@ -107,7 +107,7 @@ const Section = ({
           <span className={"type"}>time barrier</span>
           <span>{msToTime(section.elapsedHoursFromStart)}</span>
           <span className={"type"}>since start</span>
-        </p>*/}
+        </p>
       </div>
     </div>
   );
