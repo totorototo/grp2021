@@ -22,11 +22,10 @@ const setFonts = () => {
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: var(--font-family-serif);
+   
     margin: 0;
-
-   // * { border: 1px solid red; }
-
+    font-family: "Open Sans", sans-serif;
+    
     *, *:before, *:after {
       box-sizing: border-box;
       padding: 0;
@@ -51,6 +50,16 @@ const GlobalStyle = createGlobalStyle`
       height:100vh;
       background-color: var(--color-background);
     }
+  }
+
+  @font-face {
+    font-family: 'Love Ya Like A Sister';  
+    src: url('/fonts/LoveYaLikeASister.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Open Sans';
+    src: url('/fonts/OpenSens.ttf') format('truetype');
   }
 
   :root{
