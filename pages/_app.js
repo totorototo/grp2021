@@ -54,12 +54,12 @@ const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: 'Love Ya Like A Sister';  
-    src: url('/fonts/LoveYaLikeASister.ttf') format('truetype');
+    src: local("Love Ya Like A Sister" ) url('/fonts/LoveYaLikeASister.ttf') format('truetype');
   }
 
   @font-face {
     font-family: 'Open Sans';
-    src: url('/fonts/OpenSens.ttf') format('truetype');
+    src:local("Open Sans") url('/fonts/OpenSens.ttf') format('truetype');
   }
 
   :root{
