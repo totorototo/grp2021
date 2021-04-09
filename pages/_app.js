@@ -52,15 +52,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  @font-face {
-    font-family: 'Love Ya Like A Sister';  
-    src: local("Love Ya Like A Sister" ) url('/fonts/LoveYaLikeASister.ttf') format('truetype');
-  }
 
-  @font-face {
-    font-family: 'Open Sans';
-    src:local("Open Sans") url('/fonts/OpenSens.ttf') format('truetype');
-  }
 
   :root{
     ${setDefaultColors()};
