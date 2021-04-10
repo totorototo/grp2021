@@ -189,7 +189,7 @@ const Profile = ({
               stroke={"transparent"}
               strokeWidth="0"
               fill={"#F4A301"}
-              opacity={0.2}
+              opacity={0.1}
             />
           )}
           {highlightedArea && (
@@ -198,7 +198,7 @@ const Profile = ({
               stroke={"transparent"}
               strokeWidth="0"
               fill={"#F4A301"}
-              opacity={0.8}
+              opacity={0.2}
             />
           )}
           {progression && <path d={progression.path} fill={"url(#gradient)"} />}

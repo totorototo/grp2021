@@ -17,10 +17,11 @@ const style = (Component) => styled(Component)`
     padding: 1rem;
 
     .section-index {
+      font-family: "Love Ya Like A Sister", cursive;
       display: grid;
       place-items: center;
       font-weight: bolder;
-      font-size: 6rem;
+      font-size: 7rem;
       letter-spacing: -0.05em;
       min-width: 10rem;
       //flex: 1 1 auto;
@@ -38,10 +39,12 @@ const style = (Component) => styled(Component)`
       span:first-child {
         font-size: 1.1rem;
         font-weight: bolder;
+        font-family: "Love Ya Like A Sister", cursive;
       }
 
       .type {
         font-weight: bolder;
+        font-family: "Love Ya Like A Sister", cursive;
       }
 
       .locations {

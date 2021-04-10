@@ -21,12 +21,13 @@ const style = (Component) => styled(Component)`
         font-weight: bolder;
         font-size: 1.2rem;
         margin-bottom: 0.2rem;
+        font-family: "Love Ya Like A Sister", cursive;
         svg {
           margin-left: 0.3rem;
           background-color: var(--color-alert);
-          border-radius: 0.1rem;
+          border-radius: 1rem;
           stroke: var(--color-background);
-          padding: 0.1rem;
+          padding: 0.2rem;
 
           &.disable {
             opacity: 0.1;

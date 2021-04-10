@@ -19,7 +19,7 @@ const style = (Component) => styled(Component)`
   }
 
   footer {
-    height: 40px;
+    //height: 40px;
   }
 
   footer,

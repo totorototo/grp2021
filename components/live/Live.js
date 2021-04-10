@@ -453,7 +453,7 @@ const Live = ({
         </g>
         {timeSpansArea && (
           <path
-            fillOpacity="0.2"
+            fillOpacity="0.1"
             d={timeSpansArea}
             strokeWidth="0"
             fill={color}
