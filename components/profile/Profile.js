@@ -171,15 +171,15 @@ const Profile = ({
         >
           <Gradient
             from={"#F4A301"}
-            to={"#F4A30100"}
-            toOffset={"80%"}
+            to={"#ebebeb00"}
+            toOffset={"100%"}
             id="gradient1"
           />
           {profilePath && (
             <path
               d={profilePath.path}
               stroke={"#F4A301"}
-              strokeWidth="1"
+              strokeWidth="1.4"
               fill={"transparent"}
             />
           )}
@@ -201,9 +201,7 @@ const Profile = ({
               opacity={0.2}
             />
           )}
-          {progression && (
-            <path d={progression.path} fill={"url(#gradient1)"} />
-          )}
+          {progression && <path d={progression.path} fill={"url(#gradient)"} />}
           {markers &&
             scales &&
             markers.length > 0 &&
