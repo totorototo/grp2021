@@ -456,7 +456,7 @@ const Live = ({
             fillOpacity="0.1"
             d={timeSpansArea}
             strokeWidth="0"
-            fill={color}
+            fill={"transparent"}
           />
         )}
         <g className={"lines"}>

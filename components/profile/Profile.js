@@ -170,10 +170,10 @@ const Profile = ({
           viewBox={`0 0 ${width * 2.5} ${height / 2}`}
         >
           <Gradient
-            from={"#ff0000"}
-            to={"#ebebeb00"}
-            toOffset={"100%"}
-            id="gradient"
+            from={"#F4A301"}
+            to={"#F4A30100"}
+            toOffset={"80%"}
+            id="gradient1"
           />
           {profilePath && (
             <path
@@ -188,7 +188,7 @@ const Profile = ({
               d={profileArea.path}
               stroke={"transparent"}
               strokeWidth="0"
-              fill={"#F4A301"}
+              fill={"transparent"}
               opacity={0.1}
             />
           )}
@@ -197,11 +197,13 @@ const Profile = ({
               d={highlightedArea.path}
               stroke={"transparent"}
               strokeWidth="0"
-              fill={"#F4A301"}
+              fill={"url(#gradient1)"}
               opacity={0.2}
             />
           )}
-          {progression && <path d={progression.path} fill={"url(#gradient)"} />}
+          {progression && (
+            <path d={progression.path} fill={"url(#gradient1)"} />
+          )}
           {markers &&
             scales &&
             markers.length > 0 &&
