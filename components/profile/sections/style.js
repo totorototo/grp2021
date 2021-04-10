@@ -37,14 +37,14 @@ const style = (Component) => styled(Component)`
       justify-content: center;
 
       span:first-child {
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: bolder;
-        font-family: "Love Ya Like A Sister", cursive;
+        //font-family: "Love Ya Like A Sister", cursive;
       }
 
       .type {
-        font-weight: bolder;
-        font-family: "Love Ya Like A Sister", cursive;
+        font-weight: bold;
+        //font-family: "Love Ya Like A Sister", cursive;
       }
 
       .locations {
@@ -53,7 +53,7 @@ const style = (Component) => styled(Component)`
       }
 
       span:not(.type) {
-        margin-top: 0.4rem;
+        margin-top: 0.1rem;
       }
     }
 
