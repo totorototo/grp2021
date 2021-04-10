@@ -466,14 +466,14 @@ const Live = ({
                 d={slowLine}
                 fill="none"
                 stroke={color}
-                strokeWidth="1"
+                strokeWidth="1.4"
                 strokeOpacity="1"
               />
               <path
                 d={fastLine}
                 fill="none"
                 stroke={color}
-                strokeWidth="1"
+                strokeWidth="1.4"
                 strokeOpacity="1"
               />
             </g>
@@ -571,7 +571,7 @@ const Live = ({
       </svg>
       <div className={`report ${toggle ? "open" : "close"}`}>
         {!toggle ? (
-          <List size={16} onClick={() => setToggle(!toggle)} />
+          <List size={20} onClick={() => setToggle(!toggle)} />
         ) : (
           <>
             <X size={20} onClick={() => setToggle(!toggle)} />

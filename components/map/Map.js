@@ -62,7 +62,7 @@ const Map = ({
           {...viewport}
           width="100%"
           height="100%"
-          mapStyle={colorMode === "light" ? lightStyle : darkStyle}
+          mapStyle={colorMode === "light" ? lightStyle : lightStyle}
           onViewportChange={setViewport}
           mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_KEY}
         >
