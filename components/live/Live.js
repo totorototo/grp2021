@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { List } from "@styled-icons/feather/List";
 import { X } from "@styled-icons/feather/X";
 
@@ -367,18 +367,61 @@ const Live = ({
           <g className="group-area">
             {shifts &&
               shifts.map((interval, index) => {
+                const x = scales.x(new Date(interval.start));
+                const y = 0;
+                const width =
+                  scales.x(new Date(interval.end)) -
+                  scales.x(new Date(interval.start));
+
                 return (
-                  <line
-                    key={index}
-                    x1={scales.x(new Date(interval.start))}
-                    x2={scales.x(new Date(interval.start))}
-                    y1={"0"}
-                    y2={height - OFFSET_Y}
-                    strokeWidth={"1"}
-                    stroke={"var(--color-text)"}
-                    strokeOpacity={0.3}
-                    strokeDasharray="4 4"
-                  />
+                  <Fragment key={index}>
+                    <clipPath id={`clip-${index}`}>
+                      <rect
+                        key={`${index}-area`}
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height - OFFSET_Y}
+                      />
+                    </clipPath>
+                    {/*  <g clipPath={`url(#${`clip-${index}`})`}>
+                      <rect
+                        fill={"transparent"}
+                        opacity="1"
+                        key={`${index}-area`}
+                        className="area"
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height - OFFSET_Y}
+                      />
+                      <text
+                        writingMode="tb"
+                        className="label"
+                        x={x + 15}
+                        y={y + 10}
+                        //fontSize={28}
+                        transform={
+                          index > 0
+                            ? `translate(0, ${height - height / 2})`
+                            : "translate(0,0)"
+                        }
+                      >
+                        {format(new Date(interval.start), "EEEE")}
+                      </text>
+                    </g>*/}
+                    <line
+                      key={index}
+                      x1={x}
+                      x2={x}
+                      y1={y}
+                      y2={height - OFFSET_Y}
+                      strokeWidth={"1"}
+                      stroke={"var(--color-text)"}
+                      strokeOpacity={0.3}
+                      strokeDasharray="4 4"
+                    />
+                  </Fragment>
                 );
               })}
           </g>

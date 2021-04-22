@@ -7,7 +7,7 @@ const Footer = ({ className }) => {
       <div className={"conditions"}>
         <div className={"condition"}>legal</div>
         <div className={"condition"}>privacy</div>
-        <div className={"logo"}>xxxx-buddy.io © 2021 La Vallée</div>
+        <div className={"logo"}>trail-buddy.io © 2021 La Vallée</div>
       </div>
     </div>
   );

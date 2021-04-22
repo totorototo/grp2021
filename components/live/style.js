@@ -57,6 +57,12 @@ const style = (Component) => styled(Component)`
       line:first-child {
         stroke-width: 0;
       }
+      text {
+        fill: var(--color-text);
+        //font-family: "Love Ya Like A Sister", cursive;
+        opacity: 0.2;
+        font-size: 4rem;
+      }
     }
   }
   .report {

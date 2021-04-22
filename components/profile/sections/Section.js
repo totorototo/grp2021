@@ -89,24 +89,27 @@ const Section = ({
         </div>*/}
         <p className={"section-data"}>
           <span>{`${section.departureLocation} - ${section.arrivalLocation}`}</span>
-          <span>{`${(section.distance / 1000).toFixed(1)}km `}</span>
           <span className={"type"}>distance</span>
+          <span>{`${(section.distance / 1000).toFixed(1)}km `}</span>
+
+          <span className={"type"}>elevation</span>
           <span>
             {`${section.elevation.positive.toFixed(
               0
             )}D+ ${section.elevation.negative.toFixed(0)}D-`}
           </span>
-          <span className={"type"}>elevation</span>
+
+          <span className={"type"}>duration</span>
           <span>
             {formatDistance(0, section.duration, {
               includeSeconds: true,
             })}
           </span>
-          <span className={"type"}>duration</span>
-          <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
+
           <span className={"type"}>time barrier</span>
-          <span>{msToTime(section.elapsedHoursFromStart)}</span>
+          <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
           <span className={"type"}>since start</span>
+          <span>{msToTime(section.elapsedHoursFromStart)}</span>
         </p>
       </div>
     </div>

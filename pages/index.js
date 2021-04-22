@@ -15,7 +15,7 @@ const Main = styled.div`
 export default function Home() {
   return (
     <Layout>
-      <title>xxxx-buddy.io</title>
+      <title>trail-buddy.io</title>
       <Main>GRP 2021</Main>
     </Layout>
   );
