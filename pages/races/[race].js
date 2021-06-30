@@ -344,8 +344,20 @@ export async function getStaticProps({ params }) {
         endingDate,
         raceStartDate
       );
+
       const startingDate = new Date(array[index - 1].cutOffTime);
       const duration = differenceInMilliseconds(endingDate, startingDate);
+
+      const sectionStats = sectionsStats[index - 1];
+      const total = helper.getProgressionStatistics(
+        sectionsIndices[index - 1][1]
+      )[0];
+
+      const avgSpeed = (total / elapsedHoursFromStart) * 3600;
+      const updatedSectionStats = { ...sectionStats, avgSpeed };
+
+      console.log(avgSpeed);
+
       return [
         ...accu,
         {
@@ -356,13 +368,11 @@ export async function getStaticProps({ params }) {
           arrivalLocation: checkpoint[columns[0]],
           duration,
           cutOffTime: checkpoint.cutOffTime,
-          ...sectionsStats[index - 1],
+          ...updatedSectionStats,
           fromKm: helper.getProgressionStatistics(
             sectionsIndices[index - 1][0]
           )[0],
-          toKm: helper.getProgressionStatistics(
-            sectionsIndices[index - 1][1]
-          )[0],
+          toKm: total,
           indices: sectionsIndices[index - 1],
         },
       ];

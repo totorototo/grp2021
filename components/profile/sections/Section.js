@@ -110,6 +110,8 @@ const Section = ({
           <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
           <span className={"type"}>since start</span>
           <span>{msToTime(section.elapsedHoursFromStart)}</span>
+          <span className={"type"}>min avg speed</span>
+          <span>{`${section.avgSpeed.toFixed(2)} km/h`}</span>
         </p>
       </div>
     </div>
