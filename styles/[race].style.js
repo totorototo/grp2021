@@ -17,6 +17,7 @@ const style = (Component) => styled(Component)`
     "preview"
     "map" 
     "section"
+    "stages"
     "time"   
     "debug";
 
@@ -49,8 +50,12 @@ const style = (Component) => styled(Component)`
       grid-area: debug;    
     }
     
+    .stage-container {
+      grid-area: stages;
+    }
+    
     .current-section-container {
-      grid-area: section
+      grid-area: section;
     }
 
     .b {
@@ -85,7 +90,7 @@ const style = (Component) => styled(Component)`
       grid-template-columns: repeat(8, 1fr);
       grid-template-rows: repeat(6, minmax(100px, auto));
       grid-template-areas:
-       "preview preview preview preview . .time time"
+       "preview preview preview preview stage stage time time"
        "map map map map map map time time"
        "map map map map map map section section"
        "map map map map map map section section"

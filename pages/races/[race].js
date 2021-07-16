@@ -4,7 +4,7 @@ import path from "path";
 import xmldom from "xmldom";
 import { gpx } from "@mapbox/togeojson";
 import { csvParse } from "d3-dsv";
-import { differenceInMilliseconds } from "date-fns";
+import { differenceInMilliseconds, formatDistance } from "date-fns";
 import * as d3Array from "d3-array";
 import { calculateDistance, createPathHelper } from "positic";
 import { AutoSizer } from "react-virtualized";
@@ -19,8 +19,10 @@ import style from "../../styles/[race].style";
 import Preview from "../../components/preview/Preview";
 import Profile from "../../components/profile/Profile";
 import Debug from "../../components/debug/Debug";
+import Stages from "../../components/stages/Stages";
 
 function Race({
+  stages,
   positions,
   spot,
   distance,
@@ -205,6 +207,15 @@ function Race({
               </AutoSizer>
             </ClientOnly>
           </div>
+          <div className={"stages-container child"}>
+            <ClientOnly>
+              <AutoSizer>
+                {({ width, height }) => (
+                  <Stages width={width} height={height} stages={stages} />
+                )}
+              </AutoSizer>
+            </ClientOnly>
+          </div>
           <div className={"debug-container child"}>
             <Debug
               positions={positions}
@@ -356,11 +367,10 @@ export async function getStaticProps({ params }) {
       const avgSpeed = (total / elapsedHoursFromStart) * 3600;
       const updatedSectionStats = { ...sectionStats, avgSpeed };
 
-      console.log(avgSpeed);
-
       return [
         ...accu,
         {
+          lifeBase: array[index - 1].refueling.toLowerCase() === "gros rav",
           elapsedHoursFromStart,
           startingDate: array[index - 1].cutOffTime,
           endingDate: checkpoint.cutOffTime,
@@ -380,9 +390,150 @@ export async function getStaticProps({ params }) {
     return accu;
   }, []);
 
+  const stages = sections.reduce(
+    (accu, section, index, array) => {
+      if (section.distance === 0 && section.lifeBase) {
+        if (accu.stages.length > 0) {
+          const lastStage = accu.stages[accu.stages.length - 1];
+
+          //duration
+          const startingDate = new Date(lastStage.endingDate);
+          const endingDate = new Date(section.cutOffTime);
+          const duration = differenceInMilliseconds(endingDate, startingDate);
+          const humanReadableDuration = formatDistance(
+            startingDate,
+            endingDate
+          );
+
+          //distance
+          const distance = (section.toKm - lastStage.toKm) / 1000;
+
+          return {
+            ...accu,
+            stages: [
+              ...accu.stages,
+              {
+                elevation: {
+                  gain: accu.stats.elevation.gain - lastStage.elevation.gain,
+                  loss: accu.stats.elevation.loss - lastStage.elevation.loss,
+                },
+                departure: lastStage.arrival,
+                arrival: section.arrivalLocation,
+                toKm: section.toKm,
+                duration,
+                startingDate,
+                endingDate,
+                distance,
+                humanReadableDuration,
+              },
+            ],
+          };
+        } else {
+          //duration
+          const startingDate = new Date(checkpoints[0].cutOffTime);
+          const endingDate = new Date(section.cutOffTime);
+          const duration = differenceInMilliseconds(endingDate, startingDate);
+          const humanReadableDuration = formatDistance(
+            startingDate,
+            endingDate
+          );
+
+          //distance
+          const distance = section.toKm / 1000;
+
+          return {
+            ...accu,
+            stages: [
+              ...accu.stages,
+              {
+                departure: checkpoints[0][columns[0]],
+                arrival: section.arrivalLocation,
+                toKm: section.toKm,
+                duration,
+                startingDate,
+                endingDate,
+                distance,
+                humanReadableDuration,
+                elevation: {
+                  gain: accu.stats.elevation.gain,
+                  loss: accu.stats.elevation.gain,
+                },
+              },
+            ],
+          };
+        }
+      } else {
+        if (index === array.length - 1) {
+          const lastStage = accu.stages[accu.stages.length - 1];
+          if (!lastStage) return accu;
+
+          //duration
+          const startingDate = new Date(lastStage.endingDate);
+          const endingDate = new Date(section.cutOffTime);
+          const duration = differenceInMilliseconds(endingDate, startingDate);
+          const humanReadableDuration = formatDistance(
+            startingDate,
+            endingDate
+          );
+
+          const distance = (section.toKm - lastStage.toKm) / 1000;
+
+          return {
+            ...accu,
+            stages: [
+              ...accu.stages,
+              {
+                departure: lastStage.arrival,
+                arrival: section.arrivalLocation,
+                toKm: section.toKm,
+                duration,
+                startingDate,
+                endingDate,
+                distance,
+                humanReadableDuration,
+                elevation: {
+                  gain: elevation.positive - accu.stats.elevation.gain,
+                  loss: elevation.negative - accu.stats.elevation.loss,
+                },
+              },
+            ],
+            stats: {
+              distance: accu.stats.distance + section.distance,
+              elevation: {
+                gain: accu.stats.elevation.gain + section.elevation.positive,
+                loss: accu.stats.elevation.loss + section.elevation.negative,
+              },
+            },
+          };
+        } else {
+          return {
+            ...accu,
+            stats: {
+              distance: accu.stats.distance + section.distance,
+              elevation: {
+                gain: accu.stats.elevation.gain + section.elevation.positive,
+                loss: accu.stats.elevation.loss + section.elevation.negative,
+              },
+            },
+          };
+        }
+      }
+    },
+    { stages: [], stats: { distance: 0, elevation: { gain: 0, loss: 0 } } }
+  );
+
+  const sumUp = stages.stages.map((stage) => ({
+    departure: stage.departure,
+    arrival: stage.arrival,
+    distance: stage.distance,
+    elevation: stage.elevation,
+    duration: stage.humanReadableDuration,
+  }));
+
   // Pass data to the page via props
   return {
     props: {
+      stages: sumUp,
       route: geojson,
       coordinates,
       checkpoints,
