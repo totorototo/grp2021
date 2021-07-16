@@ -8,7 +8,7 @@ import { Watch } from "@styled-icons/feather/Watch";
 import { differenceInHours, formatDistanceToNow } from "date-fns";
 import { Timer } from "@styled-icons/ionicons-outline/Timer";
 
-const Preview = ({ className, distance, elevation, checkpoints }) => {
+const Preview = ({ className, distance, elevation, checkpoints, stages }) => {
   return (
     <div className={className}>
       <div className={"item"}>
@@ -23,6 +23,11 @@ const Preview = ({ className, distance, elevation, checkpoints }) => {
           )} D-`}
         </div>
       </div>
+      <div className={"item"}>
+        {/* <AddRoad size={"20"} />*/}
+        <div> {`${stages.length} stages`}</div>
+      </div>
+
       <div className={"item"}>
         {/* <AddRoad size={"20"} />*/}
         <div> {`${checkpoints.length} sections`}</div>

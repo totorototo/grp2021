@@ -157,6 +157,7 @@ function Race({
               distance={distance}
               elevation={elevation}
               checkpoints={checkpoints}
+              stages={stages}
             />
           </div>
           <div className={"map-container child"}>
