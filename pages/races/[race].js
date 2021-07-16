@@ -393,8 +393,9 @@ export async function getStaticProps({ params }) {
 
   const stages = sections.reduce(
     (accu, section, index, array) => {
-      if (section.distance === 0 && section.lifeBase) {
+      if (section.lifeBase) {
         if (accu.stages.length > 0) {
+          //get previous stage stats
           const lastStage = accu.stages[accu.stages.length - 1];
 
           //duration
@@ -407,16 +408,36 @@ export async function getStaticProps({ params }) {
           );
 
           //distance
-          const distance = (section.toKm - lastStage.toKm) / 1000;
+          const distance = section.toKm - lastStage.toKm;
+          const cumulativeElevationGain =
+            accu.stats.cumulativeElevation.gain + section.elevation.positive;
+          const cumulativeElevationLoss =
+            accu.stats.cumulativeElevation.loss + section.elevation.negative;
+          const cumulativeDistance = accu.stats.distance + section.distance;
 
           return {
             ...accu,
+            stats: {
+              distance: cumulativeDistance,
+              cumulativeElevation: {
+                gain: cumulativeElevationGain,
+                loss: cumulativeElevationLoss,
+              },
+            },
             stages: [
               ...accu.stages,
               {
                 elevation: {
-                  gain: accu.stats.elevation.gain - lastStage.elevation.gain,
-                  loss: accu.stats.elevation.loss - lastStage.elevation.loss,
+                  gain:
+                    cumulativeElevationGain -
+                    lastStage.cumulativeElevation.gain,
+                  loss:
+                    cumulativeElevationLoss -
+                    lastStage.cumulativeElevation.loss,
+                },
+                cumulativeElevation: {
+                  gain: cumulativeElevationGain,
+                  loss: cumulativeElevationLoss,
                 },
                 departure: lastStage.arrival,
                 arrival: section.arrivalLocation,
@@ -430,6 +451,12 @@ export async function getStaticProps({ params }) {
             ],
           };
         } else {
+          const cumulativeElevationGain =
+            accu.stats.cumulativeElevation.gain + section.elevation.positive;
+          const cumulativeElevationLoss =
+            accu.stats.cumulativeElevation.loss + section.elevation.negative;
+          const cumulativeDistance = accu.stats.distance + section.distance;
+
           //duration
           const startingDate = new Date(checkpoints[0].cutOffTime);
           const endingDate = new Date(section.cutOffTime);
@@ -439,11 +466,15 @@ export async function getStaticProps({ params }) {
             endingDate
           );
 
-          //distance
-          const distance = section.toKm / 1000;
-
           return {
             ...accu,
+            stats: {
+              distance: cumulativeDistance,
+              cumulativeElevation: {
+                gain: cumulativeElevationGain,
+                loss: cumulativeElevationLoss,
+              },
+            },
             stages: [
               ...accu.stages,
               {
@@ -453,11 +484,15 @@ export async function getStaticProps({ params }) {
                 duration,
                 startingDate,
                 endingDate,
-                distance,
+                distance: cumulativeDistance,
                 humanReadableDuration,
                 elevation: {
-                  gain: accu.stats.elevation.gain,
-                  loss: accu.stats.elevation.gain,
+                  gain: cumulativeElevationGain,
+                  loss: cumulativeElevationLoss,
+                },
+                cumulativeElevation: {
+                  gain: cumulativeElevationGain,
+                  loss: cumulativeElevationLoss,
                 },
               },
             ],
@@ -468,6 +503,11 @@ export async function getStaticProps({ params }) {
           const lastStage = accu.stages[accu.stages.length - 1];
           if (!lastStage) return accu;
 
+          const cumulativeElevationGain =
+            accu.stats.cumulativeElevation.gain + section.elevation.positive;
+          const cumulativeElevationLoss =
+            accu.stats.cumulativeElevation.loss + section.elevation.negative;
+
           //duration
           const startingDate = new Date(lastStage.endingDate);
           const endingDate = new Date(section.cutOffTime);
@@ -477,7 +517,7 @@ export async function getStaticProps({ params }) {
             endingDate
           );
 
-          const distance = (section.toKm - lastStage.toKm) / 1000;
+          const distance = section.toKm - lastStage.toKm;
 
           return {
             ...accu,
@@ -493,35 +533,49 @@ export async function getStaticProps({ params }) {
                 distance,
                 humanReadableDuration,
                 elevation: {
-                  gain: elevation.positive - accu.stats.elevation.gain,
-                  loss: elevation.negative - accu.stats.elevation.loss,
+                  gain:
+                    cumulativeElevationGain -
+                    lastStage.cumulativeElevation.gain,
+                  loss:
+                    cumulativeElevationLoss -
+                    lastStage.cumulativeElevation.loss,
                 },
               },
             ],
             stats: {
               distance: accu.stats.distance + section.distance,
-              elevation: {
-                gain: accu.stats.elevation.gain + section.elevation.positive,
-                loss: accu.stats.elevation.loss + section.elevation.negative,
+              cumulativeElevation: {
+                gain: cumulativeElevationGain,
+                loss: cumulativeElevationLoss,
               },
             },
           };
         } else {
+          // section
           return {
             ...accu,
             stats: {
               distance: accu.stats.distance + section.distance,
-              elevation: {
-                gain: accu.stats.elevation.gain + section.elevation.positive,
-                loss: accu.stats.elevation.loss + section.elevation.negative,
+              cumulativeElevation: {
+                gain:
+                  accu.stats.cumulativeElevation.gain +
+                  section.elevation.positive,
+                loss:
+                  accu.stats.cumulativeElevation.loss +
+                  section.elevation.negative,
               },
             },
           };
         }
       }
     },
-    { stages: [], stats: { distance: 0, elevation: { gain: 0, loss: 0 } } }
+    {
+      stages: [],
+      stats: { distance: 0, cumulativeElevation: { gain: 0, loss: 0 } },
+    }
   );
+
+  console.log(stages);
 
   const sumUp = stages.stages.map((stage) => ({
     departure: stage.departure,
@@ -530,6 +584,8 @@ export async function getStaticProps({ params }) {
     elevation: stage.elevation,
     duration: stage.humanReadableDuration,
   }));
+
+  // console.log(sumUp);
 
   // Pass data to the page via props
   return {

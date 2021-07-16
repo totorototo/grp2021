@@ -10,7 +10,7 @@ const Stage = ({ className, stage, id }) => {
         <p className={"stage-data"}>
           <span>{`${stage.departure} - ${stage.arrival}`}</span>
           <span className={"type"}>distance</span>
-          <span>{`${stage.distance.toFixed(1)}km `}</span>
+          <span>{`${(stage.distance / 1000).toFixed(1)}km `}</span>
           <span className={"type"}>elevation</span>
           <span>
             {`${stage.elevation.gain.toFixed(
