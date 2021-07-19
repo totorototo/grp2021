@@ -66,21 +66,25 @@ const Live = ({
   // horizontal ticks
   useEffect(() => {
     const duration = differenceInHours(
-      new Date(checkpoints[checkpoints.length - 1].cutOffTime),
-      new Date(checkpoints[0].cutOffTime)
+      new Date(
+        checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+      ),
+      new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"))
     );
 
     const tickPeriod = (duration / (duration * 2)).toFixed();
 
     //const tickPeriod = 2;
-    let date = new Date(checkpoints[0].cutOffTime);
+    let date = new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"));
 
     const markers = [];
 
     while (
       differenceInMilliseconds(
         date,
-        new Date(checkpoints[checkpoints.length - 1].cutOffTime)
+        new Date(
+          checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+        )
       ) < 0
     ) {
       markers.push(date);
@@ -109,8 +113,10 @@ const Live = ({
     if (!checkpoints || checkpoints.length <= 0) return;
 
     const x = createXScale(
-      new Date(checkpoints[0].cutOffTime),
-      new Date(checkpoints[checkpoints.length - 1].cutOffTime),
+      new Date(checkpoints[0].cutOffTime.replace(/-/g, "/")),
+      new Date(
+        checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+      ),
       OFFSET_X,
       width - 10
     );
@@ -129,16 +135,22 @@ const Live = ({
     if (!checkpoints) return;
 
     const days = eachDayOfInterval({
-      start: new Date(checkpoints[0].cutOffTime),
-      end: new Date(checkpoints[checkpoints.length - 1].cutOffTime),
+      start: new Date(checkpoints[0].cutOffTime.replace(/-/g, "/")),
+      end: new Date(
+        checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+      ),
     });
 
     // remove first item -> 00-AM to start date
     days.shift();
     // add race start time -> start date to 00-PM
-    days.unshift(new Date(checkpoints[0].cutOffTime));
+    days.unshift(new Date(checkpoints[0].cutOffTime.replace(/-/g, "/")));
     //add race finish time -> OO-AM to finish date
-    days.push(new Date(checkpoints[checkpoints.length - 1].cutOffTime));
+    days.push(
+      new Date(
+        checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+      )
+    );
 
     const shifts = days.reduce((shifts, day, index, array) => {
       if (index < array.length - 1) {
@@ -167,11 +179,11 @@ const Live = ({
   useEffect(() => {
     if (!checkpoints) return;
 
-    const start = new Date(checkpoints[0].cutOffTime);
+    const start = new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"));
 
     const enhancedCheckpoints = checkpoints.reduce(
       (enhancedCheckpoints, checkpoint) => {
-        const slow = new Date(checkpoint.cutOffTime);
+        const slow = new Date(checkpoint.cutOffTime.replace(/-/g, "/"));
         const duration = differenceInMilliseconds(slow, start);
         const fast = addMilliseconds(start, duration / 2);
         const name = checkpoint["\ufeffsite"];
@@ -239,8 +251,10 @@ const Live = ({
       return;
     }
 
-    const start = new Date(checkpoints[0].cutOffTime);
-    const end = new Date(checkpoints[checkpoints.length - 1].cutOffTime);
+    const start = new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"));
+    const end = new Date(
+      checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+    );
     const raceDistance = parseFloat(checkpoints[checkpoints.length - 1].km);
 
     // positions within race time range and within distance
@@ -256,7 +270,7 @@ const Live = ({
       .map((item) => {
         const duration = differenceInSeconds(
           new Date(item.position.timestamp),
-          new Date(checkpoints[0].cutOffTime)
+          new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"))
         );
 
         const averageSpeed = (item.analytics[0] / duration) * 3.6;
@@ -384,7 +398,7 @@ const Live = ({
                         height={height - OFFSET_Y}
                       />
                     </clipPath>
-                    {/*  <g clipPath={`url(#${`clip-${index}`})`}>
+                    <g clipPath={`url(#${`clip-${index}`})`}>
                       <rect
                         fill={"transparent"}
                         opacity="1"
@@ -409,7 +423,7 @@ const Live = ({
                       >
                         {format(new Date(interval.start), "EEEE")}
                       </text>
-                    </g>*/}
+                    </g>
                     <line
                       key={index}
                       x1={x}
@@ -439,7 +453,7 @@ const Live = ({
               >
                 {differenceInHours(
                   new Date(tick),
-                  new Date(checkpoints[0].cutOffTime)
+                  new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"))
                 )}
               </text>
               <line
@@ -453,24 +467,24 @@ const Live = ({
             </g>
           ))}
         </g>
-        {/*  <g className={"axis"}>
-          {xAxisLine && yAxisLine}&&(
-          <path
-            d={xAxisLine}
-            fill="none"
-            stroke="var(--color-text)"
-            strokeWidth="1"
-            strokeOpacity="0.4"
-          />
-          <path
-            d={yAxisLine}
-            fill="none"
-            stroke="var(--color-text)"
-            strokeWidth="1"
-            strokeOpacity="0.4"
-          />
-          )
-        </g>*/}
+        {/*<g className={"axis"}>*/}
+        {/*  {xAxisLine && yAxisLine}&&(*/}
+        {/*  <path*/}
+        {/*    d={xAxisLine}*/}
+        {/*    fill="none"*/}
+        {/*    stroke="var(--color-text)"*/}
+        {/*    strokeWidth="1"*/}
+        {/*    strokeOpacity="0.4"*/}
+        {/*  />*/}
+        {/*  <path*/}
+        {/*    d={yAxisLine}*/}
+        {/*    fill="none"*/}
+        {/*    stroke="var(--color-text)"*/}
+        {/*    strokeWidth="1"*/}
+        {/*    strokeOpacity="0.4"*/}
+        {/*  />*/}
+        {/*  )*/}
+        {/*</g>*/}
         <g className="vertical-ticks">
           {verticalTicks.map((tick, index) => (
             <g key={`${index}-group`}>
@@ -540,10 +554,10 @@ const Live = ({
                     fill={bgColor}
                   >
                     <title>
-                      {`${enhancedCheckpoints.name} - ${format(
-                        new Date(enhancedCheckpoints.slow),
-                        "dd-MM HH:mm"
-                      )}`}
+                      {/*{`${enhancedCheckpoints.name} - ${format(*/}
+                      {/*  new Date(enhancedCheckpoints.slow),*/}
+                      {/*  "dd-MM HH:mm"*/}
+                      {/*)}`}*/}
                     </title>
                   </circle>
                 </g>
@@ -612,35 +626,35 @@ const Live = ({
             ))}
         </g>
       </svg>
-      <div className={`report ${toggle ? "open" : "close"}`}>
-        {!toggle ? (
-          <List size={20} onClick={() => setToggle(!toggle)} />
-        ) : (
-          <>
-            <X size={20} onClick={() => setToggle(!toggle)} />
-            <p>
-              <span className={"category"}>etas</span>
-              {runnerPositions &&
-                runnerPositions
-                  .filter((_, index) => index > 0)
-                  .map((position, index) => (
-                    <span className={"step"} key={index}>
-                      {`${position.site ? position.site : "gps"} - ${
-                        position.distance
-                      } km - ${format(
-                        new Date(position.eta),
-                        "dd-MM HH:mm"
-                      )} - ${
-                        position.averageSpeed > 0
-                          ? position.averageSpeed.toFixed(2)
-                          : "x"
-                      } km/h`}
-                    </span>
-                  ))}
-            </p>
-          </>
-        )}
-      </div>
+      {/*<div className={`report ${toggle ? "open" : "close"}`}>*/}
+      {/*  {!toggle ? (*/}
+      {/*    <List size={20} onClick={() => setToggle(!toggle)} />*/}
+      {/*  ) : (*/}
+      {/*    <>*/}
+      {/*      <X size={20} onClick={() => setToggle(!toggle)} />*/}
+      {/*      <p>*/}
+      {/*        <span className={"category"}>etas</span>*/}
+      {/*        {runnerPositions &&*/}
+      {/*          runnerPositions*/}
+      {/*            .filter((_, index) => index > 0)*/}
+      {/*            .map((position, index) => (*/}
+      {/*              <span className={"step"} key={index}>*/}
+      {/*                {`${position.site ? position.site : "gps"} - ${*/}
+      {/*                  position.distance*/}
+      {/*                } km - ${format(*/}
+      {/*                  new Date(position.eta),*/}
+      {/*                  "dd-MM HH:mm"*/}
+      {/*                )} - ${*/}
+      {/*                  position.averageSpeed > 0*/}
+      {/*                    ? position.averageSpeed.toFixed(2)*/}
+      {/*                    : "x"*/}
+      {/*                } km/h`}*/}
+      {/*              </span>*/}
+      {/*            ))}*/}
+      {/*      </p>*/}
+      {/*    </>*/}
+      {/*  )}*/}
+      {/*</div>*/}
     </div>
   ) : null;
 };

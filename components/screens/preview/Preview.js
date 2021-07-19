@@ -36,17 +36,22 @@ const Preview = ({ className, distance, elevation, checkpoints, stages }) => {
         {/* <Watch size="20" />*/}
         <div>
           {`${differenceInHours(
-            new Date(checkpoints[checkpoints.length - 1].cutOffTime),
-            new Date(checkpoints[0].cutOffTime)
+            new Date(
+              checkpoints[checkpoints.length - 1].cutOffTime.replace(/-/g, "/")
+            ),
+            new Date(checkpoints[0].cutOffTime.replace(/-/g, "/"))
           )} hours`}
         </div>
       </div>
       <div className={"item"}>
         {/*<Timer size="20" />*/}
         <div>
-          {formatDistanceToNow(new Date(checkpoints[0].cutOffTime), {
-            addSuffix: true,
-          })}
+          {formatDistanceToNow(
+            new Date(checkpoints[0].cutOffTime.replace(/-/g, "/")),
+            {
+              addSuffix: true,
+            }
+          )}
         </div>
       </div>
     </div>
