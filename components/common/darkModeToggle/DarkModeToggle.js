@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { animated, useSpring } from "react-spring";
-import { ThemeContext } from "../themeProvider/ThemeProvider";
+import { ThemeContext } from "../../technical/themeProvider/ThemeProvider";
 
 const DarkModeToggle = () => {
   const { colorMode, setColorMode } = useContext(ThemeContext);

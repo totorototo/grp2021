@@ -9,17 +9,17 @@ import * as d3Array from "d3-array";
 import { calculateDistance, createPathHelper } from "positic";
 import { AutoSizer } from "react-virtualized";
 
-import Map from "../../components/map/Map";
-import ClientOnly from "../../components/clientOnly/ClientOnly";
+import Map from "../../components/screens/map/Map";
+import ClientOnly from "../../components/technical/clientOnly/ClientOnly";
 import { Layout } from "../../components";
-import Graph from "../../components/graph/Graph";
+import Graph from "../../components/technical/graph/Graph";
 import detectPeaks from "../../helpers/peak";
-import Live from "../../components/live/Live";
+import Live from "../../components/screens/live/Live";
 import style from "../../styles/[race].style";
-import Preview from "../../components/preview/Preview";
-import Profile from "../../components/profile/Profile";
-import Debug from "../../components/debug/Debug";
-import Stages from "../../components/stages/Stages";
+import Preview from "../../components/screens/preview/Preview";
+import Profile from "../../components/screens/profile/Profile";
+import Debug from "../../components/screens/debug/Debug";
+import Stages from "../../components/screens/stages/Stages";
 
 function Race({
   stages,
@@ -69,7 +69,7 @@ function Race({
     const sortedPositions = positions.sort((a, b) => a.timestamp - b.timestamp);
     const lastPosition = sortedPositions[sortedPositions.length - 1];
 
-    // temp
+    // layout
     const pairs = sortedPositions.map((position) => {
       const closestPosition = helper.findClosestPosition(position.coords);
       const closestPositionIndex = helper.getPositionIndex(closestPosition);
@@ -574,8 +574,6 @@ export async function getStaticProps({ params }) {
       stats: { distance: 0, cumulativeElevation: { gain: 0, loss: 0 } },
     }
   );
-
-  console.log(stages);
 
   const sumUp = stages.stages.map((stage) => ({
     departure: stage.departure,

@@ -8,7 +8,7 @@ import {
   getArea,
   getLine,
   getLines,
-} from "../../helpers/d3";
+} from "../../../helpers/d3";
 
 const MARKER_WIDTH = 30;
 

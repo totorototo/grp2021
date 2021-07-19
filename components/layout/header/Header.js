@@ -5,9 +5,9 @@ import { useRouter } from "next/router";
 
 import style from "./style";
 import SideNavigation from "../sideNavigation/SideNavigation";
-import { ThemeContext } from "../themeProvider/ThemeProvider";
-import Burger from "../burger/Burger";
-import DropDown from "../dropDown/DropDown";
+import { ThemeContext } from "../../technical/themeProvider/ThemeProvider";
+import Burger from "../../common/burger/Burger";
+import DropDown from "../../common/dropDown/DropDown";
 
 const Header = ({ className, title = "trail-buddy.io", items = {} }) => {
   const [state, setState] = useState(false);

@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import THEME from "../../theme/Theme";
-import DropDown from "../dropDown/DropDown";
+import THEME from "../../../theme/Theme";
+import DropDown from "../../common/dropDown/DropDown";
 
 const style = (Component) => styled(Component)`
   display: flex;

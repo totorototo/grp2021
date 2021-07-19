@@ -1,14 +1,15 @@
-import Footer from "./footer/Footer";
-import Header from "./header/Header";
-import LeftSide from "./leftSide/LeftSide";
-import RightSide from "./rightSide/RightSide";
-import Main from "./main/Main";
-import Chrome from "./chrome/Chrome";
-import Burger from "./burger/Burger";
-import DropDown from "./dropDown/DropDown";
-import Layout from "./layout/Layout";
+import {
+  Chrome,
+  Main,
+  Header,
+  Footer,
+  LeftSide,
+  RightSide,
+  Layout,
+  SideNavigation,
+} from "./layout";
 
-import SideNavigation from "./sideNavigation/SideNavigation";
+import { Burger, DropDown } from "./common";
 
 export {
   Burger,

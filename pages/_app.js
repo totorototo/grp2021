@@ -1,7 +1,7 @@
 import usePersistedState from "../hooks/usePersistedState";
 import { createGlobalStyle } from "styled-components";
 import THEME from "../theme/Theme";
-import ThemeProvider from "../components/themeProvider/ThemeProvider";
+import ThemeProvider from "../components/technical/themeProvider/ThemeProvider";
 import createRingBuffer from "../helpers/buffer";
 import { useEffect, useState } from "react";
 

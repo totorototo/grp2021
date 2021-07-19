@@ -7,9 +7,9 @@ import {
   getArea,
   getLine,
   getLines,
-} from "../../helpers/d3";
-import Gradient from "../gradient/Gradient";
-import Marker from "../marker/Marker";
+} from "../../../helpers/d3";
+import Gradient from "../../layout/chrome/gradient/Gradient";
+import Marker from "../../common/marker/Marker";
 import Section from "./sections/Section";
 
 const MARKER_WIDTH = 30;

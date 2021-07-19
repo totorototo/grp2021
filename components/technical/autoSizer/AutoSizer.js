@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 
 import styled from "./style";
-import useResizeObserver from "../../hooks/useResizeObserver";
+import useResizeObserver from "../../../hooks/useResizeObserver";
 
 const AutoSizer = ({ className, children }) => {
   const [ref, { contentRect }] = useResizeObserver();
@@ -15,7 +15,6 @@ const AutoSizer = ({ className, children }) => {
   const width = getContentRect("width") || 200;
   const height = getContentRect("height") || 200;
 
-  console.log("booom");
   debugger;
 
   return (

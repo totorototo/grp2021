@@ -7,7 +7,7 @@ import styled from "./style";
 import lightStyle from "./light-style.json";
 import darkStyle from "./dark-style.json";
 import { Location } from "@styled-icons/octicons";
-import { ThemeContext } from "../themeProvider/ThemeProvider";
+import { ThemeContext } from "../../technical/themeProvider/ThemeProvider";
 
 const Map = ({
   className,

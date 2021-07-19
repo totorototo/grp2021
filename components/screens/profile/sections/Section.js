@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { formatDistance, format } from "date-fns";
 
-import useIntersect from "../../../hooks/useIntersect";
+import useIntersect from "../../../../hooks/useIntersect";
 import Container from "../Container";
 import style from "./style";
 

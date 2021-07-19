@@ -1,4 +1,4 @@
-import { Chrome } from "../index";
+import { Chrome } from "../../index";
 import LeftSide from "../leftSide/LeftSide";
 import RightSide from "../rightSide/RightSide";
 import Header from "../header/Header";

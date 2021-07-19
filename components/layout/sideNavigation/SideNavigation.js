@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import { ThemeContext } from "../themeProvider/ThemeProvider";
+import { ThemeContext } from "../../technical/themeProvider/ThemeProvider";
 
 import style from "./style";
 import { Moon, Sun } from "@styled-icons/feather";
