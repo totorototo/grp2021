@@ -26,8 +26,10 @@ const Debug = ({
 
   useEffect(() => {
     if (!sections || sections.length === 0) return;
-    const start = new Date(sections[0].cutOffTime);
-    const end = new Date(sections[sections.length - 1].cutOffTime);
+    const start = new Date(sections[0].cutOffTime.replace(/-/g, "/"));
+    const end = new Date(
+      sections[sections.length - 1].cutOffTime.replace(/-/g, "/")
+    );
     setInterval({ start, end });
   }, [sections]);
 
