@@ -398,32 +398,32 @@ const Live = ({
                         height={height - OFFSET_Y}
                       />
                     </clipPath>
-                    <g clipPath={`url(#${`clip-${index}`})`}>
-                      <rect
-                        fill={"transparent"}
-                        opacity="1"
-                        key={`${index}-area`}
-                        className="area"
-                        x={x}
-                        y={y}
-                        width={width}
-                        height={height - OFFSET_Y}
-                      />
-                      <text
-                        writingMode="tb"
-                        className="label"
-                        x={x + 15}
-                        y={y + 10}
-                        //fontSize={28}
-                        transform={
-                          index > 0
-                            ? `translate(0, ${height - height / 2})`
-                            : "translate(0,0)"
-                        }
-                      >
-                        {format(new Date(interval.start), "EEEE")}
-                      </text>
-                    </g>
+                    {/*<g clipPath={`url(#${`clip-${index}`})`}>*/}
+                    {/*  <rect*/}
+                    {/*    fill={"transparent"}*/}
+                    {/*    opacity="1"*/}
+                    {/*    key={`${index}-area`}*/}
+                    {/*    className="area"*/}
+                    {/*    x={x}*/}
+                    {/*    y={y}*/}
+                    {/*    width={width}*/}
+                    {/*    height={height - OFFSET_Y}*/}
+                    {/*  />*/}
+                    {/*  <text*/}
+                    {/*    writingMode="tb"*/}
+                    {/*    className="label"*/}
+                    {/*    x={x + 15}*/}
+                    {/*    y={y + 10}*/}
+                    {/*    //fontSize={28}*/}
+                    {/*    transform={*/}
+                    {/*      index > 0*/}
+                    {/*        ? `translate(0, ${height - height / 2})`*/}
+                    {/*        : "translate(0,0)"*/}
+                    {/*    }*/}
+                    {/*  >*/}
+                    {/*    {format(new Date(interval.start), "EEEE")}*/}
+                    {/*  </text>*/}
+                    {/*</g>*/}
                     <line
                       key={index}
                       x1={x}
@@ -554,10 +554,10 @@ const Live = ({
                     fill={bgColor}
                   >
                     <title>
-                      {/*{`${enhancedCheckpoints.name} - ${format(*/}
-                      {/*  new Date(enhancedCheckpoints.slow),*/}
-                      {/*  "dd-MM HH:mm"*/}
-                      {/*)}`}*/}
+                      {`${enhancedCheckpoints.name} - ${format(
+                        new Date(enhancedCheckpoints.slow),
+                        "dd-MM HH:mm"
+                      )}`}
                     </title>
                   </circle>
                 </g>
@@ -626,35 +626,35 @@ const Live = ({
             ))}
         </g>
       </svg>
-      {/*<div className={`report ${toggle ? "open" : "close"}`}>*/}
-      {/*  {!toggle ? (*/}
-      {/*    <List size={20} onClick={() => setToggle(!toggle)} />*/}
-      {/*  ) : (*/}
-      {/*    <>*/}
-      {/*      <X size={20} onClick={() => setToggle(!toggle)} />*/}
-      {/*      <p>*/}
-      {/*        <span className={"category"}>etas</span>*/}
-      {/*        {runnerPositions &&*/}
-      {/*          runnerPositions*/}
-      {/*            .filter((_, index) => index > 0)*/}
-      {/*            .map((position, index) => (*/}
-      {/*              <span className={"step"} key={index}>*/}
-      {/*                {`${position.site ? position.site : "gps"} - ${*/}
-      {/*                  position.distance*/}
-      {/*                } km - ${format(*/}
-      {/*                  new Date(position.eta),*/}
-      {/*                  "dd-MM HH:mm"*/}
-      {/*                )} - ${*/}
-      {/*                  position.averageSpeed > 0*/}
-      {/*                    ? position.averageSpeed.toFixed(2)*/}
-      {/*                    : "x"*/}
-      {/*                } km/h`}*/}
-      {/*              </span>*/}
-      {/*            ))}*/}
-      {/*      </p>*/}
-      {/*    </>*/}
-      {/*  )}*/}
-      {/*</div>*/}
+      <div className={`report ${toggle ? "open" : "close"}`}>
+        {!toggle ? (
+          <List size={20} onClick={() => setToggle(!toggle)} />
+        ) : (
+          <>
+            <X size={20} onClick={() => setToggle(!toggle)} />
+            <p>
+              <span className={"category"}>etas</span>
+              {runnerPositions &&
+                runnerPositions
+                  .filter((_, index) => index > 0)
+                  .map((position, index) => (
+                    <span className={"step"} key={index}>
+                      {`${position.site ? position.site : "gps"} - ${
+                        position.distance
+                      } km - ${format(
+                        new Date(position.eta),
+                        "dd-MM HH:mm"
+                      )} - ${
+                        position.averageSpeed > 0
+                          ? position.averageSpeed.toFixed(2)
+                          : "x"
+                      } km/h`}
+                    </span>
+                  ))}
+            </p>
+          </>
+        )}
+      </div>
     </div>
   ) : null;
 };
