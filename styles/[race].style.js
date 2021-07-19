@@ -3,8 +3,7 @@ import THEME from "../theme/Theme";
 
 const style = (Component) => styled(Component)`
   
-  .container {
-   
+  .container {   
     width: 100%;
     height: calc(100vh - 100px);   
     overflow-y: scroll;    
@@ -65,7 +64,7 @@ const style = (Component) => styled(Component)`
       display: flex;
     }
 
-    @media screen and (min-width: ${THEME.breakpoints[0]}) {
+/*    @media screen and (min-width: ${THEME.breakpoints[0]}) {
       height: 100%;
 
       .child {
@@ -97,7 +96,7 @@ const style = (Component) => styled(Component)`
        "map map map map map map debug debug"
        "race-profile race-profile race-profile race-profile race-profile race-profile debug debug"
 
-    }
+    }*/
     }
    } 
 

@@ -9,17 +9,20 @@ import * as d3Array from "d3-array";
 import { calculateDistance, createPathHelper } from "positic";
 import { AutoSizer } from "react-virtualized";
 
-import Map from "../../components/screens/map/Map";
-import ClientOnly from "../../components/technical/clientOnly/ClientOnly";
-import { Layout } from "../../components";
-import Graph from "../../components/technical/graph/Graph";
-import detectPeaks from "../../helpers/peak";
-import Live from "../../components/screens/live/Live";
 import style from "../../styles/[race].style";
-import Preview from "../../components/screens/preview/Preview";
-import Profile from "../../components/screens/profile/Profile";
-import Debug from "../../components/screens/debug/Debug";
-import Stages from "../../components/screens/stages/Stages";
+import {
+  Layout,
+  Graph,
+  Live,
+  Preview,
+  Profile,
+  Debug,
+  Stages,
+  Map,
+  ClientOnly,
+} from "../../components";
+
+import detectPeaks from "../../helpers/peak";
 
 function Race({
   stages,
