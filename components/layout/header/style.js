@@ -45,6 +45,8 @@ const style = (Component) => styled(Component)`
       .menu-items {
         display: flex;
         text-transform: capitalize;
+        align-items: center;
+        justify-content: space-around;
 
         ${DropDown} {
           padding: 8px 8px 8px 8px;

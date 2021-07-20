@@ -25,12 +25,14 @@ const style = (Component) => styled(Component)`
       letter-spacing: -0.05em;
       min-width: 10rem;
       //flex: 1 1 auto;
+      width: 40%;
     }
 
     .section-data {
       display: flex;
-      flex: 1 1 auto;
+      //flex: 1 1 auto;
       height: 100%;
+      width: 60%;
 
       flex-direction: column;
       align-items: flex-start;

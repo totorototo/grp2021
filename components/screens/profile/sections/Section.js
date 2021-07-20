@@ -64,31 +64,9 @@ const Section = ({
     >
       <div className={`detail ${currentSectionIndex === id ? "current" : ""}`}>
         <div className={"section-index"}>{id + 1}</div>
-        {/* <div className={"section-data"}>
-          <div className={"item"}>{`${section.departureLocation}`}</div>
-          <div className={"item"}>{`${section.arrivalLocation}`}</div>
-          <div className={"item"}>{`${(section.distance / 1000).toFixed(
-            1
-          )}km`}</div>
-          <div className={"item"}>
-            {`${section.elevation.positive.toFixed(
-              0
-            )}D+ ${section.elevation.negative.toFixed(0)}D-`}
-          </div>
-          <div className={"item"}>
-            {formatDistance(0, section.duration, {
-              includeSeconds: true,
-            })}
-          </div>
-          <div className={"item"}>
-            {format(new Date(section.cutOffTime), "dd-MM HH:mm")}
-          </div>
-          <div className={"item"}>
-            {msToTime(section.elapsedHoursFromStart)}
-          </div>
-        </div>*/}
         <p className={"section-data"}>
           <span>{`${section.departureLocation} - ${section.arrivalLocation}`}</span>
+
           <span className={"type"}>distance</span>
           <span>{`${(section.distance / 1000).toFixed(1)}km `}</span>
 
