@@ -107,7 +107,12 @@ const Section = ({
           </span>
 
           <span className={"type"}>time barrier</span>
-          <span>{format(new Date(section.cutOffTime), "dd-MM HH:mm")}</span>
+          <span>
+            {format(
+              new Date(section.cutOffTime.replace(/-/g, "/")),
+              "dd-MM HH:mm"
+            )}
+          </span>
           <span className={"type"}>since start</span>
           <span>{msToTime(section.elapsedHoursFromStart)}</span>
           <span className={"type"}>min avg speed</span>

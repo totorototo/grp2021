@@ -10,6 +10,7 @@ const Main = styled.div`
   font-style: normal;
   color: var(--color-text);
   font-family: "Love Ya Like A Sister", cursive;
+  padding-left: 1rem;
 `;
 
 export default function Home() {

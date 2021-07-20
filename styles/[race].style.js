@@ -24,19 +24,23 @@ const style = (Component) => styled(Component)`
       height: calc(100vh - 100px);
       scroll-snap-align: center;         
       width: 100%;    
-      position: relative; 
+      position: relative;       
     }
     
     .map-container {
-      grid-area: map;     
+      grid-area: map;    
+      padding-left: 2rem;
     }
     
     .preview-container {
       grid-area: preview;
+      padding-right: 1rem;
     }
     
     .time-table-container {
       grid-area: time;
+      padding: 0.6rem;
+     
     }
     
     .profile-container {
@@ -46,11 +50,13 @@ const style = (Component) => styled(Component)`
     }
     
     .debug-container {
-      grid-area: debug;    
+      grid-area: debug;
+      padding: 0.6rem;
     }
     
     .stage-container {
       grid-area: stages;
+      padding: 0.6rem;
     }
     
     .current-section-container {
