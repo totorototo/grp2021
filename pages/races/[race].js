@@ -48,6 +48,7 @@ function Race({
 
   const [delta, setDelta] = useState();
   const [currentSectionIndex, setCurrentSectionIndex] = useState();
+  const [currentStageIndex, setCurrentStageIndex] = useState();
   const [analytics, setAnalytics] = useState();
   const [projectedLocation, setProjectedLocation] = useState();
   const [projectedLocationIndex, setProjectedLocationIndex] = useState();
@@ -60,6 +61,7 @@ function Race({
     if (positions.length === 0) {
       setDelta(undefined);
       setCurrentSectionIndex(undefined);
+      setCurrentStageIndex(undefined);
       setAnalytics(undefined);
       setProjectedLocation(undefined);
       setProjectedLocationIndex(undefined);
@@ -114,6 +116,11 @@ function Race({
     // compute error
     const delta = calculateDistance(closestLocation, lastPosition.coords);
     setDelta(delta);
+
+    const currentStageIndex = stages.findIndex(
+      (stage) => analytics[0] > stage.fromKm / 100 && stage.toKm > analytics[0]
+    );
+    setCurrentStageIndex(currentStageIndex);
 
     // compute progression
     const distanceCompleted = ((analytics[0] * 100) / distance).toFixed(2);
@@ -215,7 +222,12 @@ function Race({
             <ClientOnly>
               <AutoSizer>
                 {({ width, height }) => (
-                  <Stages width={width} height={height} stages={stages} />
+                  <Stages
+                    width={width}
+                    height={height}
+                    stages={stages}
+                    currentStageIndex={currentStageIndex}
+                  />
                 )}
               </AutoSizer>
             </ClientOnly>
@@ -445,6 +457,7 @@ export async function getStaticProps({ params }) {
                 departure: lastStage.arrival,
                 arrival: section.arrivalLocation,
                 toKm: section.toKm,
+                fromKm: lastStage.toKm,
                 duration,
                 startingDate,
                 endingDate,
@@ -484,6 +497,7 @@ export async function getStaticProps({ params }) {
                 departure: checkpoints[0][columns[0]],
                 arrival: section.arrivalLocation,
                 toKm: section.toKm,
+                fromKm: 0,
                 duration,
                 startingDate,
                 endingDate,
@@ -530,6 +544,7 @@ export async function getStaticProps({ params }) {
                 departure: lastStage.arrival,
                 arrival: section.arrivalLocation,
                 toKm: section.toKm,
+                fromKm: lastStage.toKm,
                 duration,
                 startingDate,
                 endingDate,
@@ -584,6 +599,8 @@ export async function getStaticProps({ params }) {
     distance: stage.distance,
     elevation: stage.elevation,
     duration: stage.humanReadableDuration,
+    fromKm: stage.fromKm,
+    toKm: stage.toKm,
   }));
 
   // console.log(sumUp);

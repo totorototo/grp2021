@@ -7,6 +7,10 @@ const style = (Component) => styled(Component)`
   display: flex;
 
   .detail {
+    &.current {
+      opacity: 1;
+    }
+
     min-width: 100vw;
     width: 100vw;
     height: 100%;

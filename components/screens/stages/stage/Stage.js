@@ -2,10 +2,10 @@ import React from "react";
 
 import style from "./style";
 
-const Stage = ({ className, stage, id }) => {
+const Stage = ({ className, stage, id, currentStageIndex }) => {
   return (
     <div className={className}>
-      <div className={"detail"}>
+      <div className={`detail ${currentStageIndex === id ? "current" : ""}`}>
         <div className={"stage-index"}>{id + 1}</div>
         <p className={"stage-data"}>
           <span>{`${stage.departure} - ${stage.arrival}`}</span>
