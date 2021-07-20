@@ -71,8 +71,8 @@ const Debug = ({
         {analytics && (
           <span className={"analytics"}>
             <span>{`distance: ${(analytics[0] / 1000).toFixed()}km`}</span>
-            <span>{`elevation gain: ${analytics[1].toFixed()}m`}</span>
-            <span>{`elevation loss: ${analytics[2].toFixed()}m`}</span>
+            <span>{`elevation gain: ${(analytics[1] * 0.78).toFixed()}m`}</span>
+            <span>{`elevation loss: ${(analytics[2] * 0.78).toFixed()}m`}</span>
           </span>
         )}
         {progression && progression.length > 0 && (

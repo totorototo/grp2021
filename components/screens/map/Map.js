@@ -55,7 +55,9 @@ const Map = ({
         {analytics && (
           <div className={"runner-analytics"}>{`${(analytics[0] / 1000).toFixed(
             0
-          )}km ${analytics[1]}D+ ${analytics[2]}D-`}</div>
+          )}km ${(analytics[1] * 0.78).toFixed()}D+ ${(
+            analytics[2] * 0.78
+          ).toFixed()}D-`}</div>
         )}
 
         <MapGL

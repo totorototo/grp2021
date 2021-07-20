@@ -118,12 +118,12 @@ function Race({
     // compute progression
     const distanceCompleted = ((analytics[0] * 100) / distance).toFixed(2);
     const positiveElevationCompleted = (
-      (analytics[1] * 100) /
-      elevation.positive
+      ((analytics[1] * 100) / elevation.positive) *
+      0.78
     ).toFixed(2);
     const negativeElevationCompleted = (
-      (analytics[2] * 100) /
-      elevation.negative
+      ((analytics[2] * 100) / elevation.negative) *
+      0.78
     ).toFixed(2);
 
     setProgression([
