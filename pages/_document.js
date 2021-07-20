@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 const APP_NAME = "xxxx-buddy.io";
-const APP_DESCRIPTION = "This is an example of using next-pwa plugin";
+const APP_DESCRIPTION = "grp 2021";
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
